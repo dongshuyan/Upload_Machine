@@ -1,4 +1,4 @@
-## Auto_Upload
+## Upload_Machine
 
 自动将本地资源发布到PT站
 Upload local resources to PT trackers automatically.
@@ -10,7 +10,6 @@ Upload local resources to PT trackers automatically.
 - 自由度高，智能识别能力强
 
 ## 更新说明
-
 
 ## 功能说明
 
@@ -53,36 +52,22 @@ Upload local resources to PT trackers automatically.
 
 目前支持的站点(排名仅代表支持的时间先后):
 
-- pter
-- lemonhd
-- hdsky
-- audience
-- piggo
-- ssd
-- hdpt(明教)
-- carpt
-- ptnap
-- wintersakura
-- hdfans
-- hhclub(憨憨)
+- Piggo(猪猪网)
 
 正在适配的站点(排名不分先后):
 
-- mt
-- pthome
-- hare
+
 
 Todolist:
 
-- 使用request发种,开发ing
 - GUI（有考虑，需要学）
 - 自定义站点（需要考虑做不做和怎么做）
 
 如果有新的站点/资源类型等需求,可以加入QQ群交流(735803201)
 
-## 安装Auto_Upload自动发种机
+## 安装Upload_Machine自动发种机
 
-`Auto_Upload自动发种机`可以在任何具有 `Python`环境的系统上使用，下面讲解下在各个系统上的安装步骤
+`Upload_Machine自动发种机`可以在任何具有 `Python`环境的系统上使用，下面讲解下在各个系统上的安装步骤
 
 ### Windows(已测试成功)
 
@@ -120,24 +105,28 @@ Todolist:
 mediainfo -h
 ```
 
-6.安装 `Auto_Upload`，在以管理员身份打开 `Windows PowerShell`中输入:
+6.安装 `Upload_Machine`，在以管理员身份打开 `Windows PowerShell`中输入:
 
 ```bash
-python3 -m pip install auto_upload  -i https://pypi.tuna.tsinghua.edu.cn/simple/
-auto_upload -h
+python3 -m pip install upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
+upload_machine -h
 ```
 
 如果上述命令没反应或者报错可以尝试下面这个：
 
 ```bash
-pip install auto_upload  -i https://pypi.tuna.tsinghua.edu.cn/simple/
-auto_upload -h
+pip install upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
+upload_machine -h
 ```
 
-7.更新 `Auto_Upload`，在 `Windows PowerShell`中输入:
+7.更新 `Upload_Machine`，在 `Windows PowerShell`中输入:
 
 ```bash
-python3 -m pip install --upgrade auto_upload  -i https://pypi.tuna.tsinghua.edu.cn/simple/
+python3 -m pip install --upgrade upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
+```
+Or
+```bash
+pip install --upgrade upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
 
 ### Linux
@@ -213,17 +202,17 @@ sudo python3 -m pip install --upgrade pip
 sudo apt-get install python3-pip ffmpeg mediainfo mktorrent
 ```
 
-3.安装 `Auto_Upload`
+3.安装 `Upload_Machine`
 
 ```bash
-python3 -m pip install auto_upload -i https://pypi.tuna.tsinghua.edu.cn/simple/
-auto_upload -h
+python3 -m pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+upload_machine -h
 ```
 
-4.更新 `Auto_Upload`，，在 `Terminal.app`中输入:
+4.更新 `Upload_Machine`，，在 `Terminal.app`中输入:
 
 ```bash
-python3 -m pip install --upgrade auto_upload -i https://pypi.tuna.tsinghua.edu.cn/simple/
+python3 -m pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
 
 ### MacOS(已测试成功)
@@ -245,58 +234,36 @@ ffmpeg -version
 mediainfo --version
 ```
 
-4.安装 `Auto_Upload`，在 `Terminal.app`中输入:
+4.安装 `Upload_Machine`，在 `Terminal.app`中输入:
 
 ```bash
-python3 -m pip install auto_upload -i https://pypi.tuna.tsinghua.edu.cn/simple/
-auto_upload -h
+python3 -m pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+upload_machine -h
 ```
 
-5.更新 `Auto_Upload`，，在 `Terminal.app`中输入:
+5.更新 `Upload_Machine`，，在 `Terminal.app`中输入:
 
 ```bash
-python3 -m pip install --upgrade auto_upload -i https://pypi.tuna.tsinghua.edu.cn/simple/
+python3 -m pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
 
 ## 配置环境&文件
 
 ### 1.本地新建一个工作目录
 
-例如路径为:/Users/Desktop/auto_upload
+例如路径为:/Users/Desktop/upload_machine
 
-### 2.在1中工作路径文件夹下，再新建三个文件夹
+### 2.在1中工作路径文件夹下，再新建两个文件夹
 
-"cookies_path","screenshot_path","record_path"
+"screenshot_path","record_path"
 
-- cookies_path将用来存放站点cookie文件，文件名需要命名为cookie_站点.json。(例如:cookie_lemonhd.json,cookie_pter.json等)
 - screenshot_path将用来存放视频截图，种子等临时文件
 - record_path将用来存放发种记录
 
-### 3.获取cookie并存入文件 工作目录 `/cookies_path/cookie_站点.json` 中
 
-on格式的cookie推荐使用插件"EditThisCookie"获取
+### 3.在文件夹中新建配置文件au.yaml
 
-#### EditThisCookie插件官网
-
-http://www.editthiscookie.com/
-
-#### `Chrome`下 `EditThisCookie`安装网址
-
-https://chrome.google.com/webstore/detail/fngmhnnpilhplaeedifhccceomclgfbg
-
-#### `Edge`下 `EditThisCookie`安装网址
-
-https://microsoftedge.microsoft.com/addons/detail/editthiscookie/jhampopgcdhehhkbeljdbfdbkfkmolbh?hl=zh-CN
-
-- 安装好 `EditThisCookie`之后
-- 使用浏览器 `成功登录`PT站点
-- 点击右上角 `饼干🍪`图案的图标
-- 点击向右的按钮就把json格式的cookie复制的剪贴板了
-- 粘贴进本文并保存到 `工作目录/cookies_path/cookie_站点.json`文件即可
-
-### 4.在文件夹中新建配置文件au.yaml
-
-详细参数说明参考[au_example.yaml](https://github.com/dongshuyan/Auto_Upload/blob/master/au_example.yaml)
+详细参数说明参考[au_example.yaml](https://github.com/dongshuyan/Upload_Machine/blob/master/au_example.yaml)
 
 注意：如果是在windows系统下，要发布的 `资源文件/文件夹名称`如果有 `空格`会导致制作种子失败，建议将空格替换为 `.`或者下划线 `_`。其他系统没有这个问题。
 
@@ -308,7 +275,7 @@ https://microsoftedge.microsoft.com/addons/detail/editthiscookie/jhampopgcdhehhk
 ### 1.自动发种
 
 ```bash
-auto_upload -yp '工作目录/au.yaml' -u
+upload_machine -yp '工作目录/au.yaml' -u
 ```
 
 注意：在Windows系统发种时需要确保在制作种子期间，被发布的 `文件`或者 `文件夹`没有被其他应用占用。
@@ -316,7 +283,7 @@ auto_upload -yp '工作目录/au.yaml' -u
 ### 2.本地图片自动上传图床
 
 ```bash
-auto_upload -yp '工作目录/au.yaml' -iu -ih 图床名称  -iform 图片格式 -if  '图片路径1' '图片路径2'
+upload_machine -yp '工作目录/au.yaml' -iu -ih 图床名称  -iform 图片格式 -if  '图片路径1' '图片路径2'
 ```
 
 图床名称目前仅支持（排名无先后）：
@@ -331,19 +298,19 @@ auto_upload -yp '工作目录/au.yaml' -iu -ih 图床名称  -iform 图片格式
 ### 3.获取豆瓣信息
 
 ```bash
-auto_upload -yp '工作目录/au.yaml' -di -du 豆瓣链接
+upload_machine -yp '工作目录/au.yaml' -di -du 豆瓣链接
 ```
 
 示例:
 
 ```bash
-auto_upload -yp '工作目录/au.yaml' -di -du https://movie.douban.com/subject/26353671/
+upload_machine -yp '工作目录/au.yaml' -di -du https://movie.douban.com/subject/26353671/
 ```
 
 ### 4.命令行获取本地视频截图链接
 
 ```bash
-auto_upload -yp '工作目录/au.yaml' -mi -mf '视频路径' -ih 图床名称 -iform 图片格式 -in 截图数量
+upload_machine -yp '工作目录/au.yaml' -mi -mf '视频路径' -ih 图床名称 -iform 图片格式 -in 截图数量
 ```
 
 图床名称目前仅支持（排名无先后）：
@@ -365,12 +332,12 @@ auto_upload -yp '工作目录/au.yaml' -mi -mf '视频路径' -ih 图床名称 -
 示例:
 
 ```bash
-auto_upload 'au.yaml' -mi -mf '1.mp4' -ih picgo -iform bbcode -in 6
+upload_machine 'au.yaml' -mi -mf '1.mp4' -ih picgo -iform bbcode -in 6
 ```
 
 ## 配置文件au.yaml详细说明
 
-参考 [au_example.yaml](https://github.com/dongshuyan/Auto_Upload/blob/master/au_example.yaml)
+参考 [au_example.yaml](https://github.com/dongshuyan/Upload_Machine/blob/master/au_example.yaml)
 
 ## 常见错误及修复方法（更新ing）
 
@@ -392,7 +359,7 @@ Windows下的mktorrent支持的不太好，后面我再修复吧
 ## Reference
 
 [Differential 差速器](https://github.com/LeiShi1313/Differential)  (复制了上传图床部分代码)
-[Differential差速器使用教程](https://leishi.io/blog/posts/2021-12/Differential/)  (Auto_Upload安装教程主要参考本文)
+[Differential差速器使用教程](https://leishi.io/blog/posts/2021-12/Differential/)  (Upload_Machine安装教程主要参考本文)
 [mktorrent-win-builds](https://github.com/q3aql/mktorrent-win-builds)
 [MKTORRENT WIN下命令行制作种子](https://blog.acesheep.com/index.php/archives/551/)
 [linux 安装 Chrome](https://www.cnblogs.com/ivantang/p/6290729.html)
