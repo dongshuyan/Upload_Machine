@@ -171,8 +171,8 @@ def hdsky_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         tags.append(6)
     if file1.transfer==0:
         tags.append(14)
-    
-    
+    tags=list(set(tags))
+    tags.sort()
     if siteinfo.uplver==1:
         uplver='yes'
     else:
@@ -206,23 +206,5 @@ def hdsky_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     scraper=cloudscraper.create_scraper()
     r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup)
     
-    logger.info('已发布成功')
 
-    String_url =finduploadurl(r)
-
-    downloadurl=finddownloadurl(r)
-    if downloadurl=='已存在':
-        return True,fileinfo+'种子发布失败,失败原因:种子'+downloadurl+',当前网址:'+String_url
-
-    
-    recordupload(os.path.join(record_path,siteinfo.sitename+'_torrent.csv'),file1,String_url,downloadurl)
-    if not downloadurl =='':
-        res=qbseed(url=downloadurl,filepath=file1.downloadpath,qbinfo=qbinfo,category=file1.pathinfo.category,hashlist=hashlist)
-        if res:
-            return True,fileinfo+'种子发布成功,种子链接:'+downloadurl+',当前网址:'+String_url
-        else:
-            return True,fileinfo+'种子发布成功,但是添加种子失败,请手动添加种子，种子链接:'+downloadurl+',当前网址:'+String_url
-    else:
-        return False,fileinfo+'未找到下载链接,当前网址:'+String_url
-
-    
+    return afterupload(r,fileinfo,record_path,siteinfo,file1,qbinfo,hashlist)
