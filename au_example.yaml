@@ -1,0 +1,87 @@
+basic:
+  picture_num: 3 #表示截图的数量
+  headless: 1 #是否优先后台运行 1表示是，0表示否。不填默认否
+  workpath: /Users/Desktop/ #工作路径
+  log: /Users/Desktop/record_path/Auto_Upload.sh #日志文件路径，可有可无，若没有则日志不写入文件
+  record_path: /Users/Desktop/record_path #用来存放发种记录 
+  screenshot_path: /Users/Desktop/screenshot_path #用来存放视频截图，种子等临时文件 
+  new_folder: 0 #发布的资源是否在外层套一层0day名字文件夹 1表示是，0表示否。不填默认是
+  check: 1 #是否在发布前需要人工确认再发布。0表示否1表示是。此处如果选择1 记得把headless参数设置为0来前台运行
+  doubancookie: 'cookie' #此处填写豆瓣账号的cookie可以抓到只有登录才能看到的资源的info，不填则按照未登录模式抓取
+qbinfo:
+  qburl: 127.0.0.1:8080
+  qbwebuiusername: username #你qbittorrent的WEBUI的用户名密码
+  qbwebuipassword: password
+  start: 0 #表示添加到qb的种子是否直接开始 1表示是，0表示否。不填默认否
+image hosting: #配置图床站点信息
+  seq: #这个有先后顺，如果不指定图床则优先使用编号靠前的图床上传图片
+    1: ptpimg
+    2: picgo
+    3: freeimage
+    4: chd
+    5: femp
+    6: imgbox
+    7: pter
+    8: emp
+    9: smms
+  ptpimg:
+    apikey: apikey
+  smms:
+    apikey: apikey
+  picgo:
+    apikey: apikey
+    url: https://www.picgo.net/api/1/upload
+  pter:
+    cookie: cookie #F12 nerwork中提取的cookie
+    url: https://s3.pterclub.com
+  emp:
+    cookie: cookie #F12 nerwork中提取的cookie
+    url: https://jerking.empornium.ph
+  chd:
+    cookie: cookie #F12 nerwork中提取的cookie
+    url: https://shewang.net/
+  freeimage:
+    cookie: cookie #F12 nerwork中提取的cookie
+    url: https://freeimage.host/
+site info: #配置站点信息
+  pter: #配置站点，目前支持的关键词有[pter,lemonhd,audience,carpt,hdsky,piggo,ssd,hdpt,ptnap,wintersakura,hdfans,hhclub]
+    enable: 1 #是否开启此站点自动发种 1为开启，0为关闭
+    uplver: 1 #是否开启匿名发种，1为开启，0为关闭
+    cookie: cookie #从网页F12获取的cookie
+path info:
+  path1:
+    path: /动漫/2022年7月番/6[欢迎大家下载]-杜鹃的婚约-Kakkou no Iinazuke-Lilith Raws #资源的路径, 如果不能保持后面约定的格式则需要填写chinesename，englishname，sub参数。
+    #格式："任意内容[想要在副标题添加的内容]-资源中文名-资源英文名-发布组" 如果资源不是第一季，在英文名后面加SXX,例如S02 
+    chinesename: #资源中文名
+    englishname: #资源英文名
+    sub:  #资源字幕组名称
+    seasonnum: #资源是第几季，不写默认第1季,示例: 3
+    type: anime #类型,可选择[anime,tv,movie]中的一个
+    collection: 0 #是否以合集发布 0为否 1为是
+    enable: 0 #是否开启此路径自动发种 1为开启，0为关闭
+    exclusive: pter,lemonhd #需要禁转发布的站点，以英文逗号','分割。如果均不需要禁转则留空
+    doubanurl: https://movie.douban.com/subject/35358650 #豆瓣链接  如果不填写则自动抓取
+    from_url: https://mikanani.me/Home/Bangumi/2723 #如果是转载资源 来源地址。转载资源发布柠檬动漫必填，其他非必填
+    transfer: 1 #是否是转载资源 0为否 1为是。不填默认为是
+    pter: 1,2,3,4,5,6,7,8,9,10,11,12,13 #此路径已发布的集数 每新发布一集会自动更新 '-1'代表已发布合集。未发布过填写 '0'。如果留空默认为不发。
+    lemonhd: 1,2,3,4,5,6,7,8,9,10,11,12,13 
+
+    #可有可无的信息:
+    complete: 0 #是否已完结 0为否 1为是。若未填写则自动判断。
+    category: anime #分类，可有可无，体现在qbittorrent的分类里面。如果没有或者不设置就不给分类参数。
+    downloadpath: /动漫/2022年7月番/6-杜鹃的婚约-Kakkou no Iinazuke-Lilith Raws #可有可无，如果有下载路径与资源路径不一致的情况可以配置此选项。如果一样则不填，默认与path相同
+    anidb_url: null #anidb链接 非必填
+    imdb_url: null #imdb链接 非必填
+    bgm_url: https://bgm.tv/subject/327606 # bgm链接 动漫类型如果不填写会自动抓取
+    exinfo: #可有可无，自定义显示在副标题里面的内容
+    video_type: #可有可无，资源视频类型，BDRip WEB-DL这种，不写自动抓
+    video_format: #可有可无，资源视频格式，x264 H264这种，不写自动抓
+    audio_format: #可有可无，资源音频类型，flac aac这种，不写自动抓
+    txt_info: #可有可无，资源字幕语言信息，“简体中文”这种，不写自动抓
+    audio_info: #可有可无，资源音轨语言信息，“中日双语”这种，不写自动抓
+    year: #可有可无，资源年份，不写自动抓
+    zeroday_name: #可有可无，资源0day名字，不写自动生成
+
+  path2: ...
+
+  

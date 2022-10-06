@@ -1,0 +1,12 @@
+image hosting:
+  picgo:
+    url: https://www.picgo.net/api/1/upload
+  pter:
+    url: https://s3.pterclub.com
+  emp:
+    url: https://jerking.empornium.ph
+  chd:
+    url: https://shewang.net/
+  freeimage:
+    url: https://freeimage.host/
+    

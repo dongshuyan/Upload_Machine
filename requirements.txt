@@ -1,0 +1,13 @@
+loguru
+pathlib
+typing
+requests
+bs4
+json
+yaml
+time
+datetime
+qbittorrentapi
+function_controler
+doubaninfo
+cloudscraper
