@@ -1,4 +1,6 @@
 from upload_machine.utils.uploader.piggo_upload import piggo_upload
+from upload_machine.utils.uploader.hdsky_upload import hdsky_upload
+
 
 
 

@@ -1,12 +1,10 @@
 basic:
   picture_num: 3 #表示截图的数量
-  headless: 1 #是否优先后台运行 1表示是，0表示否。不填默认否
   workpath: /Users/Desktop/ #工作路径
   log: /Users/Desktop/record_path/Auto_Upload.sh #日志文件路径，可有可无，若没有则日志不写入文件
   record_path: /Users/Desktop/record_path #用来存放发种记录 
   screenshot_path: /Users/Desktop/screenshot_path #用来存放视频截图，种子等临时文件 
   new_folder: 0 #发布的资源是否在外层套一层0day名字文件夹 1表示是，0表示否。不填默认是
-  check: 1 #是否在发布前需要人工确认再发布。0表示否1表示是。此处如果选择1 记得把headless参数设置为0来前台运行
   doubancookie: 'cookie' #此处填写豆瓣账号的cookie可以抓到只有登录才能看到的资源的info，不填则按照未登录模式抓取
 qbinfo:
   qburl: 127.0.0.1:8080
@@ -44,14 +42,13 @@ image hosting: #配置图床站点信息
     cookie: cookie #F12 nerwork中提取的cookie
     url: https://freeimage.host/
 site info: #配置站点信息
-  pter: #配置站点，目前支持的关键词有[pter,lemonhd,audience,carpt,hdsky,piggo,ssd,hdpt,ptnap,wintersakura,hdfans,hhclub]
+  piggo: #配置站点，目前支持的关键词有[hdsky,piggo]
     enable: 1 #是否开启此站点自动发种 1为开启，0为关闭
     uplver: 1 #是否开启匿名发种，1为开启，0为关闭
     cookie: cookie #从网页F12获取的cookie
 path info:
   path1:
-    path: /动漫/2022年7月番/6[欢迎大家下载]-杜鹃的婚约-Kakkou no Iinazuke-Lilith Raws #资源的路径, 如果不能保持后面约定的格式则需要填写chinesename，englishname，sub参数。
-    #格式："任意内容[想要在副标题添加的内容]-资源中文名-资源英文名-发布组" 如果资源不是第一季，在英文名后面加SXX,例如S02 
+    path: /动漫/2022年7月番/6[欢迎大家下载]-杜鹃的婚约-Kakkou no Iinazuke-Lilith Raws 
     chinesename: #资源中文名
     englishname: #资源英文名
     sub:  #资源字幕组名称

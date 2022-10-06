@@ -8,8 +8,17 @@ Upload local resources to PT trackers automatically.
 - 最适合发布追更资源，可以自动识别资源集数
 - 支持Windows，Linux，Macos系统
 - 自由度高，智能识别能力强
-
+  
+## Upload_Machine与Auto_upload的区别：
+Upload_Machine全部使用requests发请求来发种，所以：
+- 无需安装Chrome浏览器以及相关插件
+- 无需原来的Json格式的cookie文件改为在配置文件`au.yaml`中填写F12获取的cookie
+- 更轻量，更快速，更少出错的可能
+- 但是无法浏览模拟发种过程
+- 无法在发种前暂停自行修改信息
+  
 ## 更新说明
+- 20221006 增加对hdsky的支持
 
 ## 功能说明
 
@@ -52,7 +61,8 @@ Upload local resources to PT trackers automatically.
 
 目前支持的站点(排名仅代表支持的时间先后):
 
-- Piggo(猪猪网)
+- piggo(猪猪网)
+- hdsky(天空)
 
 正在适配的站点(排名不分先后):
 
@@ -79,7 +89,8 @@ Todolist:
 打开PowerShell，确认Python安装成功
 ![安装python2](https://img.picgo.net/2022/08/07/2.png)
 
-以下几个插件的安装包可以去通过下面官方途径下载，也可以前往[Install文件夹](https://github.com/dongshuyan/Auto_Upload/blob/master/install)获取 或者 前往交流群的群文件获取。3.安装 `ffmpeg`，并确认安装正确:
+以下几个插件的安装包可以去通过下面官方途径下载，也可以前往[Install文件夹](https://github.com/dongshuyan/Auto_Upload/blob/master/install)获取 或者 前往交流群的群文件获取。  
+3.安装 `ffmpeg`，并确认安装正确:
 
 - 下载安装 `ffmpeg` & `ffprobe`：https://github.com/BtbN/FFmpeg-Builds/releases
 - 将解压后的 `ffmpeg`文件夹移动到一个相对稳定的文件夹,比如 `D:\Program Files\`
@@ -112,7 +123,7 @@ python3 -m pip install upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simp
 upload_machine -h
 ```
 
-如果上述命令没反应或者报错可以尝试下面这个：
+如果上述命令没反应或者报错可以尝试下面这个：  
 
 ```bash
 pip install upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
@@ -124,7 +135,7 @@ upload_machine -h
 ```bash
 python3 -m pip install --upgrade upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
-Or
+如果上述命令没反应或者报错可以尝试下面这个：  
 ```bash
 pip install --upgrade upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
@@ -148,21 +159,6 @@ cd Python-3.9.0
 # 编译好后，会有另外一个提示，让run ./configure xxx
 ./configure --enable-optimizations
 
-# 安装pip依赖
-sudo apt-get update
-sudo apt-get install openssl
-sudo apt-get install libssl-dev
-sudo apt-get install build-essential python-dev python-setuptools python-pip python-smbus
-sudo apt-get install build-essential libncursesw5-dev libgdbm-dev libc6-dev
-sudo apt-get install zlib1g-dev libsqlite3-dev tk-dev
-sudo apt-get install libssl-dev openssl
-sudo apt-get install libffi-dev
-sudo apt-get install libxpm-dev libxext-dev 
-sudo apt-get install zlib1g-dev libbz2-dev libssl-dev libncurses5-dev libsqlite3-dev 
-
-#配置ssl
-./configure --with-ssl
-
 # 给超级权限
 sudo su
 
@@ -175,26 +171,7 @@ exit
 # 结束
 ```
 
-1.需要本地安装Chrome且升级到最新正式版本
-手动下载安装并更新即可，如果不方便手动，可以尝试使用如果命令（没有测试过）
-
-#### 安装Chrome
-
-```bash
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-sudo apt-get update
-sudo apt-get install google-chrome-stable
-```
-
-#### 更新Chrome
-
-```bash
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome-stable_current_amd64.deb
-```
-
-2.安装 `mktorrent`,`ffmpeg`和 `mediainfo`，并确认安装正确
+1.安装 `mktorrent`,`ffmpeg`和 `mediainfo`，并确认安装正确
 
 ```bash
 sudo apt update 
@@ -208,25 +185,29 @@ sudo apt-get install python3-pip ffmpeg mediainfo mktorrent
 python3 -m pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 upload_machine -h
 ```
-
+如果上述命令没反应或者报错可以尝试下面这个：  
+```bash
+pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+upload_machine -h
+```
 4.更新 `Upload_Machine`，，在 `Terminal.app`中输入:
 
 ```bash
 python3 -m pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
-
+如果上述命令没反应或者报错可以尝试下面这个：  
+```bash
+pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+```
 ### MacOS(已测试成功)
 
-1.需要本地安装Chrome且升级到最新正式版本
-以Mac为例，2020.08.06最新正式版为104.0.5112.79
-
-2.安装 `Homebrew`，在Termial.app中输入:
+1.安装 `Homebrew`，在Termial.app中输入:
 
 ```bash
-bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-3.安装 `mktorrent`,`ffmpeg`和 `mediainfo`，并确认安装正确:
+2.安装 `mktorrent`,`ffmpeg`和 `mediainfo`，并确认安装正确:
 
 ```bash
 brew install ffmpeg mediainfo mktorrent
@@ -234,10 +215,15 @@ ffmpeg -version
 mediainfo --version
 ```
 
-4.安装 `Upload_Machine`，在 `Terminal.app`中输入:
+3.安装 `Upload_Machine`，在 `Terminal.app`中输入:
 
 ```bash
 python3 -m pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+upload_machine -h
+```
+如果上述命令没反应或者报错可以尝试下面这个：  
+```bash
+pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 upload_machine -h
 ```
 
@@ -245,6 +231,10 @@ upload_machine -h
 
 ```bash
 python3 -m pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+```
+如果上述命令没反应或者报错可以尝试下面这个：  
+```bash
+pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
 
 ## 配置环境&文件
@@ -267,8 +257,18 @@ python3 -m pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.ed
 
 注意：如果是在windows系统下，要发布的 `资源文件/文件夹名称`如果有 `空格`会导致制作种子失败，建议将空格替换为 `.`或者下划线 `_`。其他系统没有这个问题。
 
-建立完成后在工作目录下应该有三个文件夹以及一个au.yaml位置文件，如下图
-![Img_Demo](https://img.picgo.net/2022/08/06/dir.jpg)
+建立完成后在工作目录下应该有两个文件夹以及一个au.yaml位置文件.
+
+### 4.获取`au.yaml`文件里面所需的站点cookie
+根据下图所示方法获取cookie，并填写在`au.yaml`配置文件中`site info`中`站点`中`cookie`中。
+```yaml
+site info: #配置站点信息
+  pter: #配置站点，目前支持的关键词有[pter,lemonhd,audience,carpt,hdsky,piggo,ssd,hdpt,ptnap,wintersakura,hdfans,hhclub]
+    enable: 1 #是否开启此站点自动发种 1为开启，0为关闭
+    uplver: 1 #是否开启匿名发种，1为开启，0为关闭
+    cookie: 获取到的cookie #从网页F12获取的cookie
+```
+![获取cookie](https://ptpimg.me/mtb58j.png)
 
 ## 运行脚本
 
@@ -298,7 +298,7 @@ upload_machine -yp '工作目录/au.yaml' -iu -ih 图床名称  -iform 图片格
 ### 3.获取豆瓣信息
 
 ```bash
-upload_machine -yp '工作目录/au.yaml' -di -du 豆瓣链接
+upload_machine -yp '工作目录/au.yaml' -di -du '豆瓣链接'
 ```
 
 示例:
@@ -341,16 +341,7 @@ upload_machine 'au.yaml' -mi -mf '1.mp4' -ih picgo -iform bbcode -in 6
 
 ## 常见错误及修复方法（更新ing）
 
-### 1.Chrome未更新至最新
 
-### 2.Windows下 如果资源路径 `最后的文件夹名称`有空格会导致制作种子失败（已修复）
-
-Windows下的mktorrent支持的不太好，后面我再修复吧
-
-### 3.文件夹名称错误
-
-最后一级文件夹名称必须是：任意内容[想要在副标题添加的内容]-资源中文名-资源英文名-发布组
-例如 `6[有B站水印]-不死者之王-OVERLOAD-sauterne`
 
 ## 交流群
 
