@@ -6,6 +6,7 @@ import re
 import cloudscraper
 
 def audience_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
+    post_url = "https://audiences.me/takeupload.php"
     tags=[]
     if (file1.pathinfo.type=='anime' or file1.pathinfo.type=='tv') and file1.pathinfo.collection==0:
         fileinfo=file1.chinesename+'在'+siteinfo.sitename+'第'+file1.episodename+'集'
@@ -138,7 +139,6 @@ def audience_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         uplver='no'
 
     torrent_file = file1.torrentpath
-    post_url = "https://audiences.me/takeupload.php"
     file_tup = ("file", (os.path.basename(torrent_file), open(torrent_file, 'rb'), 'application/x-bittorrent')),
             
 

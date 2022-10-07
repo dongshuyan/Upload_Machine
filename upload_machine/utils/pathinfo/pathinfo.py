@@ -137,6 +137,8 @@ class pathinfo(object):
         self.sites=[]
         self.exclusive=[]
         self.infodict=infodict
+        self.max=1
+        self.min=1
         #必须有的属性
         attr_must=['path']
         for item in attr_must:

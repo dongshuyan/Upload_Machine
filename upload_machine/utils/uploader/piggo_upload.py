@@ -6,7 +6,8 @@ import re
 import cloudscraper
 
 def piggo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
-
+    post_url = "https://piggo.me/takeupload.php"
+    tags=[]
     if (file1.pathinfo.type=='anime' or file1.pathinfo.type=='tv') and file1.pathinfo.collection==0:
         fileinfo=file1.chinesename+'在'+siteinfo.sitename+'第'+file1.episodename+'集'
     else:
@@ -151,7 +152,6 @@ def piggo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     else:
         team_sel='5'
     logger.info('制作组已成功选择为'+file1.sub)
-    tags=[]
     if 'piggo' in file1.pathinfo.exclusive :
         tags.append(1)
     if 'PIGGO' in file1.sub.upper():
@@ -174,7 +174,6 @@ def piggo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         uplver='no'
 
     torrent_file = file1.torrentpath
-    post_url = "https://piggo.me/takeupload.php"
 
     file_tup = ("file", (os.path.basename(torrent_file), open(torrent_file, 'rb'), 'application/x-bittorrent')),
             

@@ -18,6 +18,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - 无法在发种前暂停自行修改信息
   
 ## 更新说明
+- 20221007 增加对pter，hhclub和LemonHD的支持
 - 20221006 增加对audience和ssd的支持
 - 20221006 增加对hdsky的支持
 
@@ -65,7 +66,10 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - piggo(猪猪网)
 - hdsky(天空)
 - ssd
-- audience
+- audience（观众）
+- pter（猫站）
+- hhclub（憨憨）
+- Lemonhd（柠檬）
 
 正在适配的站点(排名不分先后):
 
