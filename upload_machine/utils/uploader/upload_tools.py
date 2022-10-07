@@ -109,7 +109,15 @@ def finddownloadurl(res):
     logger.info('正在寻找页面下载链接')
     o = urlparse(res.url)
     o = o.scheme+'://'+o.hostname+'/download.php?'
-    
+    #白兔特判
+    if 'hare' in o:
+        link = re.findall('(https://club\.hares\.top/download\.php\?downhash=.*)\</p',res.text)
+        if len(link)>0:
+            return link[0]
+        else:
+            logger.warning('未找到下载链接')
+            return ''
+    #白兔特判结束
     soup = BeautifulSoup(res.text,'lxml')
     for a in soup.find_all('a'):
         link=''

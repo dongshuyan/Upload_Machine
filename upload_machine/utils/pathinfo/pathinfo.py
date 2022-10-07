@@ -245,28 +245,6 @@ class pathinfo(object):
         
         pathitem=self.chinesename
 
-        
-
-        self.downloadpath=''
-        if not 'downloadpath' in infodict or infodict['downloadpath']==None:
-            if self.collection == 1 and ('new_folder' in basic and basic['new_folder']==0):
-                self.downloadpath=os.path.dirname( self.path)
-            else:
-                self.downloadpath=self.path
-        else:
-            self.downloadpath=infodict['downloadpath']
-
-        self.category=None
-        if not 'category' in infodict or infodict['category']==None:
-            self.category=None
-        else:
-            self.category=infodict['category']
-
-        if self.complete=='':
-            self.complete=0
-        else:
-            self.complete=int(self.complete)
-
         if not self.exist_type:
             logger.warning('未识别路径'+infodict['path']+'的type（资源类型）信息')
             res=100
@@ -291,7 +269,29 @@ class pathinfo(object):
                 logger.error(pathid+' 中type(资源类型)输入错误')
                 raise ValueError (pathid+' 中type(资源类型)输入错误')
 
-        if (self.type=='anime' or self.type=='tv') and not self.exist_collection:
+
+        self.downloadpath=''
+        if not 'downloadpath' in infodict or infodict['downloadpath']==None:
+            if (self.collection or 'movie' in self.type) == 1 and ('new_folder' in basic and basic['new_folder']==0):
+                self.downloadpath=os.path.dirname( self.path)
+            else:
+                self.downloadpath=self.path
+        else:
+            self.downloadpath=infodict['downloadpath']
+
+        self.category=None
+        if not 'category' in infodict or infodict['category']==None:
+            self.category=None
+        else:
+            self.category=infodict['category']
+
+        if self.complete=='':
+            self.complete=0
+        else:
+            self.complete=int(self.complete)
+
+        
+        if ('anime' in self.type or 'tv' in self.type) and not self.exist_collection:
             res=100
             while not(res==0 or res==1):
                 res=input('未识别路径'+pathid+'的collection（资源是否按合集发布）信息,请重新输入选项对应的数字:\n0:发布单集,1:发布合集\n')
@@ -412,7 +412,7 @@ class pathinfo(object):
             self.exclusive=[i.strip().lower() for i in self.exclusive]
 
 
-        if (self.type=='anime' or self.type=='tv'):
+        if ('anime' in self.type or 'tv' in self.type):
             
             season_ch=''
             season_ch=season_ch+'第'
@@ -450,7 +450,7 @@ class pathinfo(object):
             self.min=self.eps[0]
             self.max=self.eps[-1]
 
-            if (not self.exist_bgm_url) and self.type=='anime':
+            if (not self.exist_bgm_url) and 'anime' in self.type:
                 if self.seasonnum>1:
                     self.bgm_url=findbgmurl(self.chinesename.strip()+' '+self.season_ch.strip())
                 else:
@@ -464,7 +464,7 @@ class pathinfo(object):
 
 
         if (not self.exist_doubanurl):
-            if (self.type=='anime' or self.type=='tv'):
+            if ('anime' in self.type or 'tv' in self.type):
                 if self.seasonnum>1:
                     self.doubanurl=finddoubanurl(self.chinesename.strip()+' '+self.season_ch.strip())
                 else:
@@ -482,7 +482,7 @@ class pathinfo(object):
 
 
 
-        if (self.type=='anime' or self.type=='tv'):
+        if ('anime' in self.type or 'tv' in self.type):
             if len(self.eps) == self.max-self.min+1:
                 self.lack=False
             else:
@@ -524,7 +524,7 @@ class pathinfo(object):
                 exec('print("'+item+'_min_done:"  ,self.'+item+'_min_done  )')
                 exec('print("'+item+'_max_done:"  ,self.'+item+'_max_done  )')
 
-        if (self.type=='anime' or self.type=='tv') :
+        if ('anime' in self.type or 'tv' in self.type) :
             print('self.lack:',self.lack)
             if self.lack:
                 print('self.lackeps:',self.lackeps)
