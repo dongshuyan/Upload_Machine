@@ -9,7 +9,7 @@ Upload local resources to PT trackers automatically.
 - 支持Windows，Linux，Macos系统
 - 自由度高，智能识别能力强
   
-## Upload_Machine与Auto_upload的区别：
+## Upload_Machine与Auto_Upload的区别：
 Upload_Machine全部使用requests发请求来发种，所以：
 - 无需安装Chrome浏览器以及相关插件
 - 无需原来的Json格式的cookie文件改为在配置文件`au.yaml`中填写F12获取的cookie
@@ -18,6 +18,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - 无法在发种前暂停自行修改信息
   
 ## 更新说明
+- 20221008 豆瓣简介的获取改使用doubaninfo的接口
 - 20221008 增加对hdpt,carpt,hdfans,hares和wintersakura的支持
 - 20221007 增加对pter，hhclub和LemonHD的支持
 - 20221006 增加对audience和ssd的支持
