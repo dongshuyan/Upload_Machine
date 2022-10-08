@@ -1,18 +1,21 @@
 basic:
+  #必填项
   picture_num: 3 #表示截图的数量
-  workpath: /Users/Desktop/ #工作路径
+  workpath: /Users/Desktop/ #工作路径 反斜杠朝向请根据自己系统填写，示例文档是linux和Mac下的路径格式。Win下应该是D:\Upload_Machine_Demo\这种格式
+  #选填并建议填写项
   log: /Users/Desktop/record_path/Auto_Upload.sh #日志文件路径，可有可无，若没有则日志不写入文件
+  new_folder: 0 #发布的资源是否在外层套一层0day名字文件夹 1表示是，0表示否。不填默认是
+  doubancookie: cookie #此处填写豆瓣账号的cookie可以抓到只有登录才能看到的资源的info，不填则按照未登录模式抓取
+  #选填但是建议不填项
   record_path: /Users/Desktop/record_path #用来存放发种记录 
   screenshot_path: /Users/Desktop/screenshot_path #用来存放视频截图，种子等临时文件 
-  new_folder: 0 #发布的资源是否在外层套一层0day名字文件夹 1表示是，0表示否。不填默认是
-  doubancookie: 'cookie' #此处填写豆瓣账号的cookie可以抓到只有登录才能看到的资源的info，不填则按照未登录模式抓取
 qbinfo:
   qburl: 127.0.0.1:8080
   qbwebuiusername: username #你qbittorrent的WEBUI的用户名密码
   qbwebuipassword: password
   start: 0 #表示添加到qb的种子是否直接开始 1表示是，0表示否。不填默认否
 image hosting: #配置图床站点信息
-  seq: #这个有先后顺，如果不指定图床则优先使用编号靠前的图床上传图片
+  seq: #这个有先后顺，如果不指定图床则优先使用编号靠前的图床上传图片，所以请根据用户情况自行调整顺序
     1: ptpimg
     2: picgo
     3: freeimage
@@ -30,16 +33,16 @@ image hosting: #配置图床站点信息
     apikey: apikey
     url: https://www.picgo.net/api/1/upload
   pter:
-    cookie: cookie #F12 nerwork中提取的cookie
+    cookie: cookie #F12 nerwork中提取的cookie,如果没有账号则在冒号后留空或者填写null
     url: https://s3.pterclub.com
   emp:
-    cookie: cookie #F12 nerwork中提取的cookie
+    cookie: cookie #F12 nerwork中提取的cookie,如果没有账号则在冒号后留空或者填写null
     url: https://jerking.empornium.ph
   chd:
-    cookie: cookie #F12 nerwork中提取的cookie
+    cookie: cookie #F12 nerwork中提取的cookie,如果没有账号则在冒号后留空或者填写null
     url: https://shewang.net/
   freeimage:
-    cookie: cookie #F12 nerwork中提取的cookie
+    cookie: cookie #F12 nerwork中提取的cookie,如果没有账号则在冒号后留空或者填写null
     url: https://freeimage.host/
 site info: #配置站点信息
   piggo: #配置站点，目前支持的关键词有[hdsky,piggo,ssd,audience,pter,hhaclub,lemonhd,carpt,hdpt,wintersakura,hdfans,hare]
@@ -48,6 +51,7 @@ site info: #配置站点信息
     cookie: cookie #从网页F12获取的cookie
 path info:
   path1:
+    #必填项
     path: /动漫/2022年7月番/6[欢迎大家下载]-杜鹃的婚约-Kakkou no Iinazuke-Lilith Raws 
     chinesename: #资源中文名
     englishname: #资源英文名
@@ -56,11 +60,11 @@ path info:
     type: anime #类型,可选择[anime,tv,movie]中的一个
     collection: 0 #是否以合集发布 0为否 1为是
     enable: 0 #是否开启此路径自动发种 1为开启，0为关闭
-    exclusive: pter,lemonhd #需要禁转发布的站点，以英文逗号','分割。如果均不需要禁转则留空
+    exclusive: pter,lemonhd #需要禁转发布的站点，以英文逗号','分割。如果均不需要禁转则在冒号后留空或者填写null
     doubanurl: https://movie.douban.com/subject/35358650 #豆瓣链接  如果不填写则自动抓取
-    from_url: https://mikanani.me/Home/Bangumi/2723 #如果是转载资源 来源地址。转载资源发布柠檬动漫必填，其他非必填
+    from_url: https://mikanani.me/Home/Bangumi/2723 #如果是转载资源 来源地址。转载资源发布柠檬必填，其他非必填
     transfer: 1 #是否是转载资源 0为否 1为是。不填默认为是
-    pter: 1,2,3,4,5,6,7,8,9,10,11,12,13 #此路径已发布的集数 每新发布一集会自动更新 '-1'代表已发布合集。未发布过填写 '0'。如果留空默认为不发。
+    pter: 1,2,3,4,5,6,7,8,9,10,11,12,13 #此路径在此站点已发布的集数 每新发布一集会自动更新 '-1'代表已发布合集。未发布过填写 '0'。如果留空默认为不发。
     lemonhd: 1,2,3,4,5,6,7,8,9,10,11,12,13 
 
     #可有可无的信息:
@@ -79,6 +83,6 @@ path info:
     year: #可有可无，资源年份，不写自动抓
     zeroday_name: #可有可无，资源0day名字，不写自动生成
 
-  path2: ...
+  path2: ... #其他路径信息，如果有请继续补全上述信息，如果没有请删除此行
 
   

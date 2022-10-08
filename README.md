@@ -8,16 +8,19 @@ Upload local resources to PT trackers automatically.
 - 最适合发布追更资源，可以自动识别资源集数
 - 支持Windows，Linux，Macos系统
 - 自由度高，智能识别能力强
-  
+
 ## Upload_Machine与Auto_Upload的区别：
+
 Upload_Machine全部使用requests发请求来发种，所以：
+
 - 无需安装Chrome浏览器以及相关插件
-- 无需原来的Json格式的cookie文件改为在配置文件`au.yaml`中填写F12获取的cookie
+- 无需原来的Json格式的cookie文件改为在配置文件 `au.yaml`中填写F12获取的cookie
 - 更轻量，更快速，更少出错的可能
 - 但是无法浏览模拟发种过程
 - 无法在发种前暂停自行修改信息
-  
+
 ## 更新说明
+
 - 20221008 豆瓣简介的获取改使用doubaninfo的接口
 - 20221008 增加对hdpt,carpt,hdfans,hares和wintersakura的支持
 - 20221007 增加对pter，hhclub和LemonHD的支持
@@ -65,14 +68,14 @@ Upload_Machine全部使用requests发请求来发种，所以：
 
 目前支持的站点(排名仅代表支持的时间先后):
 
-- piggo (猪猪网)  
-- hdsky (天空)  
-- ssd  
-- audience (观众)  
-- pter (猫站)  
-- hhclub (憨憨)  
-- Lemonhd (柠檬)  
-- hdpt (明教)  
+- piggo (猪猪网)
+- hdsky (天空)
+- ssd
+- audience (观众)
+- pter (猫站)
+- hhclub (憨憨)
+- lemonhd (柠檬)
+- hdpt (明教)
 - wintersakura (冬樱)
 - carpt (车站)
 - hdfans (红豆饭)
@@ -80,7 +83,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 
 正在适配的站点(排名不分先后):
 
-
+- MT
 
 Todolist:
 
@@ -100,11 +103,13 @@ Todolist:
 2.安装python3:
 [安装Python](https://www.python.org/downloads/)，一般选择最新版本的Python3及对应的Windows installer即可。安装时注意将为所有用户安装和将Python添加到PATH勾上
 ![安装python1](https://img.picgo.net/2022/08/07/1.png)
-打开PowerShell，确认Python安装成功
+
+打开PowerShell(不是cmd)，确认Python安装成功  
+![打开PowerShell](https://fapping.empornium.sx/images/2022/10/08/IMG7874.png)
+
 ![安装python2](https://img.picgo.net/2022/08/07/2.png)
 
-以下几个插件的安装包可以去通过下面官方途径下载，也可以前往[Install文件夹](https://github.com/dongshuyan/Auto_Upload/blob/master/install)获取 或者 前往交流群的群文件获取。  
-3.安装 `ffmpeg`，并确认安装正确:
+以下几个插件的安装包可以去通过下面官方途径下载，也可以前往[Install文件夹](https://github.com/dongshuyan/Auto_Upload/blob/master/install)获取 或者 前往交流群的群文件获取。3.安装 `ffmpeg`，并确认安装正确:
 
 - 下载安装 `ffmpeg` & `ffprobe`：https://github.com/BtbN/FFmpeg-Builds/releases
 - 将解压后的 `ffmpeg`文件夹移动到一个相对稳定的文件夹,比如 `D:\Program Files\`
@@ -137,7 +142,7 @@ python3 -m pip install upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simp
 upload_machine -h
 ```
 
-如果上述命令没反应或者报错可以尝试下面这个：  
+如果上述命令没反应或者报错可以尝试下面这个：
 
 ```bash
 pip install upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
@@ -149,7 +154,9 @@ upload_machine -h
 ```bash
 python3 -m pip install --upgrade upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
-如果上述命令没反应或者报错可以尝试下面这个：  
+
+如果上述命令没反应或者报错可以尝试下面这个：
+
 ```bash
 pip install --upgrade upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
@@ -199,20 +206,26 @@ sudo apt-get install python3-pip ffmpeg mediainfo mktorrent
 python3 -m pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 upload_machine -h
 ```
-如果上述命令没反应或者报错可以尝试下面这个：  
+
+如果上述命令没反应或者报错可以尝试下面这个：
+
 ```bash
 pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 upload_machine -h
 ```
+
 4.更新 `Upload_Machine`，，在 `Terminal.app`中输入:
 
 ```bash
 python3 -m pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
-如果上述命令没反应或者报错可以尝试下面这个：  
+
+如果上述命令没反应或者报错可以尝试下面这个：
+
 ```bash
 pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
+
 ### MacOS(已测试成功)
 
 1.安装 `Homebrew`，在Termial.app中输入:
@@ -235,7 +248,9 @@ mediainfo --version
 python3 -m pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 upload_machine -h
 ```
-如果上述命令没反应或者报错可以尝试下面这个：  
+
+如果上述命令没反应或者报错可以尝试下面这个：
+
 ```bash
 pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 upload_machine -h
@@ -246,7 +261,9 @@ upload_machine -h
 ```bash
 python3 -m pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
-如果上述命令没反应或者报错可以尝试下面这个：  
+
+如果上述命令没反应或者报错可以尝试下面这个：
+
 ```bash
 pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
@@ -264,17 +281,18 @@ pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple
 - screenshot_path将用来存放视频截图，种子等临时文件
 - record_path将用来存放发种记录
 
-
 ### 3.在文件夹中新建配置文件au.yaml
+因为yaml文件有很严格的格式要求，所以建议使用sublime,vscode等编辑器进行编辑。如果使用记事本不要破坏原有格式。
 
 详细参数说明参考[au_example.yaml](https://github.com/dongshuyan/Upload_Machine/blob/master/au_example.yaml)
 
-注意：如果是在windows系统下，要发布的 `资源文件/文件夹名称`如果有 `空格`会导致制作种子失败，建议将空格替换为 `.`或者下划线 `_`。其他系统没有这个问题。
 
-建立完成后在工作目录下应该有两个文件夹以及一个au.yaml位置文件.
+建立完成后在工作目录下应该有两个文件夹以及一个au.yaml配置文件.
 
-### 4.获取`au.yaml`文件里面所需的站点cookie
-根据下图所示方法获取cookie，并填写在`au.yaml`配置文件中`site info`中`站点`中`cookie`中。
+### 4.获取 `au.yaml`文件里面所需的站点cookie
+
+根据下图所示方法获取cookie，并填写在 `au.yaml`配置文件中 `site info`中 `站点`中 `cookie`中。
+
 ```yaml
 site info: #配置站点信息
   pter: #配置站点，目前支持的关键词有[pter,lemonhd,audience,carpt,hdsky,piggo,ssd,hdpt,ptnap,wintersakura,hdfans,hhclub]
@@ -282,6 +300,7 @@ site info: #配置站点信息
     uplver: 1 #是否开启匿名发种，1为开启，0为关闭
     cookie: 获取到的cookie #从网页F12获取的cookie
 ```
+
 ![获取cookie](https://ptpimg.me/mtb58j.png)
 
 ## 运行脚本
@@ -354,8 +373,6 @@ upload_machine 'au.yaml' -mi -mf '1.mp4' -ih picgo -iform bbcode -in 6
 参考 [au_example.yaml](https://github.com/dongshuyan/Upload_Machine/blob/master/au_example.yaml)
 
 ## 常见错误及修复方法（更新ing）
-
-
 
 ## 交流群
 
