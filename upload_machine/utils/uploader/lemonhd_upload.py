@@ -13,25 +13,12 @@ def lemonhd_upload(web,file1,record_path,qbinfo,basic,hashlist):
     elif 'movie' in file1.pathinfo.type.lower():
         return lemonhd_upload_tv(web,file1,record_path,qbinfo,basic,hashlist,'https://lemonhd.org/takeupload_movie.php')
 
-def lemon_check(web):
-    logger.info('正在自动审核')
-    #自动审核
-    try:
-        checkbox=web.driver.find_elements(By.NAME,'check_type')[0]
-        if not checkbox.is_selected():
-            checkbox.click()
-        logger.info('自动选择审核通过')
-        time.sleep(2)
-        web.driver.find_elements(By.ID,'qr')[0].click()
-        logger.info('已审核')
-        return True
-    except Exception as r:
-        logger.info('审核失败')
-        return False
+
 
 def lemonhd_upload_anime(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     post_url = "https://lemonhd.org/takeupload_animate.php"
     tags=[]
+    time_out=40
     if (file1.pathinfo.type=='anime' or file1.pathinfo.type=='tv') and file1.pathinfo.collection==0:
         fileinfo=file1.chinesename+'在'+siteinfo.sitename+'第'+file1.episodename+'集'
     else:
@@ -266,7 +253,7 @@ def lemonhd_upload_anime(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         logger.info('已成功填写转载地址')
 
     scraper=cloudscraper.create_scraper()
-    r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup)
+    r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup,timeout=time_out)
     
     return afterupload(r,fileinfo,record_path,siteinfo,file1,qbinfo,hashlist)
 
@@ -280,6 +267,7 @@ def lemonhd_upload_anime(siteinfo,file1,record_path,qbinfo,basic,hashlist):
 def lemonhd_upload_tv(siteinfo,file1,record_path,qbinfo,basic,hashlist,up_url):
     post_url = up_url
     tags=[]
+    time_out=40
     if (file1.pathinfo.type=='anime' or file1.pathinfo.type=='tv') and file1.pathinfo.collection==0:
         fileinfo=file1.chinesename+'在'+siteinfo.sitename+'第'+file1.episodename+'集'
     else:
@@ -513,6 +501,6 @@ def lemonhd_upload_tv(siteinfo,file1,record_path,qbinfo,basic,hashlist,up_url):
 
 
     scraper=cloudscraper.create_scraper()
-    r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup)
+    r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup,timeout=time_out)
     
     return afterupload(r,fileinfo,record_path,siteinfo,file1,qbinfo,hashlist)

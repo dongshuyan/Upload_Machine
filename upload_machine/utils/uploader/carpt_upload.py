@@ -8,6 +8,7 @@ import cloudscraper
 def carpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     post_url = "https://carpt.net/takeupload.php"
     tags=[]
+    time_out=40
     if (file1.pathinfo.type=='anime' or file1.pathinfo.type=='tv') and file1.pathinfo.collection==0:
         fileinfo=file1.chinesename+'在'+siteinfo.sitename+'第'+file1.episodename+'集'
     else:
@@ -176,6 +177,6 @@ def carpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             }
 
     scraper=cloudscraper.create_scraper()
-    r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup)
+    r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup,timeout=time_out)
     
     return afterupload(r,fileinfo,record_path,siteinfo,file1,qbinfo,hashlist)

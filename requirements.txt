@@ -1,6 +1,7 @@
 loguru
 pathlib
 typing
+lxml
 requests
 bs4
 json

@@ -61,8 +61,15 @@ def findnum(name):
         sty=num[0]
         stz="XX"
         stx=num[0]
-        return num[0],sty,stz,stx        
-    return num[0],sty,stz,stx
+        return num[0],sty,stz,stx  
+    
+    num=re.findall(r"([0-9]{1,2})",name)
+    if len(num)!=0:
+        sty=num[0]
+        stz="XX"
+        stx=num[0]
+        return num[0],sty,stz,stx     
+    return '-1','-1','XX','-1'
 
 def finddoubanurl(name):
     logger.info('正在寻找 '+name+' 的豆瓣链接，请稍等...')
@@ -73,10 +80,12 @@ def finddoubanurl(name):
             'user-agent': user_agent,
             'referer': url,
             }
+    r=requests.models.Response()
     try:
         r = requests.get(url,headers=headers,timeout=30)
     except:
         logger.warning('寻找豆瓣链接失败')
+        
     for item in re.findall('/?url=(.*)%2F',r.text):
         item=unquote(item)
         if ('movie.douban.com'in item) and ('/subject/' in item or '/movie/' in item) :
@@ -122,6 +131,9 @@ def findeps(pathlist):
             if (os.path.isdir(c_path)) or (i.startswith('.')) or (not(  os.path.splitext(i)[1].lower()== ('.mp4') or os.path.splitext(i)[1].lower()== ('.mkv')  or os.path.splitext(i)[1].lower()== ('.avi') or os.path.splitext(i)[1].lower()== ('.ts')    )):
                 continue
             epnum=int(findnum(i)[0])
+            if epnum==-1:
+                logger.error(c_path+' 这个文件，文件名为:'+i+',没找到集数信息，请用户检查，如果确定是程序没有抽取成功请联系作者')
+                raise ValueError (c_path+' 这个文件，文件名为:'+i+',没找到集数信息，请用户检查，如果确定是程序没有抽取成功请联系作者')
             if not epnum in eps:
                 eps.append(epnum)
     eps.sort()
@@ -140,18 +152,19 @@ class pathinfo(object):
         self.max=1
         self.min=1
         #必须有的属性
-        attr_must=['path']
+        attr_must=['path','chinesename','englishname','sub']
         for item in attr_must:
             if not item in infodict or infodict[item]==None:
                 logger.error('未识别'+pathid+' 中的'+item+'信息')
                 raise ValueError ('未识别'+pathid+' 中的'+item+'信息')
             else:
                 exec('self.'+item+'=infodict[item]')
+                exec('self.exist_'+item+'=True')
 
         
 
         #可有可无的属性,后面写入配置文件
-        attr_disp=['type','collection','complete','enable','doubanurl','imdb_url','bgm_url','anidb_url','from_url','transfer','chinesename','englishname','sub']
+        attr_disp=['type','collection','complete','enable','doubanurl','imdb_url','bgm_url','anidb_url','from_url','transfer']
         for item in attr_disp:
             if not item in infodict or infodict[item]==None:
                 exec('self.'+item+'=""')
@@ -240,8 +253,8 @@ class pathinfo(object):
             
 
         else:
-            logger.error(pathid+' 中文件夹命名有误,错误信息: - 数量异常')
-            raise ValueError (pathid+' 中文件夹命名有误,错误信息: - 数量异常')
+            logger.error(pathid+' 信息异常，中文名，英文名，制作小组名有缺失，请补齐后重发')
+            raise ValueError (pathid+' 信息异常，中文名，英文名，制作小组名有缺失，请补齐后重发')
         
         pathitem=self.chinesename
 
@@ -449,7 +462,7 @@ class pathinfo(object):
 
             self.min=self.eps[0]
             self.max=self.eps[-1]
-
+            '''
             if (not self.exist_bgm_url) and 'anime' in self.type:
                 if self.seasonnum>1:
                     self.bgm_url=findbgmurl(self.chinesename.strip()+' '+self.season_ch.strip())
@@ -461,7 +474,7 @@ class pathinfo(object):
                     infodict['bgm_url']=None
                 else:
                     infodict['bgm_url']=self.bgm_url
-
+            '''
 
         if (not self.exist_doubanurl):
             if ('anime' in self.type or 'tv' in self.type):

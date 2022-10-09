@@ -784,8 +784,8 @@ class mediafile(object):
         douban_dict=res_douban.parse()
         self.douban_info=res_douban.info()
 
-        if (douban_dict['names']['chinesename']):
-            self.chinesename=douban_dict['names']['chinesename']
+        #if (douban_dict['names']['chinesename']):
+        #    self.chinesename=douban_dict['names']['chinesename']
         if (douban_dict['names']['akaTitles']):
             self.allName='/'.join(douban_dict['names']['akaTitles'])
         if (douban_dict['year']):

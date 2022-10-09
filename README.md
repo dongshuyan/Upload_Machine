@@ -9,6 +9,11 @@ Upload local resources to PT trackers automatically.
 - 支持Windows，Linux，Macos系统
 - 自由度高，智能识别能力强
 
+## 最佳适用场景
+  
+发布追更类资源，脚本可以自动判断资源的集数信息。  
+初次配置好资源信息后，每次只需要将新的一集放入资源文件夹中，脚本会自动找到未发布的资源并一条龙发布。  
+
 ## Upload_Machine与Auto_Upload的区别：
 
 Upload_Machine全部使用requests发请求来发种，所以：

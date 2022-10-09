@@ -53,9 +53,9 @@ path info:
   path1:
     #必填项
     path: /动漫/2022年7月番/6[欢迎大家下载]-杜鹃的婚约-Kakkou no Iinazuke-Lilith Raws 
-    chinesename: #资源中文名
-    englishname: #资源英文名
-    sub:  #资源字幕组名称
+    chinesename: #资源中文名,必填
+    englishname: #资源英文名,必填
+    sub:  #资源制作组名称,必填，实在不知道可以写 NONAME
     seasonnum: #资源是第几季，不写默认第1季,示例: 3
     type: anime #类型,可选择[anime,tv,movie]中的一个
     collection: 0 #是否以合集发布 0为否 1为是
