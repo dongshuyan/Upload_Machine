@@ -164,7 +164,7 @@ class pathinfo(object):
         
 
         #可有可无的属性,后面写入配置文件
-        attr_disp=['type','collection','complete','enable','doubanurl','imdb_url','bgm_url','anidb_url','from_url','transfer']
+        attr_disp=['type','collection','complete','enable','doubanurl','imdb_url','bgm_url','anidb_url','from_url','transfer','contenttail','contenthead','screenshot','small_descr']
         for item in attr_disp:
             if not item in infodict or infodict[item]==None:
                 exec('self.'+item+'=""')

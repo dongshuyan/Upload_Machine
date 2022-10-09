@@ -26,6 +26,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 
 ## 更新说明
 
+- 20221010 新增自定义配置“副标题”，“自定义截图”，“简介头信息”，“简介尾信息”等配置参数
 - 20221010 修复imdb链接只记录了id的bug
 - 20221008 豆瓣简介的获取改使用doubaninfo的接口
 - 20221008 增加对hdpt,carpt,hdfans,hares和wintersakura的支持

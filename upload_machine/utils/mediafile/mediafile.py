@@ -273,7 +273,6 @@ class mediafile(object):
                     self.address=c_path
                     maxsize=filesize
 
-               
             if 'zeroday_path' in self.pathinfo.infodict and self.pathinfo.infodict['zeroday_path']!=None:
                 ls = os.listdir(self.pathinfo.infodict['zeroday_path'])
                 for i in ls:
@@ -1126,9 +1125,20 @@ class mediafile(object):
             self.small_descr=self.small_descr+self.sublan
         self.small_descr=self.small_descr.replace('（','(').replace('）',')')
 
+        if self.pathinfo.small_descr!='':
+            self.small_descr=self.pathinfo.small_descr
 
         self.getimgurl()
+        if self.pathinfo.screenshot!='':
+            self.screenshoturl=self.pathinfo.screenshot+'\n'+self.screenshoturl
         self.content=self.douban_info+"\n[quote=Mediainfo]\n"+self.mediainfo+"[/quote]\n"+self.screenshoturl
+
+        if self.pathinfo.contenthead!='':
+            self.content= self.pathinfo.contenthead+self.content
+        
+        if self.pathinfo.contenttail!='':
+            self.content= self.content+self.pathinfo.contenttail
+
         
         if 'new_folder' in self.basic and self.basic['new_folder']==1:
             self.gettorrent(tracker)

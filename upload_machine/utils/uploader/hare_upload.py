@@ -97,7 +97,7 @@ def hare_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     elif 'MP3' in file1.Audio_Format.upper():
         audiocodec_sel='4'
     elif 'AC3' in file1.Audio_Format.upper() or 'AC-3' in file1.Audio_Format.upper() or 'DD' in file1.Audio_Format.upper():
-        audiocodec_sel='8'
+        audiocodec_sel='13'
     elif 'DTS:X' in file1.Audio_Format.upper() or 'DTS-X' in file1.Audio_Format.upper():
         audiocodec_sel='3'
     elif 'DTS' in file1.Audio_Format.upper():
@@ -229,13 +229,12 @@ def hare_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             
 
     other_data = {
-            "name": file1.uploadname.replace('  ',' ').replace(' ','.'),
+            "name": file1.uploadname,
             "small_descr": file1.small_descr+file1.pathinfo.exinfo,
-            "screenshots" : file1.screenshoturl.replace('[img]','').replace('[/img]',''),
             "color": "0",
             "font": "0",
             "size": "0",
-            "descr": file1.douban_info,
+            "descr": file1.pathinfo.contenthead+'\n'+file1.douban_info.replace(''.join(re.findall('\[img\]https://img9\.douban.*p\d*.jpg\[/img\]',file1.douban_info)),'')+'\n'+file1.pathinfo.contenttail,
             "technical_info" : file1.mediainfo,
             "type": select_type,
             "medium_sel": medium_sel,
@@ -251,6 +250,11 @@ def hare_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         other_data["url_poster"] = re.findall(r'\[img\](.*)\[/img\]',file1.douban_info)[0]
     else:
         return False,fileinfo+'未找到豆瓣简介中的海报图链接,无法填写海报信息'
+    shots=file1.screenshoturl.replace('[img]','').replace('[/img]','').strip()
+    if shots!='':
+        other_data["screenshots"] = shots
+    else:
+        return False,fileinfo+'检测到用户设置为不截图，但是白兔强制要求资源截图'
     if file1.doubanurl!=None and file1.doubanurl!='':
         other_data["pt_gen[douban][link]"]= file1.doubanurl
     if file1.imdburl!=None and file1.imdburl!='':
