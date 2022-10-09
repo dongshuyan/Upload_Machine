@@ -231,10 +231,6 @@ def hare_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     other_data = {
             "name": file1.uploadname.replace('  ',' ').replace(' ','.'),
             "small_descr": file1.small_descr+file1.pathinfo.exinfo,
-            "pt_gen[douban][link]": file1.doubanurl,
-            "pt_gen[imdb][link]" : file1.imdburl,
-            "pt_gen[bangumi][link]" : file1.bgmurl,
-            "url_poster" : re.findall(r'\[img\](.*)\[/img\]',file1.douban_info),
             "screenshots" : file1.screenshoturl.replace('[img]','').replace('[/img]',''),
             "color": "0",
             "font": "0",
@@ -251,6 +247,16 @@ def hare_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "uplver": uplver,
             "tags[]": tags,
             }
+    if len(re.findall(r'\[img\](.*)\[/img\]',file1.douban_info))>0:
+        other_data["url_poster"] = re.findall(r'\[img\](.*)\[/img\]',file1.douban_info)[0]
+    else:
+        return False,fileinfo+'未找到豆瓣简介中的海报图链接,无法填写海报信息'
+    if file1.doubanurl!=None and file1.doubanurl!='':
+        other_data["pt_gen[douban][link]"]= file1.doubanurl
+    if file1.imdburl!=None and file1.imdburl!='':
+        other_data["pt_gen[imdb][link]"] = file1.imdburl
+    if file1.bgmurl!=None and file1.bgmurl!='':
+        other_data["pt_gen[bangumi][link]"] = file1.bgmurl
 
     scraper=cloudscraper.create_scraper()
     r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup,timeout=time_out)

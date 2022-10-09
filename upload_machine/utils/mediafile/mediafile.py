@@ -804,7 +804,8 @@ class mediafile(object):
             self.release=" / ".join(douban_dict['pubdates'])
         if (douban_dict['imdb'].strip()!='') :
             self.imdburl=douban_dict['imdb']
-            self.pathinfo.imdb_url=douban_dict['imdb']
+            self.imdburl='https://www.imdb.com/title/'+self.imdburl+'/'
+            self.pathinfo.imdb_url=self.imdburl
             logger.info('根据豆瓣信息分析，imdb链接为'+douban_dict['imdb'])
         if (douban_dict['episodes']) :
             self.media_type='TV_series'
