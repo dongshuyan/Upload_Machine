@@ -806,7 +806,7 @@ class mediafile(object):
             self.imdburl=douban_dict['imdb']
             self.imdburl='https://www.imdb.com/title/'+self.imdburl+'/'
             self.pathinfo.imdb_url=self.imdburl
-            logger.info('根据豆瓣信息分析，imdb链接为'+douban_dict['imdb'])
+            logger.info('根据豆瓣信息分析，imdb链接为'+self.imdburl)
         if (douban_dict['episodes']) :
             self.media_type='TV_series'
             self.num=int(douban_dict['episodes'])
