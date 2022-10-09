@@ -5,7 +5,7 @@ from upload_machine.utils.uploader.upload_tools import *
 import re
 import cloudscraper
 
-def hare_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
+def hares_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     post_url = "https://club.hares.top/takeupload.php"
     tags=[]
     time_out=40

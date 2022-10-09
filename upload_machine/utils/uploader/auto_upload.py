@@ -9,7 +9,7 @@ from upload_machine.utils.uploader.hdpt_upload import hdpt_upload
 from upload_machine.utils.uploader.wintersakura_upload import wintersakura_upload
 from upload_machine.utils.uploader.carpt_upload import carpt_upload
 from upload_machine.utils.uploader.hdfans_upload import hdfans_upload
-from upload_machine.utils.uploader.hare_upload import hare_upload
+from upload_machine.utils.uploader.hares_upload import hares_upload
 
 
 

@@ -26,6 +26,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 
 ## 更新说明
 
+- 20221010 hare改为hares
 - 20221010 新增自定义配置“副标题”，“自定义截图”，“简介头信息”，“简介尾信息”等配置参数
 - 20221010 修复imdb链接只记录了id的bug
 - 20221008 豆瓣简介的获取改使用doubaninfo的接口
@@ -86,7 +87,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - wintersakura (冬樱)
 - carpt (车站)
 - hdfans (红豆饭)
-- hare (白兔)
+- hares (白兔)
 
 正在适配的站点(排名不分先后):
 
