@@ -316,6 +316,9 @@ class mediafile(object):
         self.audio_ch=0
         self.audio_jp=0
         self.audio_en=0
+        self.audio_yue=0
+        self.audio_num=0
+
         self.text_jp=0
         self.text_sc=0
         self.text_tc=0
@@ -363,6 +366,7 @@ class mediafile(object):
         self.language=''
         self.country=''
         self.year=2022
+
         #根据文件名判断内嵌字幕信息
         self.sublan=''
         jp=0
@@ -374,6 +378,7 @@ class mediafile(object):
             tc=1
         if 'JP' in self.filename.upper() or 'JAPANESE' in self.filename.upper() or '日' in self.filename.upper():
             jp=1
+        
         if jp==0 and sc==0 and tc==1:
             self.sublan='[内嵌繁中]'
         elif jp==0 and sc==1 and tc==0:
@@ -390,6 +395,7 @@ class mediafile(object):
             self.sublan='[内嵌简繁日双语]'
         else:
             self.sublan=''
+        
         if jp+sc+tc>0:
             logger.info('根据文件名分析，字幕语言为'+self.sublan)
         else:
@@ -447,7 +453,7 @@ class mediafile(object):
                             tc=1
                         if 'JP' in subitem.upper() or 'JA' in subitem.upper() or'JAPANESE' in subitem.upper() or '日' in subitem.upper():
                             jp=1
-                        elif 'EN' in subitem.upper() or 'ENGLISH' in subitem.upper() or '英' in subitem.upper():
+                        if 'EN' in subitem.upper() or 'ENGLISH' in subitem.upper() or '英' in subitem.upper():
                             en=1
         if en==0 and jp==0 and sc==0 and tc==1:
             self.sublan='[繁体中字]'
@@ -510,8 +516,10 @@ class mediafile(object):
                         if 'ENGLISH' in subitem.upper() or '英' in subitem.upper():
                             en=1
                             #logger.info('根据mediainfo音轨分析，语言为'+self.language)
+                        if 'CANTON' in subitem.upper() or '粤' in subitem.upper():
+                            yue=1
 
-
+        '''
         if jp==0 and ch==0 and en==1:
             self.language='英语'
         elif jp==0 and ch==1 and en==0:
@@ -527,13 +535,34 @@ class mediafile(object):
         elif jp==1 and ch==1 and en==1:
             self.language='中英日三语'
         else:
+            self.language=self.language
+        '''
+        if jp+ch+en+yue>0:
             self.language=''
-
+            if ch==1:
+                self.language=self.language+'国'
+            if yue==1:
+                self.language=self.language+'粤'
+            if jp==1:
+                self.language=self.language+'日'
+            if en==1:
+                self.language=self.language+'英'
+        self.audio_num=jp+ch+en+yue
         self.audio_ch=ch
         self.audio_jp=jp
         self.audio_en=en
+        self.audio_yue=yue
 
-        if jp+ch+en>0:
+        if self.audio_num=='1':
+            self.language=self.language+'语'
+        elif self.audio_num=='2':
+            self.language=self.language+'双语'
+        elif self.audio_num=='3':
+            self.language=self.language+'三语'
+        elif self.audio_num=='4':
+            self.language=self.language+'四语'
+
+        if self.audio_num>0:
             logger.info('根据mediainfo音轨分析，语言为'+self.language)
         else:
             logger.warning('无法根据mediainfo分析出音轨语言信息')
@@ -577,7 +606,7 @@ class mediafile(object):
         elif jp==1 and ch==1 and en==1:
             self.language='中英日三语'
         else:
-            self.language=''
+            self.language=self.language
 
         self.audio_ch=ch
         self.audio_jp=jp
@@ -781,6 +810,7 @@ class mediafile(object):
         else:
             res_douban=getdoubaninfo(url=self.doubanurl,ret_val=True)
         douban_dict=res_douban.parse()
+        self.douban_dict=douban_dict
         self.douban_info=res_douban.info()
 
         #if (douban_dict['names']['chinesename']):
@@ -798,7 +828,9 @@ class mediafile(object):
         if (douban_dict['genres'] and len(douban_dict['genres']) > 0):
             self.genre=" / ".join(douban_dict['genres'])
         if (douban_dict['languages'] and len(douban_dict['languages']) > 0) :
-            self.language=" / ".join(douban_dict['languages'])
+            if self.language.strip()=='':
+                self.language=" / ".join(douban_dict['languages'])
+                logger.info('根据豆瓣信息分析，语言为'+self.language)
         if (douban_dict['pubdates'] and len(douban_dict['pubdates']) > 0) :
             self.release=" / ".join(douban_dict['pubdates'])
         if (douban_dict['imdb'].strip()!='') :
@@ -1044,13 +1076,21 @@ class mediafile(object):
     def getfullinfo(self,tracker='https://announce.leaguehd.com/announce.php'):
         if self.getinfo_done==1:
             return
-
+        
+        trytime=0
         while not self.getptgen_done==1:
+            logger.info('正在获取豆瓣信息...')
+            trytime += 1
+            if trytime>10:
+                logger.error('获取豆瓣信息失败')
+                raise Exception('获取豆瓣信息失败')
             self.get_douban()
+            '''
             if self.getptgen_done<1:
                 self.getptgen_douban_info()
             if self.getptgen_done<1:
                 self.getdoubaninfo()
+            '''
             if self.getptgen_done<1:
                 time.sleep(3)
         
@@ -1073,23 +1113,35 @@ class mediafile(object):
 
 
         self.uploadname=self.englishname+' '+str(self.year)
-        self.small_descr=self.chinesename
+        self.small_descr=self.douban_dict['names']['chinesename'].strip()
 
         
         medianame=self.uploadname
         if self.pathinfo.type=='anime' or self.pathinfo.type=='tv':
             self.uploadname=self.uploadname+' '+self.season
-            self.small_descr=self.small_descr+' ('+self.season_ch+') '
+            #if int(self.seasonnum)>1:
+            #self.small_descr=self.small_descr+' | '+self.season_ch.strip()
             medianame=self.uploadname
             if not self.isdir:
                 self.uploadname=self.uploadname+'E'+self.episodename
-                self.small_descr=self.small_descr+'(第'+self.episodename+'集) '
+                self.small_descr=self.small_descr+' | 第E'+self.episodename+'集'
             elif self.complete==1:
                 self.uploadname=self.uploadname
-                self.small_descr=self.small_descr+'(全'+str(self.pathinfo.max)+'集)'
+                self.small_descr=self.small_descr+' | 全 '+str(self.pathinfo.max)+' 集'
             else:
                 self.uploadname=self.uploadname+'E'+str(self.pathinfo.min).zfill(2)+'-E'+str(self.pathinfo.max).zfill(2)
-                self.small_descr=self.small_descr+'(第'+str(self.pathinfo.min).zfill(2)+'-'+str(self.pathinfo.max).zfill(2)+'集)'
+                self.small_descr=self.small_descr+' | 第E'+str(self.pathinfo.min).zfill(2)+'-E'+str(self.pathinfo.max).zfill(2)+'集'
+
+
+        if self.douban_dict['directors']:
+            self.small_descr=self.small_descr+' | 导演: '+self.douban_dict['directors'][0]['name'].strip()
+            for i in range(min(len(self.douban_dict['directors'])-1,1)):
+                self.small_descr=self.small_descr+' / '+self.douban_dict['directors'][i+1]['name'].strip()
+
+        if self.douban_dict['actors']:
+            self.small_descr=self.small_descr+' | 主演: '+self.douban_dict['actors'][0]['name'].strip()
+            for i in range(min(len(self.douban_dict['actors'])-1,4)):
+                self.small_descr=self.small_descr+' / '+self.douban_dict['actors'][i+1]['name'].strip()
 
         medianame = medianame+' '+self.standard_sel+' '+self.type+' '+self.Video_Format+' '+self.Audio_Format+'-'+self.sub
         while '  'in medianame:
@@ -1111,23 +1163,25 @@ class mediafile(object):
 
             
 
-        self.uploadname_ssd=self.uploadname+' '+self.type+' '+self.standard_sel+' '+self.Video_Format+' '+self.Audio_Format+'-'+self.sub
-        self.uploadname    =self.uploadname+' '+self.standard_sel+' '+self.type+' '+self.Video_Format+' '+self.Audio_Format+'-'+self.sub
+        self.uploadname_ssd=self.uploadname+' '+self.type+' '+self.standard_sel+' '+self.Video_Format+' '+self.Audio_Format+(self.audio_num>1)*('.'+str(self.audio_num)+'Audio') +'-'+self.sub
+        self.uploadname    =self.uploadname+' '+self.standard_sel+' '+self.type+' '+self.Video_Format+' '+self.Audio_Format+(self.audio_num>1)*(' '+str(self.audio_num)+'Audio') +'-'+self.sub
         
         try:
-            if not self.language=='':
-                self.small_descr=self.small_descr+'['+self.language+'] '
+            if self.language!='':
+                self.small_descr=self.small_descr+' ['+self.language+']'
         except:
             logger.warning('未找到资源语言信息，默认为日语')
-            self.small_descr=self.small_descr+'[日语] '
+            self.small_descr=self.small_descr+' [日语]'
 
         if not self.sublan=='':
-            self.small_descr=self.small_descr+self.sublan
+            self.small_descr=self.small_descr+' '+self.sublan
+        else:
+            self.small_descr=self.small_descr+' [无字幕]'
         self.small_descr=self.small_descr.replace('（','(').replace('）',')')
 
         if self.pathinfo.small_descr!='':
             self.small_descr=self.pathinfo.small_descr
-
+        logger.debug('副标题为'+self.small_descr)
         self.getimgurl()
         if self.pathinfo.screenshot!='':
             self.screenshoturl=self.pathinfo.screenshot+'\n'+self.screenshoturl

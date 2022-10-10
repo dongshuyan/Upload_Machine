@@ -83,8 +83,8 @@ path info:
     year: #可有可无，资源年份，不写自动抓
     screenshot: #自定义截图,需要BBcode格式,此部分截图会放在脚本截图前面，如果不需要脚本截图请在basic里面把picture_num设置为0
     small_descr: #自定义副标题，会完全覆盖掉原有的副标题
-    contenttail: #简介头，此部分信息会放在简介头部
     contenthead: #简介尾，此部分信息会放在简介尾部
+    contenttail: #简介头，此部分信息会放在简介头部
     zeroday_name: #可有可无，资源0day名字，不写自动生成
 
   path2: ... #其他路径信息，如果有请继续补全上述信息，如果没有请删除此行
