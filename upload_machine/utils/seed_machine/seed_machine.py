@@ -127,14 +127,16 @@ def seedmachine_single(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
             pathyaml['imdb_url']=pathinfo.imdb_url
         
         file1.getfullinfo()
+        
         logger.info('正在发布路径'+pathinfo.path+'下第'+str(pathep)+'集资源:'+filepath)
         for siteitem in site_upload:
             if siteitem.enable==0:
                 continue
             logger.info('正在'+siteitem.sitename+'站点发布路径'+pathinfo.chinesename+'第'+str(pathep)+'集资源')
-            
             upload_success=False
             uploadtime=0
+            #用模板获取mediainfo
+            file1.updatemediainfo(siteitem.mediainfo_template_file)
             while upload_success==False and uploadtime<3:
                 uploadtime=uploadtime+1
                 logger.info('第'+str(uploadtime)+'次尝试发布')
@@ -225,6 +227,8 @@ def seedmachine(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         logger.info('正在'+siteitem.sitename+'站点发布'+pathinfo.chinesename+'资源')
         upload_success=False
         uploadtime=0
+        #用模板获取mediainfo
+        file1.updatemediainfo(siteitem.mediainfo_template_file)
         while upload_success==False and uploadtime<3:
             uploadtime=uploadtime+1
             logger.info('第'+str(uploadtime)+'次尝试发布')

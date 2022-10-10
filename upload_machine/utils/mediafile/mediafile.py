@@ -687,11 +687,25 @@ class mediafile(object):
         else:
             logger.warning('无法根据mediainfo分析出字幕语言信息')
 
+    def updatemediainfo(self,filepath=''):
+        if filepath!='':
+            a=os.popen('mediainfo --Inform=file://"'+filepath+'" "'+self.address+'"')
+            res=a.buffer.read().decode('utf-8')
+        else:
+            a=os.popen('mediainfo "'+self.address+'"')
+            res=a.buffer.read().decode('utf-8')
+            ss=res.split('\n')
+            for i in range(len(ss)):
+                if ss[i].startswith('Complete name'):
+                    ss[i]=':'.join([ss[i].split(':')[0],' '+self.filename])
+            res='\n'.join(ss)
+
+        self.mediainfo=res
 
     def getmediainfo(self):
         if self.getmediainfo_done==1:
             return self.mediainfo
-        a=os.popen("mediainfo \""+self.address+'"')
+        a=os.popen('mediainfo "'+self.address+'"')
         #res=a.read()
         res=a.buffer.read().decode('utf-8')
         #self.dealsubtext(res)
@@ -1181,7 +1195,7 @@ class mediafile(object):
 
         if self.pathinfo.small_descr!='':
             self.small_descr=self.pathinfo.small_descr
-        logger.debug('副标题为'+self.small_descr)
+        #logger.debug('副标题为'+self.small_descr)
         self.getimgurl()
         if self.pathinfo.screenshot!='':
             self.screenshoturl=self.pathinfo.screenshot+'\n'+self.screenshoturl

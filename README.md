@@ -26,6 +26,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 
 ## 更新说明
 
+- 20221011 支持了mediainfo模板文件，详细参数说明参考[au_example.yaml](https://github.com/dongshuyan/Upload_Machine/blob/master/au_example.yaml)中`site info` 中 `站点` 中 `mediainfo_template_file`参数说明
 - 20221010 更改副标题样式为标准样式，对于多语言音轨在主标题添加类似 2Audio的内容
 - 20221010 hare改为hares
 - 20221010 新增自定义配置“副标题”，“自定义截图”，“简介头信息”，“简介尾信息”等配置参数

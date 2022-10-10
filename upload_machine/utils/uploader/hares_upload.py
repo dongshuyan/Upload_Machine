@@ -261,7 +261,7 @@ def hares_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         other_data["pt_gen[imdb][link]"] = file1.imdburl
     if file1.bgmurl!=None and file1.bgmurl!='':
         other_data["pt_gen[bangumi][link]"] = file1.bgmurl
-
+    
     scraper=cloudscraper.create_scraper()
     r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup,timeout=time_out)
     

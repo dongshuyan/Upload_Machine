@@ -10,6 +10,7 @@ class site(object):
         self.uplver =1
         self.enable =0
         self.check = False
+        self.mediainfo_template_file=''
 
 
         try:
@@ -23,6 +24,14 @@ class site(object):
             logger.warning(sitename+'站点匿名发布uplver信息填错错误，已设置为1:默认匿名发布')
             self.uplver =1
             sitedict['uplver']=1
+
+        if 'mediainfo_template_file' in sitedict and sitedict['mediainfo_template_file']!= None and sitedict['mediainfo_template_file'].strip()!='':
+            if os.path.exists(sitedict['mediainfo_template_file']):
+                self.mediainfo_template_file=sitedict['mediainfo_template_file']
+            else:
+                raise Exception(sitename+'站点的mediainfo模板文件不存在')
+        else:
+            self.mediainfo_template_file=''
 
 
         try:
