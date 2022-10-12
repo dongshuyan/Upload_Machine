@@ -26,6 +26,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 
 ## 更新说明
 
+- 20221012 修改了`zeroday_name`可能引起的bug
 - 20221011 支持了mediainfo模板文件，详细参数说明参考[au_example.yaml](https://github.com/dongshuyan/Upload_Machine/blob/master/au_example.yaml)中`site info` 中 `站点` 中 `mediainfo_template_file`参数说明
 - 20221010 更改副标题样式为标准样式，对于多语言音轨在主标题添加类似 2Audio的内容
 - 20221010 hare改为hares
@@ -96,7 +97,9 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - MT
 
 Todolist:
-
+- 自动文件夹改名
+- 自动文件改名
+- 配置文件详细教程
 - GUI（有考虑，需要学）
 - 自定义站点（需要考虑做不做和怎么做）
 

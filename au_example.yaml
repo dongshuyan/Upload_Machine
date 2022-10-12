@@ -4,7 +4,7 @@ basic:
   workpath: /Users/Desktop/ #工作路径 反斜杠朝向请根据自己系统填写，示例文档是linux和Mac下的路径格式。Win下应该是D:\Upload_Machine_Demo\这种格式
   #选填并建议填写项
   log: /Users/Desktop/record_path/Auto_Upload.sh #日志文件路径，可有可无，若没有则日志不写入文件
-  new_folder: 0 #发布的资源是否在外层套一层0day名字文件夹 1表示是，0表示否。不填默认是
+  new_folder: 0 #发布的资源是否在外层套一层0day名字文件夹 0表示否,1表示是,2表示0day文件夹以中文名开头。不填默认是
   doubancookie: cookie #此处填写豆瓣账号的cookie可以抓到只有登录才能看到的资源的info，不填则按照未登录模式抓取
   #选填但是建议不填项
   record_path: /Users/Desktop/record_path #用来存放发种记录 

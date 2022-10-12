@@ -124,6 +124,8 @@ def findbgmurl(name):
 def findeps(pathlist):
     eps=[]
     for path in pathlist:
+        if not os.path.exists(path):
+            continue
         ls = os.listdir(path)
         ls.sort()
         for i in ls:
@@ -175,7 +177,7 @@ class pathinfo(object):
                 exec('self.exist_'+item+'=True')
 
         #可有可无的属性,后面不写入配置文件
-        attr_disp=['video_type','video_format','audio_format','year','zeroday_name','exinfo','seasonnum','imdb_url','bgm_url','anidb_url','transfer','txt_info','audio_info','zeroday_path','from_url','contenttail','contenthead','screenshot','small_descr']
+        attr_disp=['video_type','video_format','audio_format','year','zeroday_name','exinfo','seasonnum','imdb_url','bgm_url','anidb_url','transfer','txt_info','audio_info','from_url','contenttail','contenthead','screenshot','small_descr']
         for item in attr_disp:
             if not item in infodict or infodict[item]==None:
                 exec('self.'+item+'=""')
@@ -183,15 +185,8 @@ class pathinfo(object):
             else:
                 exec('self.'+item+'=infodict[item]')
                 exec('self.exist_'+item+'=True')
-        '''
-        if self.zeroday_path!='':
-            ls = os.listdir(self.zeroday_path)
-            for i in ls:
-                c_path=os.path.join(self.zeroday_path, i)
-                if (os.path.isdir(c_path)) or (i.startswith('.')) or (not(  os.path.splitext(i)[1].lower()== ('.mp4') or os.path.splitext(i)[1].lower()== ('.mkv')  or os.path.splitext(i)[1].lower()== ('.avi') or os.path.splitext(i)[1].lower()== ('.ts')    )):
-                    continue
-                filepath=move(c_path,self.path)
-        '''
+        
+        
         pathstr=os.path.basename(self.path)
         if (self.exist_chinesename and self.exist_englishname and self.exist_sub):
             if self.exinfo!='':
@@ -402,7 +397,7 @@ class pathinfo(object):
                 continue
             self.sites.append(siteitem)
             if (not siteitem in infodict) or (infodict[siteitem]==None):
-                logger.warning('未找到路径'+pathitem+'在'+siteitem+'的站点信息,已设置为10000（不发)')
+                logger.warning('未找到路径'+pathitem+'在'+siteitem+'的站点信息,已设置为不发')
                 exec('self.'+siteitem+'_done=[]')
                 exec('self.'+siteitem+'_max_done=10000')
                 exec('self.'+siteitem+'_min_done=-1')
@@ -449,17 +444,27 @@ class pathinfo(object):
                 season_ch=season_ch+'九'
             elif self.seasonnum==10:
                 season_ch=season_ch+'十'
+            elif self.seasonnum==11:
+                season_ch=season_ch+'十一'
+            elif self.seasonnum==12:
+                season_ch=season_ch+'十二'
+            elif self.seasonnum==13:
+                season_ch=season_ch+'十三'
+            elif self.seasonnum==14:
+                season_ch=season_ch+'十四'
+            elif self.seasonnum==15:
+                season_ch=season_ch+'十五'
             else:
                 season_ch=season_ch+str(self.seasonnum)
             season_ch=season_ch+'季'
             self.season_ch=season_ch
 
-            if self.zeroday_path=='':
+            if self.zeroday_name=='':
                 self.eps=findeps([self.path])
             else:
-                self.eps=findeps([self.path,self.zeroday_path])
-
-
+                self.eps=findeps([self.path,os.path.join(self.path,self.zeroday_name)])
+            if (len(self.eps)<1):
+                raise Exception('路径'+pathid+' : '+self.infodict['path']+'中没找到视频文件')
             self.min=self.eps[0]
             self.max=self.eps[-1]
             '''

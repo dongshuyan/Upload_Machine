@@ -133,10 +133,18 @@ def mktorrent_win(filepath,torrentname,tracker="https://announce.leaguehd.com/an
             #os.system(order)
             res=os.popen(order)
             res=res.buffer.read().decode('utf-8')
-            if os.path.exists(torrentname):
-                filesize=os.path.getsize(torrentname)
-            else:
-                filesize=0
+            filesizetime=0
+            while filesize==0:
+                filesizetime=filesizetime+1
+                if filesizetime>5:
+                    break
+                if os.path.exists(torrentname):
+                    filesize=os.path.getsize(torrentname)
+                else:
+                    filesize=0
+                if filesize==0:
+                    time.sleep(1)
+            
 
         os.rename(new_filepath,filepath)
         t=Torrent()
@@ -196,10 +204,18 @@ def mktorrent(filepath,torrentname,tracker="https://announce.leaguehd.com/announ
                 logger.error('删除种子发生错误: %s' %(r))
         res=os.popen(order)
         res=res.buffer.read().decode('utf-8')
-        if os.path.exists(torrentname):
-            filesize=os.path.getsize(torrentname)
-        else:
-            filesize=0
+        filesizetime=0
+        while filesize==0:
+            filesizetime=filesizetime+1
+            if filesizetime>5:
+                break
+            if os.path.exists(torrentname):
+                filesize=os.path.getsize(torrentname)
+            else:
+                filesize=0
+            if filesize==0:
+                time.sleep(1)
+        
 
     logger.info('已完成制作种子'+torrentname)
 
@@ -273,16 +289,18 @@ class mediafile(object):
                     self.address=c_path
                     maxsize=filesize
 
-            if 'zeroday_path' in self.pathinfo.infodict and self.pathinfo.infodict['zeroday_path']!=None:
-                ls = os.listdir(self.pathinfo.infodict['zeroday_path'])
-                for i in ls:
-                    c_path=os.path.join(self.pathinfo.infodict['zeroday_path'], i)
-                    if (os.path.isdir(c_path)) or (i.startswith('.')) or (not(  os.path.splitext(i)[1].lower()== ('.mp4') or os.path.splitext(i)[1].lower()== ('.mkv')  or os.path.splitext(i)[1].lower()== ('.avi') or os.path.splitext(i)[1].lower()== ('.ts')    )):
-                        continue
-                    filesize=os.path.getsize(c_path)
-                    if filesize>maxsize:
-                        self.address=c_path
-                        maxsize=filesize
+            if 'zeroday_name' in self.pathinfo.infodict and self.pathinfo.infodict['zeroday_name']!=None and self.pathinfo.infodict['zeroday_name']!='':
+                zeroday_path=os.path.join(self.pathinfo.path,self.pathinfo.infodict['zeroday_name'])
+                if os.path.exists(zeroday_path):
+                    ls = os.listdir(zeroday_path)
+                    for i in ls:
+                        c_path=os.path.join(zeroday_path, i)
+                        if (os.path.isdir(c_path)) or (i.startswith('.')) or (not(  os.path.splitext(i)[1].lower()== ('.mp4') or os.path.splitext(i)[1].lower()== ('.mkv')  or os.path.splitext(i)[1].lower()== ('.avi') or os.path.splitext(i)[1].lower()== ('.ts')    )):
+                            continue
+                        filesize=os.path.getsize(c_path)
+                        if filesize>maxsize:
+                            self.address=c_path
+                            maxsize=filesize
         
         else:
             self.address           = mediapath
@@ -1045,6 +1063,9 @@ class mediafile(object):
             ls = os.listdir(self.topath)
             for i in ls:
                 c_path=os.path.join(self.topath, i)
+                if i.startswith('.'):
+                    os.remove(c_path)
+                    continue
                 if (os.path.isdir(c_path)):
                     if not os.path.exists(   os.path.join(dirpath,i)    ):
                         newpath=move(c_path,dirpath)
@@ -1083,7 +1104,7 @@ class mediafile(object):
             if os.path.exists(item):
                 newpath=move(item,self.topath)
                 if '_temp' in newpath and os.path.exists(newpath):
-                    rename(newpath,newpath.replace('_temp',''))
+                    os.rename(newpath,newpath.replace('_temp',''))
 
 
 
@@ -1161,17 +1182,22 @@ class mediafile(object):
         while '  'in medianame:
             medianame=medianame.replace('  ',' ')
         medianame=medianame.replace(' ','.')
-        #self.topath=os.path.join(os.path.dirname(self.address),medianame)
-        self.topath=os.path.join(self.pathinfo.path,medianame)
-
-        if self.pathinfo.zeroday_name!='':
-            #self.topath=os.path.join(os.path.dirname(self.address),self.pathinfo.zeroday_name)
-            self.topath=os.path.join(self.pathinfo.path,self.pathinfo.zeroday_name)
+        
 
         
 
         if 'new_folder' in self.basic and self.basic['new_folder']==1:
-            self.pathinfo.infodict['zeroday_path']=self.topath
+            if self.pathinfo.zeroday_name!='':
+                self.topath=os.path.join(self.pathinfo.path,self.pathinfo.zeroday_name)
+            else:
+                self.topath=os.path.join(self.pathinfo.path,medianame)
+                self.pathinfo.infodict['zeroday_name']=self.topath
+        elif 'new_folder' in self.basic and self.basic['new_folder']==2:
+            if self.pathinfo.zeroday_name!='':
+                self.topath=os.path.join(self.pathinfo.path,self.pathinfo.zeroday_name)
+            else:
+                self.topath=os.path.join(self.pathinfo.path,self.chinesename+'.'+self.medianame)
+                self.pathinfo.infodict['zeroday_name']=self.topath
         else:
             self.topath=self.mediapath
 
