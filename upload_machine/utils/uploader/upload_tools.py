@@ -132,7 +132,8 @@ def finddownloadurl(res):
         try:
             link = a['href']
         except:
-            logger.warning('该a标签未找到href属性')
+            #logger.warning('该a标签未找到href属性')
+            logger.trace('该a标签未找到href属性')
         if o in link:
             logger.info('成功获得下载链接'+link)
             return link

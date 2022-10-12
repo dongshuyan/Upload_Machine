@@ -1191,13 +1191,18 @@ class mediafile(object):
                 self.topath=os.path.join(self.pathinfo.path,self.pathinfo.zeroday_name)
             else:
                 self.topath=os.path.join(self.pathinfo.path,medianame)
-                self.pathinfo.infodict['zeroday_name']=self.topath
+                self.pathinfo.infodict['zeroday_name']=medianame
         elif 'new_folder' in self.basic and self.basic['new_folder']==2:
             if self.pathinfo.zeroday_name!='':
                 self.topath=os.path.join(self.pathinfo.path,self.pathinfo.zeroday_name)
             else:
-                self.topath=os.path.join(self.pathinfo.path,self.chinesename+'.'+self.medianame)
-                self.pathinfo.infodict['zeroday_name']=self.topath
+                tempchinesename=self.chinesename.strip()
+                while '  'in tempchinesename:
+                    tempchinesename=tempchinesename.replace('  ',' ')
+                tempchinesename=tempchinesename.replace(' ','.')
+                self.topath=os.path.join(self.pathinfo.path,tempchinesename+'.'+medianame)
+                self.pathinfo.infodict['zeroday_name']=tempchinesename+'.'+medianame
+                del(tempchinesename)
         else:
             self.topath=self.mediapath
 
@@ -1234,7 +1239,7 @@ class mediafile(object):
             self.content= self.content+self.pathinfo.contenttail
 
         
-        if 'new_folder' in self.basic and self.basic['new_folder']==1:
+        if 'new_folder' in self.basic and self.basic['new_folder']>=1:
             self.gettorrent(tracker)
         else:
             self.mktorrent(tracker)

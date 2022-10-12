@@ -103,11 +103,13 @@ def seedmachine_single(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         move_suc=0
         move_newpath=''
         move_oldpath=''
-        if filepath=='' and pathinfo.zeroday_path!='':
-            ls = os.listdir(pathinfo.zeroday_path)
+        
+        if filepath=='' and pathinfo.zeroday_name!='':
+            zeroday_path=os.path.join(pathinfo.path,pathinfo.zeroday_name)
+            ls = os.listdir(zeroday_path)
             filepath=''
             for i in ls:
-                c_path=os.path.join(pathinfo.zeroday_path, i)
+                c_path=os.path.join(zeroday_path, i)
                 if (os.path.isdir(c_path)) or (i.startswith('.')) or (not(  os.path.splitext(i)[1].lower()== ('.mp4') or os.path.splitext(i)[1].lower()== ('.mkv')  or os.path.splitext(i)[1].lower()== ('.avi') or os.path.splitext(i)[1].lower()== ('.ts')    )):
                     continue
                 if int(findnum(i)[0])==pathep:
@@ -116,7 +118,7 @@ def seedmachine_single(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
                     move_newpath=filepath
                     move_suc=1
                     break
-        
+    
         if filepath=='':
             logger.error('未找到文件夹'+pathinfo.path+'下第'+str(pathep)+'集资源')
             raise ValueError ('未找到文件夹'+pathinfo.path+'下第'+str(pathep)+'集资源')
@@ -126,9 +128,11 @@ def seedmachine_single(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         if not pathinfo.imdb_url=='' and pathyaml['imdb_url']==None:
             pathyaml['imdb_url']=pathinfo.imdb_url
         
-        file1.getfullinfo()
+        
         
         logger.info('正在发布路径'+pathinfo.path+'下第'+str(pathep)+'集资源:'+filepath)
+        logger.info('正在抓取资源信息,请稍后...')
+        file1.getfullinfo()
         for siteitem in site_upload:
             if siteitem.enable==0:
                 continue
@@ -178,11 +182,14 @@ def seedmachine_single(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
             #a=input('check')
             
         del(file1)
-        if move_suc==1 and 'new_folder' in basic and basic['new_folder']==0 and os.path.exists(move_newpath) and os.path.exists(move_oldpath):
+        if move_suc==1 and os.path.exists(move_newpath) and os.path.exists(move_oldpath):
+            logger.info('正在尝试将文件：'+move_newpath+'移动回原位：'+move_oldpath)
             try:
                 move_newpath=move(move_newpath,move_oldpath)
+                move_suc=0
             except Exception as r:
                 logger.warning('移动文件'+move_newpath+'到'+move_oldpath+'链接失败，原因: %s' %(r))
+            
     logger.info('路径'+pathinfo.path+'下资源已全部发布完毕')
     return log_error,log_succ
 
@@ -219,6 +226,7 @@ def seedmachine(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         pathyaml['imdb_url']=pathinfo.imdb_url
 
     logger.info('正在'+siteitem+'站点发布路径'+pathinfo.path+'下资源')
+    logger.info('正在抓取资源信息,请稍后...')
     file1.getfullinfo()
 
     for siteitem in site_upload:
