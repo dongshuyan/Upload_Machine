@@ -10,6 +10,8 @@ from upload_machine.utils.uploader.wintersakura_upload import wintersakura_uploa
 from upload_machine.utils.uploader.carpt_upload import carpt_upload
 from upload_machine.utils.uploader.hdfans_upload import hdfans_upload
 from upload_machine.utils.uploader.hares_upload import hares_upload
+from upload_machine.utils.uploader.zmpt_upload import zmpt_upload
+from upload_machine.utils.uploader.hdvideo_upload import hdvideo_upload
 
 
 

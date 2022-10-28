@@ -419,45 +419,46 @@ class pathinfo(object):
             self.exclusive=infodict['exclusive'].split(",")
             self.exclusive=[i.strip().lower() for i in self.exclusive]
 
-
-        if ('anime' in self.type or 'tv' in self.type):
+        season_ch=''
+        season_ch=season_ch+'第'
+        if self.seasonnum==1:
+            season_ch=season_ch+'一'
+        elif self.seasonnum==2:
+            season_ch=season_ch+'二'
+        elif self.seasonnum==3:
+            season_ch=season_ch+'三'
+        elif self.seasonnum==4:
+            season_ch=season_ch+'四'
+        elif self.seasonnum==5:
+            season_ch=season_ch+'五'
+        elif self.seasonnum==6:
+            season_ch=season_ch+'六'
+        elif self.seasonnum==7:
+            season_ch=season_ch+'七'
+        elif self.seasonnum==8:
+            season_ch=season_ch+'八'
+        elif self.seasonnum==9:
+            season_ch=season_ch+'九'
+        elif self.seasonnum==10:
+            season_ch=season_ch+'十'
+        elif self.seasonnum==11:
+            season_ch=season_ch+'十一'
+        elif self.seasonnum==12:
+            season_ch=season_ch+'十二'
+        elif self.seasonnum==13:
+            season_ch=season_ch+'十三'
+        elif self.seasonnum==14:
+            season_ch=season_ch+'十四'
+        elif self.seasonnum==15:
+            season_ch=season_ch+'十五'
+        else:
+            season_ch=season_ch+str(self.seasonnum)
+        season_ch=season_ch+'季'
+        self.season_ch=season_ch
+        
+        if ('anime' in self.type.lower() or 'tv' in self.type.lower()):
             
-            season_ch=''
-            season_ch=season_ch+'第'
-            if self.seasonnum==1:
-                season_ch=season_ch+'一'
-            elif self.seasonnum==2:
-                season_ch=season_ch+'二'
-            elif self.seasonnum==3:
-                season_ch=season_ch+'三'
-            elif self.seasonnum==4:
-                season_ch=season_ch+'四'
-            elif self.seasonnum==5:
-                season_ch=season_ch+'五'
-            elif self.seasonnum==6:
-                season_ch=season_ch+'六'
-            elif self.seasonnum==7:
-                season_ch=season_ch+'七'
-            elif self.seasonnum==8:
-                season_ch=season_ch+'八'
-            elif self.seasonnum==9:
-                season_ch=season_ch+'九'
-            elif self.seasonnum==10:
-                season_ch=season_ch+'十'
-            elif self.seasonnum==11:
-                season_ch=season_ch+'十一'
-            elif self.seasonnum==12:
-                season_ch=season_ch+'十二'
-            elif self.seasonnum==13:
-                season_ch=season_ch+'十三'
-            elif self.seasonnum==14:
-                season_ch=season_ch+'十四'
-            elif self.seasonnum==15:
-                season_ch=season_ch+'十五'
-            else:
-                season_ch=season_ch+str(self.seasonnum)
-            season_ch=season_ch+'季'
-            self.season_ch=season_ch
+            
 
             if self.zeroday_name=='':
                 self.eps=findeps([self.path])
