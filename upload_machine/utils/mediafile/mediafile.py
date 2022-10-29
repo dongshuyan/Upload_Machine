@@ -1148,7 +1148,7 @@ class mediafile(object):
 
 
         self.uploadname=self.englishname+' '+str(self.year)
-        self.small_descr=self.douban_dict['names']['chinesename'].strip()
+        self.small_descr=self.chinesename.strip()
         
         
         medianame=self.uploadname
