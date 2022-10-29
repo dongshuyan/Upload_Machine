@@ -2,9 +2,20 @@ import os
 import yaml
 from loguru import logger
 def readyaml(file):
+    newfile=file+'.bak'
     logger.info('正在读取yaml...')
     f=open(file, encoding='utf-8')
     audata = yaml.load(f, Loader=yaml.FullLoader)
+    try:
+        if (len(audata)<2):
+            logger.warning('配置文件'+file+'数据缺失，已自动使用备份配置文件'+newfile)
+            f=open(newfile, encoding='utf-8')
+            audata = yaml.load(f, Loader=yaml.FullLoader)
+    except:
+        logger.warning('配置文件'+file+'数据缺失，已自动使用备份配置文件'+newfile)
+        f=open(newfile, encoding='utf-8')
+        audata = yaml.load(f, Loader=yaml.FullLoader)
+
     f.close()
     logger.info('读取yaml完毕')
     #au_data['yaml_path']=file
