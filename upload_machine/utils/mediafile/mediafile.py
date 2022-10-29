@@ -1159,13 +1159,13 @@ class mediafile(object):
             medianame=self.uploadname
             if not self.isdir:
                 self.uploadname=self.uploadname+'E'+self.episodename
-                self.small_descr=self.small_descr+' | 第E'+self.episodename+'集'
+                self.small_descr=self.small_descr+' | E'+self.episodename+'集'
             elif self.complete==1:
                 self.uploadname=self.uploadname
                 self.small_descr=self.small_descr+' | 全 '+str(self.pathinfo.max)+' 集'
             else:
                 self.uploadname=self.uploadname+'E'+str(self.pathinfo.min).zfill(2)+'-E'+str(self.pathinfo.max).zfill(2)
-                self.small_descr=self.small_descr+' | 第E'+str(self.pathinfo.min).zfill(2)+'-E'+str(self.pathinfo.max).zfill(2)+'集'
+                self.small_descr=self.small_descr+' | E'+str(self.pathinfo.min).zfill(2)+'-E'+str(self.pathinfo.max).zfill(2)+'集'
 
 
         if self.douban_dict['directors']:
