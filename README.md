@@ -25,6 +25,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - 无法在发种前暂停自行修改信息
 
 ## 更新说明
+- 20221029 副标题第EXX集取消字符“E”
 - 20221029 如果配置文件为空时自动使用备份配置文件文件，修复DoubanInfo了抓取imdb分数超时的bug
 - 20221028 增加对ihdbits的支持
 - 20221028 增加对zmpt，hdvideo的支持,增加对于粤语的判断.修改了配置文件部分描述，使得配置变得更加简单。详细参数说明参考[au_example.yaml](https://github.com/dongshuyan/Upload_Machine/blob/master/au_example.yaml)
