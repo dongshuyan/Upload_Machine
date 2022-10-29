@@ -95,6 +95,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - hares (白兔)
 - zmpt (织梦)
 - hdvideo
+- iHDBits
 
 正在适配的站点(排名不分先后):
 
