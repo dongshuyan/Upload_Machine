@@ -1149,7 +1149,7 @@ class mediafile(object):
 
         self.uploadname=self.englishname+' '+str(self.year)
         self.small_descr=self.douban_dict['names']['chinesename'].strip()
-
+        
         
         medianame=self.uploadname
         if self.pathinfo.type=='anime' or self.pathinfo.type=='tv':
