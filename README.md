@@ -25,6 +25,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - 无法在发种前暂停自行修改信息
 
 ## 更新说明
+- 20221028 增加对ihdbits的支持
 - 20221028 增加对zmpt，hdvideo的支持,增加对于粤语的判断.修改了配置文件部分描述，使得配置变得更加简单。详细参数说明参考[au_example.yaml](https://github.com/dongshuyan/Upload_Machine/blob/master/au_example.yaml)
 - 20221012 增加了自动生成0day文件带有中文标题的功能,详细参数说明参考[au_example.yaml](https://github.com/dongshuyan/Upload_Machine/blob/master/au_example.yaml)中`basic` 中 `new_folder`参数说明
 - 20221012 修改了`zeroday_name`可能引起的bug

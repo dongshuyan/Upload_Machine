@@ -12,6 +12,8 @@ from upload_machine.utils.uploader.hdfans_upload import hdfans_upload
 from upload_machine.utils.uploader.hares_upload import hares_upload
 from upload_machine.utils.uploader.zmpt_upload import zmpt_upload
 from upload_machine.utils.uploader.hdvideo_upload import hdvideo_upload
+from upload_machine.utils.uploader.ihdbits_upload import ihdbits_upload
+#from upload_machine.utils.uploader.mteam_upload import mteam_upload
 
 
 
