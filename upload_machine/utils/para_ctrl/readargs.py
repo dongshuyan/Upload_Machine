@@ -13,7 +13,7 @@ def readargs():
     parser.add_argument('-di','--douban-info', action='store_true', default=False, help='Get douban info')
     parser.add_argument('-mi','--media-img', action='store_true', default=False, help='Get screenshots of the video and upload the image')
 
-    parser.add_argument('-ih','--img-host', type=str, help='Choose your img host from the following list. [ptpimg,picgo,chd,smms,pter,emp,femp,imgbox,freeimage]',choices=['ptpimg','picgo','chd','smms','pter','emp','femp','imgbox','freeimage'],required=False,default='')
+    parser.add_argument('-ih','--img-host', type=str, help='Choose your img host from the following list. [ptpimg,picgo,chd,smms,pter,emp,femp,imgbox,freeimage,redleaves]',choices=['ptpimg','picgo','chd','smms','pter','emp','femp','imgbox','freeimage','redleaves'],required=False,default='')
     parser.add_argument('-if','--img-file', nargs='+',help='Choose your img file',action='append',required=False)
     parser.add_argument('-iform','--img-form', help='Choose your img form the following list. [bbcode,img]',choices=['bbcode','img'],required=False,default='img')
 

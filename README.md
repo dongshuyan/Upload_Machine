@@ -25,6 +25,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - 无法在发种前暂停自行修改信息
 
 ## 更新说明
+- 20221029 增加对红叶(redleaves)站点以及图床的支持
 - 20221029 副标题第EXX集取消字符“E”
 - 20221029 如果配置文件为空时自动使用备份配置文件文件，修复DoubanInfo了抓取imdb分数超时的bug
 - 20221028 增加对ihdbits的支持
@@ -98,6 +99,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - zmpt (织梦)
 - hdvideo
 - iHDBits
+- redleaves(红叶)
 
 正在适配的站点(排名不分先后):
 

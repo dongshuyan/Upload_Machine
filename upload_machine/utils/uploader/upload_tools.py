@@ -197,20 +197,20 @@ def qbseed(url,filepath,qbinfo,is_skip_checking=False,is_paused=True,category=No
         if 'Ok' in res:
             logger.info('返回值显示成功添加种子')
         else:
-            logger.warning('添加种子失败，返回值为:'+str(res))
+            logger.warning('添加种子失败，返回值为:'+str(res)[:50])
         time.sleep(1)
         try:
             tor_num_new=len(client.torrents_info())
         except Exception as r:
             tor_num_new=tor_num
-            logger.warning('计算种子数量出错，错误信息: %s' %(r))
+            logger.warning('计算种子数量出错，错误信息: %s' %(str(r)[:50]))
         if tor_num_new==tor_num:
             time.sleep(5)
             try:
                 tor_num_new=len(client.torrents_info())
             except Exception as r:
                 tor_num_new=tor_num
-                logger.warning('计算种子数量出错，错误信息: %s' %(r))
+                logger.warning('计算种子数量出错，错误信息: %s' %(str(r)[:50]))
 
     logger.info('已经成功添加种子')
     addtime=0
@@ -219,7 +219,7 @@ def qbseed(url,filepath,qbinfo,is_skip_checking=False,is_paused=True,category=No
         torrentlist=client.torrents.info()
     except Exception as r:
         torrentlist=[]
-        logger.warning('获取种子信息出错，错误信息: %s' %(r))
+        logger.warning('获取种子信息出错，错误信息: %s' %(str(r)[:50]))
     for item in torrentlist:
         if item.added_on>addtime:
             addtime=item.added_on
@@ -239,6 +239,6 @@ def qbseed(url,filepath,qbinfo,is_skip_checking=False,is_paused=True,category=No
                     try:
                         to.edit_tracker(orig_url=tracker,new_url=tracker.replace('http:','https:'))
                     except Exception as r:
-                        logger.error('更改tracker失败，原因: %s' %(r))
+                        logger.error('更改tracker失败，原因: %s' %(str(r)[:50]))
 
     return True
