@@ -130,31 +130,31 @@ def ssd_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             source_sel='2'
             logger.info('国家信息已选择'+file1.country)
         elif '台湾' in file1.country:
-            source_sel='2'
+            source_sel='3'
             logger.info('国家信息已选择'+file1.country)
         elif '美国' in file1.country:
-            source_sel='9'
+            source_sel='4'
             logger.info('国家信息已选择'+file1.country)
         elif '英国' in file1.country:
-            source_sel='9'
+            source_sel='4'
             logger.info('国家信息已选择'+file1.country)
         elif '法国' in file1.country:
-            source_sel='9'
+            source_sel='4'
             logger.info('国家信息已选择'+file1.country)
         elif '韩国' in file1.country:
-            source_sel='10'
+            source_sel='6'
             logger.info('国家信息已选择'+file1.country)
         elif '日本' in file1.country:
-            source_sel='10'
+            source_sel='5'
             logger.info('国家信息已选择'+file1.country)
         elif '印度' in file1.country:
-            source_sel='3'
+            source_sel='7'
             logger.info('国家信息已选择'+file1.country)
         else:
-            source_sel='3'
+            source_sel='99'
             logger.info('未找到资源国家信息，已选择Other')
     else:
-        source_sel='10'
+        source_sel='5'
     logger.info('未找到资源国家信息，已默认日本')
 
     if file1.pathinfo.collection==1:
