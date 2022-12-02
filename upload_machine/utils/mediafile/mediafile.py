@@ -348,7 +348,7 @@ class mediafile(object):
             self.season_ch         = self.pathinfo.season_ch
             self.complete          = self.pathinfo.complete
 
-        dlgroup           =['NaN-Raws','NaN Raws','NC-Raws','NC Raws','Lilith-Raws','Lilith Raws','ANi','Skymoon-Raws','Skymoon Raws','GMTeam']
+        dlgroup           =['NaN-Raws','NaN Raws','NC-Raws','NC Raws','Lilith-Raws','Lilith Raws','ANi','Skymoon-Raws','Skymoon Raws','GMTeam','GM-Team']
         self.type              ='WEBRip'
         self.Video_Format      ='H264'
         

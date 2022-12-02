@@ -44,6 +44,22 @@ def ihdbits_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         select_type='405'
     logger.info('已成功填写类型为'+file1.pathinfo.type)
 
+    #选择来源
+    if 'web' in file1.type.lower():
+        source_sel='3'
+    elif (file1.type=='bluray' or 'bd' in file1.type.lower()) and '2160' in file1.standard_sel:
+        source_sel='2'
+    elif file1.type=='bluray' or 'bd' in file1.type.lower():
+        source_sel='1'
+    elif 'dvd' in file1.type.lower()  :
+        source_sel='6'
+    elif file1.type=='HDTV':
+        source_sel='4'
+    elif file1.type=='remux':
+        source_sel='6'
+    else:
+        source_sel='6'
+    logger.info('已成功填写来源为'+file1.type)
 
     #选择媒介
     if 'web' in file1.type.lower() and 'dl' in file1.type.lower():
@@ -53,7 +69,7 @@ def ihdbits_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     elif file1.type=='bluray':
         medium_sel='1'
     elif 'rip' in file1.type.lower() and  'web' in file1.type.lower():
-        medium_sel='7'
+        medium_sel='11'
     elif 'rip' in file1.type.lower() and 'dvd' in file1.type.lower():
         medium_sel='7'
     elif 'rip' in file1.type.lower()  :
@@ -114,6 +130,10 @@ def ihdbits_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         audiocodec_sel='12'
     elif 'OPUS' in file1.Audio_Format.upper():
         audiocodec_sel='15'
+    elif 'OGG' in file1.Audio_Format.upper():
+        audiocodec_sel='16'
+    elif 'TAA' in file1.Audio_Format.upper():
+        audiocodec_sel='17'
     else:
         audiocodec_sel='7'
     logger.info('已成功选择音频编码为'+file1.Audio_Format.upper())
@@ -135,7 +155,14 @@ def ihdbits_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     else:
         standard_sel='1'
     logger.info('已成功选择分辨率为'+file1.standard_sel)
-    
+
+    if 'rip' in file1.type.lower():
+        processing_sel='2'
+        logger.info('处理已成功选择为Encode')
+    else:
+        processing_sel='1'
+        logger.info('处理已成功选择为Raw')
+
     #选择制作组
     if 'IHDBITS' in file1.sub.upper():
         team_sel='1'
@@ -190,7 +217,7 @@ def ihdbits_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     torrent_file = file1.torrentpath
     file_tup = ("file", (os.path.basename(torrent_file), open(torrent_file, 'rb'), 'application/x-bittorrent')),
             
-
+    
     other_data = {
             "name": file1.uploadname,
             "small_descr": file1.small_descr+file1.pathinfo.exinfo,
@@ -200,15 +227,16 @@ def ihdbits_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "size": "0",
             "descr": file1.content,
             "type": select_type,
+            "source_sel" : source_sel,
             "medium_sel": medium_sel,
             "codec_sel": codec_sel,
             "audiocodec_sel": audiocodec_sel,
             "standard_sel": standard_sel,
+            "processing_sel" : processing_sel,
             "team_sel": team_sel,
             "uplver": uplver,
             "tags[]": tags,
             }
-
     scraper=cloudscraper.create_scraper()
     r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup,timeout=time_out)
     
