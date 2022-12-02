@@ -78,11 +78,11 @@ def ssd_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         audiocodec_sel='5'
     elif 'DTS-HDMA' in file1.Audio_Format.upper() or 'DTS-HD MA' in file1.Audio_Format.upper():
         audiocodec_sel='1'
-    elif 'TrueHD Atmos' in file1.Audio_Format.upper():
+    elif 'TRUEHD ATMOS' in file1.Audio_Format.upper():
         audiocodec_sel='2'
     elif 'LPCM' in file1.Audio_Format.upper():
         audiocodec_sel='6'
-    elif 'TrueHD' in file1.Audio_Format.upper():
+    elif 'TRUEHD' in file1.Audio_Format.upper():
         audiocodec_sel='2'
     elif 'FLAC' in file1.Audio_Format.upper():
         audiocodec_sel='7'

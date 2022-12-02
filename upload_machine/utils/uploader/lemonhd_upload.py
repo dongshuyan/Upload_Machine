@@ -65,11 +65,11 @@ def lemonhd_upload_anime(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         audiocodec_sel='104'
     elif 'DTS-HDMA' in file1.Audio_Format.upper() or 'DTS-HD MA' in file1.Audio_Format.upper():
         audiocodec_sel='5'
-    elif 'TrueHD Atmos' in file1.Audio_Format.upper():
+    elif 'TRUEHD ATMOS' in file1.Audio_Format.upper():
         audiocodec_sel='1'
     elif 'LPCM' in file1.Audio_Format.upper():
         audiocodec_sel='15'
-    elif 'TrueHD' in file1.Audio_Format.upper():
+    elif 'TRUEHD' in file1.Audio_Format.upper():
         audiocodec_sel='2'
     elif 'FLAC' in file1.Audio_Format.upper():
         audiocodec_sel='7'
@@ -318,11 +318,11 @@ def lemonhd_upload_tv(siteinfo,file1,record_path,qbinfo,basic,hashlist,up_url):
         audiocodec_sel='104'
     elif 'DTS-HDMA' in file1.Audio_Format.upper() or 'DTS-HD MA' in file1.Audio_Format.upper():
         audiocodec_sel='5'
-    elif 'TrueHD Atmos' in file1.Audio_Format.upper():
+    elif 'TRUEHD ATMOS' in file1.Audio_Format.upper():
         audiocodec_sel='1'
     elif 'LPCM' in file1.Audio_Format.upper():
         audiocodec_sel='15'
-    elif 'TrueHD' in file1.Audio_Format.upper():
+    elif 'TRUEHD' in file1.Audio_Format.upper():
         audiocodec_sel='2'
     elif 'FLAC' in file1.Audio_Format.upper():
         audiocodec_sel='7'

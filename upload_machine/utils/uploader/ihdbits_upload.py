@@ -86,6 +86,39 @@ def ihdbits_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         codec_sel='1'
     logger.info('已成功选择编码为'+file1.Video_Format)
 
+
+    #选择音频编码
+    if file1.Audio_Format.upper()=='AAC':
+        audiocodec_sel='6'
+    elif 'DTS-HDMA' in file1.Audio_Format.upper() or 'DTS-HD MA' in file1.Audio_Format.upper():
+        audiocodec_sel='5'
+    elif 'TRUEHD ATMOS' in file1.Audio_Format.upper():
+        audiocodec_sel='8'
+    elif 'LPCM' in file1.Audio_Format.upper():
+        audiocodec_sel='10'
+    elif 'TRUEHD' in file1.Audio_Format.upper():
+        audiocodec_sel='9'
+    elif 'FLAC' in file1.Audio_Format.upper():
+        audiocodec_sel='1'
+    elif 'APE' in file1.Audio_Format.upper():
+        audiocodec_sel='2'
+    elif 'MP3' in file1.Audio_Format.upper():
+        audiocodec_sel='14'
+    elif 'AC3' in file1.Audio_Format.upper() or 'AC-3' in file1.Audio_Format.upper() or 'DD' in file1.Audio_Format.upper():
+        audiocodec_sel='11'
+    elif 'DTS:X' in file1.Audio_Format.upper() or 'DTS-X' in file1.Audio_Format.upper():
+        audiocodec_sel='4'
+    elif 'DTS' in file1.Audio_Format.upper():
+        audiocodec_sel='3'
+    elif 'WAV' in file1.Audio_Format.upper():
+        audiocodec_sel='12'
+    elif 'OPUS' in file1.Audio_Format.upper():
+        audiocodec_sel='15'
+    else:
+        audiocodec_sel='7'
+    logger.info('已成功选择音频编码为'+file1.Audio_Format.upper())
+
+
     #选择分辨率
     if '8K' in file1.standard_sel:
         standard_sel='4'
@@ -169,6 +202,7 @@ def ihdbits_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "type": select_type,
             "medium_sel": medium_sel,
             "codec_sel": codec_sel,
+            "audiocodec_sel": audiocodec_sel,
             "standard_sel": standard_sel,
             "team_sel": team_sel,
             "uplver": uplver,

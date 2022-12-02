@@ -111,11 +111,11 @@ def zmpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         audiocodec_sel='6'
     elif 'DTS-HDMA' in file1.Audio_Format.upper() or 'DTS-HD MA' in file1.Audio_Format.upper():
         audiocodec_sel='3'
-    elif 'TrueHD Atmos' in file1.Audio_Format.upper():
+    elif 'TRUEHD ATMOS' in file1.Audio_Format.upper():
         audiocodec_sel='7'
     elif 'LPCM' in file1.Audio_Format.upper():
         audiocodec_sel='7'
-    elif 'TrueHD' in file1.Audio_Format.upper():
+    elif 'TRUEHD' in file1.Audio_Format.upper():
         audiocodec_sel='7'
     elif 'FLAC' in file1.Audio_Format.upper():
         audiocodec_sel='1'

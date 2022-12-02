@@ -75,11 +75,11 @@ def wintersakura_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         audiocodec_sel='19'
     elif 'DTS-HDMA' in file1.Audio_Format.upper() or 'DTS-HD MA' in file1.Audio_Format.upper():
         audiocodec_sel='8'
-    elif 'TrueHD Atmos' in file1.Audio_Format.upper():
+    elif 'TRUEHD ATMOS' in file1.Audio_Format.upper():
         audiocodec_sel='10'
     elif 'LPCM' in file1.Audio_Format.upper():
         audiocodec_sel='14'
-    elif 'TrueHD' in file1.Audio_Format.upper():
+    elif 'TRUEHD' in file1.Audio_Format.upper():
         audiocodec_sel='12'
     elif 'FLAC' in file1.Audio_Format.upper():
         audiocodec_sel='15'

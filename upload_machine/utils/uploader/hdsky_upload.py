@@ -70,11 +70,11 @@ def hdsky_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         audiocodec_sel='16'
     elif 'DTS-HDMA' in file1.Audio_Format.upper():
         audiocodec_sel='10'
-    elif 'TrueHD Atmos' in file1.Audio_Format.upper():
+    elif 'TRUEHD ATMOS' in file1.Audio_Format.upper():
         audiocodec_sel='17'
     elif 'LPCM' in file1.Audio_Format.upper():
         audiocodec_sel='13'
-    elif 'TrueHD' in file1.Audio_Format.upper():
+    elif 'TRUEHD' in file1.Audio_Format.upper():
         audiocodec_sel='11'
     elif 'DTS-HD HR' in file1.Audio_Format.upper():
         audiocodec_sel='14'

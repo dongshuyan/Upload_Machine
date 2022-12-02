@@ -75,11 +75,11 @@ def carpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         audiocodec_sel='7'
     elif 'DTS-HDMA' in file1.Audio_Format.upper() or 'DTS-HD MA' in file1.Audio_Format.upper():
         audiocodec_sel='2'
-    elif 'TrueHD Atmos' in file1.Audio_Format.upper():
+    elif 'TRUEHD ATMOS' in file1.Audio_Format.upper():
         audiocodec_sel='1'
     elif 'LPCM' in file1.Audio_Format.upper():
         audiocodec_sel='4'
-    elif 'TrueHD' in file1.Audio_Format.upper():
+    elif 'TRUEHD' in file1.Audio_Format.upper():
         audiocodec_sel='1'
     elif 'FLAC' in file1.Audio_Format.upper():
         audiocodec_sel='5'
@@ -162,6 +162,7 @@ def carpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "name": file1.uploadname,
             "small_descr": file1.small_descr+file1.pathinfo.exinfo,
             "url" : file1.imdburl,
+            "pt_gen": file1.doubanurl,
             "color": "0",
             "font": "0",
             "size": "0",
@@ -175,8 +176,26 @@ def carpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "uplver": uplver,
             "tags[]": tags,
             }
-
     scraper=cloudscraper.create_scraper()
-    r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup,timeout=time_out)
+    headers = {
+        'authority': 'carpt.net',
+        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+        'cache-control': 'max-age=0',
+        #'content-length': '6820',
+        'cookie': siteinfo.cookie,
+        'origin': 'https://carpt.net',
+        'referer': 'https://carpt.net/upload.php',
+        'sec-ch-ua': '"Microsoft Edge";v="107", "Chromium";v="107", "Not=A?Brand";v="24"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"macOS"',
+        'sec-fetch-dest': 'document',
+        'sec-fetch-mode': 'navigate',
+        'sec-fetch-site': 'same-origin',
+        'sec-fetch-user': '?1',
+        'upgrade-insecure-requests': '1',
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edg/107.0.1418.62',
+    } 
+    r = scraper.post(post_url, headers=headers,cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup,timeout=time_out)
     
     return afterupload(r,fileinfo,record_path,siteinfo,file1,qbinfo,hashlist)
