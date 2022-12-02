@@ -25,6 +25,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - 无法在发种前暂停自行修改信息
 
 ## 更新说明
+- 20221202 增加对于MTeam的支持
 - 20221202 随着carpt升级更改carpt发种部分代码以顺利发种，ihdbits添加音频编码。
 - 20221029 增加对红叶(redleaves)站点以及图床的支持
 - 20221029 副标题第EXX集取消字符“E”
@@ -98,13 +99,13 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - hdfans (红豆饭)
 - hares (白兔)
 - zmpt (织梦)
-- hdvideo
-- iHDBits
+- hdvideo(高清视频)
+- iHDBits(爱好多)
 - redleaves(红叶)
+- mteam(馒头)
 
 正在适配的站点(排名不分先后):
 
-- MT
 - HDTime
 
 Todolist:

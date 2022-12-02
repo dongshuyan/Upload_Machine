@@ -148,7 +148,24 @@ def mteam_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "team_sel": '8',
             "uplver": uplver,
             }
-
+    headers = {
+        'authority': 'kp.m-team.cc',
+        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+        'cache-control': 'max-age=0',
+        'cookie': siteinfo.cookie,
+        'origin': 'https://kp.m-team.cc',
+        'referer': 'https://kp.m-team.cc/upload.php',
+        'sec-ch-ua': '"Microsoft Edge";v="107", "Chromium";v="107", "Not=A?Brand";v="24"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"macOS"',
+        'sec-fetch-dest': 'document',
+        'sec-fetch-mode': 'navigate',
+        'sec-fetch-site': 'same-origin',
+        'sec-fetch-user': '?1',
+        'upgrade-insecure-requests': '1',
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edg/107.0.1418.62',
+    }
     if '国' in file1.language or '中' in file1.language:
         other_data['l_dub']='yes'
         logger.info('已选择国语')
@@ -156,6 +173,6 @@ def mteam_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         other_data['l_sub']='yes'
         logger.info('已选择中字')
     scraper=cloudscraper.create_scraper()
-    r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup,timeout=time_out)
+    r = scraper.post(post_url, headers=headers,cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup,timeout=time_out)
     
     return afterupload(r,fileinfo,record_path,siteinfo,file1,qbinfo,hashlist)
