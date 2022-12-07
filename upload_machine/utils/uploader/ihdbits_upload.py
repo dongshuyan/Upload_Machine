@@ -160,7 +160,7 @@ def ihdbits_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         processing_sel='2'
         logger.info('处理已成功选择为Encode')
     else:
-        processing_sel='1'
+        processing_sel='0'
         logger.info('处理已成功选择为Raw')
 
     #选择制作组
@@ -201,7 +201,7 @@ def ihdbits_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         tags.append(10)
         logger.info('已选择粤语')
     '''
-    if not file1.sublan=='' and ('简' in file1.sublan or '繁' in file1.sublan or '中' in file1.sublan):
+    if (not file1.sublan=='') and ('简' in file1.sublan or '繁' in file1.sublan or '中' in file1.sublan or '国' in file1.sublan):
         tags.append(6)
         logger.info('已选择中字')
 
