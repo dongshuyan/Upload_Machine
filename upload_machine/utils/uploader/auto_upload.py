@@ -15,6 +15,7 @@ from upload_machine.utils.uploader.hdvideo_upload import hdvideo_upload
 from upload_machine.utils.uploader.ihdbits_upload import ihdbits_upload
 from upload_machine.utils.uploader.redleaves_upload import redleaves_upload
 from upload_machine.utils.uploader.mteam_upload import mteam_upload
+#from upload_machine.utils.uploader.zhuque_upload import zhuque_upload
 
 
 

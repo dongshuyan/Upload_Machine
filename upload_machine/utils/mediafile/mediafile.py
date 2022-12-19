@@ -385,7 +385,7 @@ class mediafile(object):
         self.country=''
         self.year=2022
 
-        #根据文件名判断内嵌字幕信息
+        #根据文件名判断内封字幕信息
         self.sublan=''
         jp=0
         sc=0
@@ -398,19 +398,19 @@ class mediafile(object):
             jp=1
         
         if jp==0 and sc==0 and tc==1:
-            self.sublan='[内嵌繁中]'
+            self.sublan='[内封繁中]'
         elif jp==0 and sc==1 and tc==0:
-            self.sublan='[内嵌简中]'
+            self.sublan='[内封简中]'
         elif jp==0 and sc==1 and tc==1:
-            self.sublan='[内嵌简繁中字]'
+            self.sublan='[内封简繁中字]'
         elif jp==1 and sc==0 and tc==0:
-            self.sublan='[内嵌日字]'
+            self.sublan='[内封日字]'
         elif jp==1 and sc==0 and tc==1:
-            self.sublan='[内嵌繁日双语]'
+            self.sublan='[内封繁日双语]'
         elif jp==1 and sc==1 and tc==0:
-            self.sublan='[内嵌简日双语]'
+            self.sublan='[内封简日双语]'
         elif jp==1 and sc==1 and tc==1:
-            self.sublan='[内嵌简繁日双语]'
+            self.sublan='[内封简繁日双语]'
         else:
             self.sublan=''
         
