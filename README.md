@@ -25,6 +25,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - 无法在发种前暂停自行修改信息
 
 ## 更新说明
+- 20221223 增加对于SharkPT的支持
 - 20221219 更正“内嵌字幕”为“内封字幕”
 - 20221202 增加对于MTeam的支持
 - 20221202 随着carpt升级更改carpt发种部分代码以顺利发种，ihdbits添加音频编码。
@@ -104,6 +105,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - iHDBits(爱好多)
 - redleaves(红叶)
 - mteam(馒头)
+- sharkpt(鲨鱼)
 
 正在适配的站点(排名不分先后):
 
