@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 def afterupload(r,fileinfo,record_path,siteinfo,file1,qbinfo,hashlist):
     if r.status_code==200:
         logger.info('已发布成功')
-    elif r.status_code==400 and siteinfo.sitename=='zhuque' and 'data' in r.json() and 'code' in r.json()['data'] and 'ALREADY_UPLOAD' in r.json()['data']['code']:
+    elif r.status_code==400 and siteinfo.sitename=='zhuque' and 'code' in r.json() and 'TORRENT_ALREADY_UPLOAD' in r.json()['code']:
         return True,fileinfo+'种子发布失败,失败原因:种子已存在'
     else:
         logger.warning('发布种子发生错误，错误代码:'+str(r.status_code)+' ,错误信息:'+str(r.reason))
@@ -150,7 +150,7 @@ def finddownloadurl(res):
             logger.info('成功获得下载链接'+link)
             return link
 
-    for a in soup.find_all('a'):
+    for a in soup.find_all('a', href=True):
         link=''
         try:
             link = a['href']
