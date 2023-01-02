@@ -193,6 +193,7 @@ def seedmachine_single(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
     logger.info('路径'+pathinfo.path+'下资源已全部发布完毕')
     return log_error,log_succ
 
+#发布合集
 def seedmachine(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
     '''
     para:
@@ -260,7 +261,10 @@ def seedmachine(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
             log_error=log_error+str(errornum)+':\t'+siteitem.sitename+'   \t'+logstr+'\n'
             logger.warning(logstr)
             #记录已发布的种子
+            for epitem in pathinfo.eps:
+                exec('pathinfo.'+siteitem.sitename+'_done.append('+str(epitem)+')')
             exec('pathinfo.'+siteitem.sitename+'_done.append(-1)')
+            exec('pathinfo.'+siteitem.sitename+'_done=list(set('+'pathinfo.'+siteitem.sitename+'_done'+'))')
             exec('pathinfo.'+siteitem.sitename+'_done.sort()')
             exec('pathyaml["'+siteitem.sitename+'"]=",".join([str(i) for i in pathinfo.'+siteitem.sitename+'_done])')
         else:
@@ -268,7 +272,10 @@ def seedmachine(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
             log_succ=log_succ+str(succnum)+':\t'+siteitem.sitename+'   \t'+logstr+'\n'
             logger.info(logstr)
             #记录已发布的种子
+            for epitem in pathinfo.eps:
+                exec('pathinfo.'+siteitem.sitename+'_done.append('+str(epitem)+')')
             exec('pathinfo.'+siteitem.sitename+'_done.append(-1)')
+            exec('pathinfo.'+siteitem.sitename+'_done=list(set('+'pathinfo.'+siteitem.sitename+'_done'+'))')
             exec('pathinfo.'+siteitem.sitename+'_done.sort()')
             exec('pathyaml["'+siteitem.sitename+'"]=",".join([str(i) for i in pathinfo.'+siteitem.sitename+'_done])')
             #deletetorrent(basic['screenshot_path'])
