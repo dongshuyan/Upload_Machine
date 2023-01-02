@@ -11,6 +11,8 @@ class site(object):
         self.enable =0
         self.check = False
         self.mediainfo_template_file=''
+        self.token='' #zhuque站点token
+        self.torrentkey='' #zhuque站点torrentkey
 
 
         try:
@@ -63,6 +65,20 @@ class site(object):
                 self.check=True
             else:
                 self.check=False
+        
+        if sitename=='zhuque':
+            if 'token' in sitedict :
+                self.token=sitedict['token']
+            else:
+                logger.warning('zhuque站点缺少x-csrf-token')
+            
+            if 'torrentkey' in sitedict :
+                self.torrentkey=sitedict['torrentkey']
+            else:
+                logger.warning('zhuque站点缺少torrentkey，将会导致无法做种')
+            
+
+
         if 'username' in sitedict and not sitedict['username']==None and 'password' in sitedict and not sitedict['password']==None:
             self.username   = sitedict['username']
             self.password   = sitedict['password']

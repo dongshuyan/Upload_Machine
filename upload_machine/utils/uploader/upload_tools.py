@@ -5,20 +5,31 @@ import datetime
 import os
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
+import cloudscraper
 import sys
 import re
 import qbittorrentapi
 from http.cookies import SimpleCookie
-
+from bs4 import BeautifulSoup
 
 def afterupload(r,fileinfo,record_path,siteinfo,file1,qbinfo,hashlist):
     if r.status_code==200:
         logger.info('已发布成功')
+    elif r.status_code==400 and siteinfo.sitename=='zhuque' and 'data' in r.json() and 'code' in r.json()['data'] and 'ALREADY_UPLOAD' in r.json()['data']['code']:
+        return True,fileinfo+'种子发布失败,失败原因:种子已存在'
     else:
         logger.warning('发布种子发生错误，错误代码:'+str(r.status_code)+' ,错误信息:'+str(r.reason))
         return False,fileinfo+' 发布种子发生错误，错误代码:'+str(r.status_code)+' ,错误信息:'+str(r.reason)
-    String_url =finduploadurl(r)
-    downloadurl=finddownloadurl(r)
+    if siteinfo.sitename=='zhuque':
+        String_url='https://zhuque.in/torrent/info/'+str(r.json()['data']['id'])
+    else:
+        String_url =finduploadurl(r)
+    if siteinfo.sitename=='zhuque':
+        if siteinfo.torrentkey=='':
+            return True,fileinfo+'种子发布成功,但是做种失败，失败原因:未设置zhuque站点torrentkey.'+',当前网址:'+String_url
+        downloadurl='https://zhuque.in/api/torrent/download/'+str(r.json()['data']['id'])+'/'+siteinfo.torrentkey
+    else:
+        downloadurl=finddownloadurl(r)
     if downloadurl=='已存在':
         return True,fileinfo+'种子发布失败,失败原因:种子'+downloadurl+',当前网址:'+String_url
     recordupload(os.path.join(record_path,siteinfo.sitename+'_torrent.csv'),file1,String_url,downloadurl)
@@ -110,6 +121,7 @@ def finduploadurl(res):
     return String_url
 
 
+
 def finddownloadurl(res):
     logger.info('正在寻找页面下载链接')
     o = urlparse(res.url)
@@ -127,7 +139,7 @@ def finddownloadurl(res):
             return ''
     #白兔特判结束
     soup = BeautifulSoup(res.text,'lxml')
-    for a in soup.find_all('a'):
+    for a in soup.find_all('a', href=True):
         link=''
         try:
             link = a['href']

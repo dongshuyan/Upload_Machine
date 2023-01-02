@@ -181,8 +181,7 @@ def mktorrent(filepath,torrentname,tracker="https://announce.leaguehd.com/announ
 
     logger.info('正在对下面路径制作种子:'+filepath)
     #order='mktorrent -v -p -f -l 24 -c "Made by Auto_Upload" -a '+tracker+' -o \"'+torrentname+ '\" \"'+filepath+'\"'+' > /dev/null'
-    order='mktorrent -v -p -l 24 -c "Made by Auto_Upload" -a '+tracker+' -o \"'+torrentname+ '\" \"'+filepath+'\"'
-        
+    order='mktorrent -v -p -l 24 -c "Made by Upload_Machine" -a '+tracker+' -o \"'+torrentname+ '\" \"'+filepath+'\"'
     #logger.info(order)
     trytime=0
     filesize=0

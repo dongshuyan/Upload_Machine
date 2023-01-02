@@ -191,16 +191,33 @@ def zhuque_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     
     tags=list(set(tags))
     tags.sort()
-    
+    tags=[str(titem) for titem in tags]
     if siteinfo.uplver==1:
         uplver='true'
     else:
         uplver='false'
+        
+    if siteinfo.token=='':
+        return False,fileinfo+' 发布种子发生错误,错误信息:朱雀缺少站点token信息，请联系站点/莫与解决'
 
     torrent_file = file1.torrentpath
-    #file_tup = ("torrent", (os.path.basename(torrent_file), open(torrent_file, 'rb'), 'application/x-bittorrent')),
-    file_tup = {'file': open(torrent_file, 'rb')}
-
+    file_tup = ("torrent", (os.path.basename(torrent_file), open(torrent_file, 'rb'), 'application/x-bittorrent')),
+    headers = {
+            'authority': 'zhuque.in',
+            'accept': 'application/json, text/plain, */*',
+            'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+            'cookie': siteinfo.cookie,
+            'origin': 'https://zhuque.in',
+            'referer': 'https://zhuque.in/torrent/upload',
+            'sec-ch-ua': '"Not?A_Brand";v="8", "Chromium";v="108", "Microsoft Edge";v="108"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"macOS"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-origin',
+            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54',
+            'x-csrf-token': siteinfo.token,
+    }
     other_data = {
             "title": file1.uploadname,
             "subtitle": file1.small_descr+file1.pathinfo.exinfo,
@@ -215,10 +232,10 @@ def zhuque_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "group": team_sel,
             "anonymous": uplver,
             "tags": ','.join(tags),
+            "note": '',
             }
 
     scraper=cloudscraper.create_scraper()
-    
-    r = scraper.post(post_url, cookies=cookies_raw2jar(siteinfo.cookie),data=other_data, files=file_tup,timeout=time_out)
+    r = scraper.post(post_url, headers=headers,data=other_data, files=file_tup,timeout=time_out)
     
     return afterupload(r,fileinfo,record_path,siteinfo,file1,qbinfo,hashlist)
