@@ -226,7 +226,7 @@ def seedmachine(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
     if not pathinfo.imdb_url=='' and pathyaml['imdb_url']==None:
         pathyaml['imdb_url']=pathinfo.imdb_url
 
-    logger.info('正在'+siteitem+'站点发布路径'+pathinfo.path+'下资源')
+    logger.info('正在发布路径'+pathinfo.path+'下资源')
     logger.info('正在抓取资源信息,请稍后...')
     file1.getfullinfo()
 
