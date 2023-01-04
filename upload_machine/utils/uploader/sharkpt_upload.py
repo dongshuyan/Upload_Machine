@@ -188,13 +188,14 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             
 
     other_data = {
-            "name": file1.uploadname,
+            "name": file1.uploadname_sharkpt,
             "small_descr": file1.small_descr+file1.pathinfo.exinfo,
             "pt_gen": file1.doubanurl,
             "color": "0",
             "font": "0",
             "size": "0",
-            "descr": file1.content,
+            "descr": file1.douban_info+'\n'+file1.screenshoturl,
+            "technical_info": file1.mediainfo,
             "type": select_type,
             "medium_sel": medium_sel,
             "codec_sel": codec_sel,

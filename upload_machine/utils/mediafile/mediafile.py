@@ -899,9 +899,25 @@ class mediafile(object):
     
     def get_douban(self):
         if 'doubancookie' in self.basic and self.basic['doubancookie']!=None:
-            res_douban=getdoubaninfo(url=self.doubanurl,cookie=self.basic['doubancookie'],ret_val=True)
+            get_success=0
+            while get_success==0:
+                try:
+                    res_douban=getdoubaninfo(url=self.doubanurl,cookie=self.basic['doubancookie'],ret_val=True)
+                    get_success=1
+                except:
+                    get_success=0
+                    logger.warning('抓取豆瓣info错误，正在重试...')
+
         else:
-            res_douban=getdoubaninfo(url=self.doubanurl,ret_val=True)
+            get_success=0
+            while get_success==0:
+                try:
+                    res_douban=getdoubaninfo(url=self.doubanurl,ret_val=True)
+                    get_success=1
+                except:
+                    get_success=0
+                    logger.warning('抓取豆瓣info错误，正在重试...')
+            
         douban_dict=res_douban.parse()
         self.douban_dict=douban_dict
         self.douban_info=res_douban.info()
@@ -1209,23 +1225,28 @@ class mediafile(object):
 
 
         self.uploadname=self.englishname+' '+str(self.year)
+        self.uploadname_sharkpt = self.englishname
         self.small_descr=self.chinesename.strip()
+        
         
         
         medianame=self.uploadname
         if self.pathinfo.type=='anime' or self.pathinfo.type=='tv':
             self.uploadname=self.uploadname+' '+self.season
+            self.uploadname_sharkpt=self.uploadname_sharkpt+' '+self.season
             #if int(self.seasonnum)>1:
             #self.small_descr=self.small_descr+' | '+self.season_ch.strip()
             medianame=self.uploadname
             if not self.isdir:
                 self.uploadname=self.uploadname+'E'+self.episodename
+                self.uploadname_sharkpt=self.uploadname_sharkpt+'E'+self.episodename
                 self.small_descr=self.small_descr+' | 第'+self.episodename+'集'
             elif self.complete==1:
                 self.uploadname=self.uploadname
                 self.small_descr=self.small_descr+' | 全 '+str(self.pathinfo.max)+' 集'
             else:
                 self.uploadname=self.uploadname+'E'+str(self.pathinfo.min).zfill(2)+'-E'+str(self.pathinfo.max).zfill(2)
+                self.uploadname_sharkpt=self.uploadname_sharkpt+'E'+str(self.pathinfo.min).zfill(2)+'-E'+str(self.pathinfo.max).zfill(2)
                 self.small_descr=self.small_descr+' | 第'+str(self.pathinfo.min).zfill(2)+'-'+str(self.pathinfo.max).zfill(2)+'集'
 
 
@@ -1269,8 +1290,9 @@ class mediafile(object):
 
             
 
-        self.uploadname_ssd=self.uploadname+' '+self.type+' '+self.standard_sel+' '+self.Video_Format+' '+self.Audio_Format+(self.audio_num>1)*('.'+str(self.audio_num)+'Audio') +'-'+self.sub
-        self.uploadname    =self.uploadname+' '+self.standard_sel+' '+self.type+' '+self.Video_Format+' '+self.Audio_Format+(self.audio_num>1)*(' '+str(self.audio_num)+'Audio') +'-'+self.sub
+        self.uploadname_ssd     =self.uploadname+' '+self.type+' '+self.standard_sel+' '+self.Video_Format+' '+self.Audio_Format+(self.audio_num>1)*('.'+str(self.audio_num)+'Audio') +'-'+self.sub
+        self.uploadname_sharkpt =self.uploadname_sharkpt+str(self.year)+' '+self.standard_sel+' '+self.type+' '+self.Video_Format+' '+self.Audio_Format+(self.audio_num>1)*(' '+str(self.audio_num)+'Audio') +'-'+self.sub
+        self.uploadname         =self.uploadname+' '+self.standard_sel+' '+self.type+' '+self.Video_Format+' '+self.Audio_Format+(self.audio_num>1)*(' '+str(self.audio_num)+'Audio') +'-'+self.sub
         
         try:
             if self.language!='':
