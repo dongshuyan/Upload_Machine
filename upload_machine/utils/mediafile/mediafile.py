@@ -1,4 +1,5 @@
 from upload_machine.utils.pathinfo.pathinfo import findnum
+from upload_machine.utils.pathinfo.pathinfo import findeps
 import os
 from loguru import logger
 import time
@@ -1241,6 +1242,12 @@ class mediafile(object):
                 self.uploadname=self.uploadname+'E'+self.episodename
                 self.uploadname_sharkpt=self.uploadname_sharkpt+'E'+self.episodename
                 self.small_descr=self.small_descr+' | 第'+self.episodename+'集'
+            elif self.pathinfo.collection==2:
+                eps_temp=findeps([self.mediapath])
+                eps_temp.sort()
+                self.uploadname=self.uploadname+'E'+str(eps_temp[0]).zfill(2)+'-E'+str(eps_temp[-1]).zfill(2)
+                self.uploadname_sharkpt=self.uploadname_sharkpt+'E'+str(eps_temp[0]).zfill(2)+'-E'+str(eps_temp[-1]).zfill(2)
+                self.small_descr=self.small_descr+' | 第'+str(eps_temp[0]).zfill(2)+'-'+str(eps_temp[-1]).zfill(2)+'集'
             elif self.complete==1:
                 self.uploadname=self.uploadname
                 self.small_descr=self.small_descr+' | 全 '+str(self.pathinfo.max)+' 集'

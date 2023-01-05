@@ -302,12 +302,12 @@ class pathinfo(object):
         if ('anime' in self.type or 'tv' in self.type) and not self.exist_collection:
             res=100
             while not(res==0 or res==1):
-                res=input('未识别路径'+pathid+'的collection（资源是否按合集发布）信息,请重新输入选项对应的数字:\n0:发布单集,1:发布合集\n')
+                res=input('未识别路径'+pathid+'的collection（资源是否按合集发布）信息,请重新输入选项对应的数字:\n0:发布单集,1:发布合集,2:将未发布的资源按合集发布\n')
                 try:
                     res=int(res)
                 except:
                     res=100
-                if not(res==0 or res==1):
+                if not(res==0 or res==1 or res==2):
                     logger.warning('输入有误，请重新输入')
             if res==0:
                 self.collection =0
@@ -315,6 +315,9 @@ class pathinfo(object):
             elif res==1:
                 self.collection =1
                 infodict['collection']=1
+            elif res==2:
+                self.collection =2
+                infodict['collection']=2
             else:
                 logger.error('未识别路径'+pathid+'的collection（资源是否按合集发布）信息')
                 raise ValueError ('未识别路径'+pathid+'的collection（资源是否按合集发布）信息')
@@ -343,7 +346,7 @@ class pathinfo(object):
                 logger.warning('未识别路径'+pathid+'的collection（资源是否以合集发布）信息,已设置为0（单集发布）')
                 self.collection =0
                 infodict['collection']=0
-            if not (self.collection==0 or self.collection==1):
+            if not (self.collection==0 or self.collection==1 or self.collection==2):
                 logger.warning('未识别路径'+pathid+'的collection（资源是否以合集发布）信息,已设置为0（单集发布）')
                 self.collection =0
                 infodict['collection']=0
@@ -465,7 +468,8 @@ class pathinfo(object):
             else:
                 self.eps=findeps([self.path,os.path.join(self.path,self.zeroday_name)])
             if (len(self.eps)<1):
-                raise Exception('路径'+pathid+' : '+self.infodict['path']+'中没找到视频文件')
+                #raise Exception('路径'+pathid+' : '+self.infodict['path']+'中没找到视频文件')
+                logger.warning('路径'+pathid+' : '+self.infodict['path']+'中没找到任何视频文件,请检查或者联系开发者')
             self.min=self.eps[0]
             self.max=self.eps[-1]
             '''

@@ -117,6 +117,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - HDTime
 
 Todolist:
+- 将没有发布过的资源按照合计发布
 - 自动文件夹改名
 - 自动文件改名
 - 配置文件详细教程

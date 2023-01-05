@@ -208,7 +208,8 @@ def zmpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             }
 
     scraper=cloudscraper.create_scraper()
-    
+    success_upload=0
+    try_upload=0
     while success_upload==0:
         try_upload+=1
         if try_upload>5:
