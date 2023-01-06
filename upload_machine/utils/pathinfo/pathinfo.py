@@ -162,7 +162,8 @@ class pathinfo(object):
             else:
                 exec('self.'+item+'=infodict[item]')
                 exec('self.exist_'+item+'=True')
-
+        if self.path[-1]=='\\' or self.path[-1]=='/':
+            self.path=self.path[:-1]
         
 
         #可有可无的属性,后面写入配置文件
