@@ -18,7 +18,7 @@ def hdsky_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     #选择类型
     if 'anime' in file1.pathinfo.type.lower():
         select_type='405'
-    elif 'tv' in file1.pathinfo.type.lower() and file1.pathinfo.collection==1:
+    elif 'tv' in file1.pathinfo.type.lower() and file1.pathinfo.collection>=1:
         if '大陆' in file1.country or '香港' in file1.country or '台湾' in file1.country:
             select_type='411'
         else:
@@ -130,7 +130,7 @@ def hdsky_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     elif 'HDSTV' in file1.sub.upper():
         team_sel='9'
         tags.append(12)
-    elif 'HDSWEB' in file1.sub.upper() and file1.pathinfo.collection==1:
+    elif 'HDSWEB' in file1.sub.upper() and file1.pathinfo.collection>=1:
         team_sel='35'
         tags.append(12)
     elif 'HDSWEB' in file1.sub.upper():

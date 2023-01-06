@@ -150,15 +150,7 @@ Todolist:
 - 将上一步 `ffmpeg\bin`文件夹路径添加到系统PATH我的电脑【右击】 -> 选择 属性 -> 高级系统设置 -> 高级 -> 环境变量  -> 系统变量里面找到'Path',点击编辑 -> 新建 -> 将上一步 `ffmpeg\bin`文件夹路径路径粘贴进去 -> 确定 --> 确定 … 保存即可。一般也是 不需要重启
 - 在PowerShell确认ffmpeg和ffprobe安装成功
 
-4.安装 `mktorrent`，并确认安装正确:
-
-- 根据自己电脑下载[64位安装包](https://github.com/q3aql/mktorrent-win/releases/download/v1.1-2/mktorrent-1.1-win-64bit-build2.7z)或者[32位安装包](https://github.com/q3aql/mktorrent-win/releases/download/v1.1-2/mktorrent-1.1-win-32bit-build2.7z)
-- 使用[7-zip](http://www.7-zip.org/) or [Winrar](http://www.rarlab.com/)解压文件.
-- 将 `mktorrent`文件夹移动到一个相对稳定的文件夹,比如 `D:\Program Files\`
-- 将上一步 `mktorrent\bin`文件夹路径添加到系统PATH
-  我的电脑【右击】 -> 选择 属性 -> 高级系统设置 -> 高级 -> 环境变量  -> 系统变量里面找到'Path',点击编辑 -> 新建 -> 将上一步 `mktorrent\bin`文件夹路径路径粘贴进去 -> 确定 --> 确定 … 保存即可。一般也是 不需要重启
-
-5.安装 `mediainfo`，并确认安装正确
+4.安装 `mediainfo`，并确认安装正确
 
 - 下载[mediainfo-cli](https://mediaarea.net/download/binary/mediainfo/22.06/MediaInfo_CLI_22.06_Windows_x64.zip)：https://mediaarea.net/en/MediaInfo/Download/Windows
 - 解压zip文件并解压后的 `Mediainfo_CLIxxx`文件夹移动到一个相对稳定的位置
@@ -169,7 +161,7 @@ Todolist:
 mediainfo -h
 ```
 
-6.安装 `Upload_Machine`，在以管理员身份打开 `Windows PowerShell`中输入:
+5.安装 `Upload_Machine`，在以管理员身份打开 `Windows PowerShell`中输入:
 
 ```bash
 python3 -m pip install upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/

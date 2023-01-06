@@ -768,7 +768,7 @@ class mediafile(object):
             logger.warning('无法根据mediainfo分析出字幕语言信息')
 
     def updatemediainfo(self,filepath=''):
-        if filepath!='':
+        if filepath!='' and filepath!=None:
             a=os.popen('mediainfo --Inform=file://"'+filepath+'" "'+self.address+'"')
             res=a.buffer.read().decode('utf-8')
         else:

@@ -18,7 +18,7 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     #选择类型
     if 'anime' in file1.pathinfo.type.lower():
         select_type='405'
-    elif 'tv' in file1.pathinfo.type.lower() and file1.pathinfo.collection==1:
+    elif 'tv' in file1.pathinfo.type.lower() and file1.pathinfo.collection>=1:
         if '大陆' in file1.country or '香港' in file1.country or '台湾' in file1.country:
             select_type='402'
         else:
@@ -205,7 +205,8 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "uplver": uplver,
             "tags[]": tags,
             }
-    
+    print(other_data)
+    a=input('check')
     scraper=cloudscraper.create_scraper()
     success_upload=0
     try_upload=0

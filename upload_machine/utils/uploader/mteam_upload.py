@@ -18,7 +18,7 @@ def mteam_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     #选择类型
     if 'anime' in file1.pathinfo.type.lower():
         select_type='405'
-    elif 'tv' in file1.pathinfo.type.lower() and file1.pathinfo.collection==1:
+    elif 'tv' in file1.pathinfo.type.lower() and file1.pathinfo.collection>=1:
         if '480' in file1.standard_sel:
             select_type='403'
         else:
