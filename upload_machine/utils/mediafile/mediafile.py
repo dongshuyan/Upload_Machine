@@ -367,8 +367,6 @@ class mediafile(object):
         else:
             self.address           = mediapath
             self.isdir=False
-            
- 
         
         #种子目录
         self.topath            = ''
@@ -767,8 +765,8 @@ class mediafile(object):
         else:
             logger.warning('无法根据mediainfo分析出字幕语言信息')
 
-    def updatemediainfo(self,filepath=''):
-        if filepath!='' and filepath!=None:
+    def updatemediainfo(self,filepath='',newpath=''):
+        if not (filepath=='' or filepath==None):
             a=os.popen('mediainfo --Inform=file://"'+filepath+'" "'+self.address+'"')
             res=a.buffer.read().decode('utf-8')
         else:
@@ -779,8 +777,8 @@ class mediafile(object):
                 if ss[i].startswith('Complete name'):
                     ss[i]=':'.join([ss[i].split(':')[0],' '+self.filename])
             res='\n'.join(ss)
-
         self.mediainfo=res
+
 
     def getmediainfo(self):
         if self.getmediainfo_done==1:

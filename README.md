@@ -164,27 +164,27 @@ mediainfo -h
 5.安装 `Upload_Machine`，在以管理员身份打开 `Windows PowerShell`中输入:
 
 ```bash
-python3 -m pip install upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip install upload_machine
 upload_machine -h
 ```
 
 如果上述命令没反应或者报错可以尝试下面这个：
 
 ```bash
-pip install upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip3 install upload_machine
 upload_machine -h
 ```
 
 7.更新 `Upload_Machine`，在 `Windows PowerShell`中输入:
 
 ```bash
-python3 -m pip install --upgrade upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip install --upgrade upload_machine
 ```
 
 如果上述命令没反应或者报错可以尝试下面这个：
 
 ```bash
-pip install --upgrade upload_machine  -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip3 install --upgrade upload_machine 
 ```
 
 ### Linux
@@ -229,27 +229,27 @@ sudo apt-get install python3-pip ffmpeg mediainfo mktorrent
 3.安装 `Upload_Machine`
 
 ```bash
-python3 -m pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip install upload_machine
 upload_machine -h
 ```
 
 如果上述命令没反应或者报错可以尝试下面这个：
 
 ```bash
-pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip3 install upload_machine
 upload_machine -h
 ```
 
 4.更新 `Upload_Machine`，，在 `Terminal.app`中输入:
 
 ```bash
-python3 -m pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip install --upgrade upload_machine
 ```
 
 如果上述命令没反应或者报错可以尝试下面这个：
 
 ```bash
-pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip3 install --upgrade upload_machine
 ```
 
 ### MacOS(已测试成功)
@@ -271,27 +271,27 @@ mediainfo --version
 3.安装 `Upload_Machine`，在 `Terminal.app`中输入:
 
 ```bash
-python3 -m pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip install upload_machine
 upload_machine -h
 ```
 
 如果上述命令没反应或者报错可以尝试下面这个：
 
 ```bash
-pip install upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip3 install upload_machine
 upload_machine -h
 ```
 
 5.更新 `Upload_Machine`，，在 `Terminal.app`中输入:
 
 ```bash
-python3 -m pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip install --upgrade upload_machine
 ```
 
 如果上述命令没反应或者报错可以尝试下面这个：
 
 ```bash
-pip install --upgrade upload_machine -i https://pypi.tuna.tsinghua.edu.cn/simple/
+pip3 install --upgrade upload_machine
 ```
 
 ## 配置环境&文件

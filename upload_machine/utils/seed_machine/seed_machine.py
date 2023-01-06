@@ -247,6 +247,8 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         file1.getfullinfo()
         if not pathinfo.imdb_url=='' and ((not 'imdb_url' in pathyaml) or pathyaml['imdb_url']==None):
             pathyaml['imdb_url']=pathinfo.imdb_url
+        #用模板获取mediainfo
+        file1.updatemediainfo(siteitem.mediainfo_template_file)
         
         #3.把文件返回原位
         ls = os.listdir(path_new)
@@ -257,11 +259,10 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
             shutil.move(c_path, pathinfo.path) 
         #4.删除path_new文件夹
         shutil.rmtree(path_new)
-        
+
         upload_success=False
         uploadtime=0
-        #用模板获取mediainfo
-        file1.updatemediainfo(siteitem.mediainfo_template_file)
+        
         while upload_success==False and uploadtime<3:
             uploadtime=uploadtime+1
             logger.info('第'+str(uploadtime)+'次尝试发布')
