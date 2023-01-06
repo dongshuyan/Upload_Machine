@@ -672,7 +672,7 @@ class mediafile(object):
                         jp=1
                     if 'EN' in item['Language'].upper() or '英' in item['Language'].upper():
                         en=1
-                    if 'CANTON' in item['Title'].upper() or '粤' in item['Title'].upper():
+                    if 'CANTON' in item['Language'].upper() or '粤' in item['Language'].upper():
                         yue=1
         '''
         if jp==0 and ch==0 and en==1:
