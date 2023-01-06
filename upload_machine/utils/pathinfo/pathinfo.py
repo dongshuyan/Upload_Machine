@@ -470,8 +470,12 @@ class pathinfo(object):
             if (len(self.eps)<1):
                 #raise Exception('路径'+pathid+' : '+self.infodict['path']+'中没找到视频文件')
                 logger.warning('路径'+pathid+' : '+self.infodict['path']+'中没找到任何视频文件,请检查或者联系开发者')
-            self.min=self.eps[0]
-            self.max=self.eps[-1]
+            if len(self.eps)>0:
+                self.min=self.eps[0]
+                self.max=self.eps[-1]
+            else:
+                self.min=10000
+                self.max=-10000
             '''
             if (not self.exist_bgm_url) and 'anime' in self.type:
                 if self.seasonnum>1:
