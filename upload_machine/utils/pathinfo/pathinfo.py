@@ -294,10 +294,6 @@ class pathinfo(object):
         else:
             self.category=infodict['category']
 
-        if self.complete=='':
-            self.complete=0
-        else:
-            self.complete=int(self.complete)
 
         
         if ('anime' in self.type or 'tv' in self.type) and not self.exist_collection:
@@ -381,17 +377,14 @@ class pathinfo(object):
             try:
                 self.complete =int(self.complete)
             except:
-                logger.warning('未识别路径'+pathid+'的complete(资源是否为完结)信息,已设置为0（未完结）')
-                self.complete =0
-                infodict['complete']=0
-            if not (self.complete==0 or self.complete==1):
-                logger.warning('未识别路径'+pathid+'的complete(资源是否为完结)信息,已设置为0（未完结）')
-                self.complete =0
-                infodict['complete']=0
+                logger.warning('未识别路径'+pathid+'的complete(资源是否为完结)信息,默认设置为0（未完结）')
+                self.complete =-1
+            if not (self.complete==0 or self.complete==1 or self.complete==-1):
+                logger.warning('未识别路径'+pathid+'的complete(资源是否为完结)信息,默认设置为0（未完结）')
+                self.complete =-1
         else:
-            logger.warning('未识别路径'+pathid+'的complete(资源是否为完结)信息,已设置为0（未完结）')
-            self.complete =0
-            infodict['complete']=0
+            logger.warning('未识别路径'+pathid+'的complete(资源是否为完结)信息,默认设置为0（未完结）')
+            self.complete =-1
             
 
 

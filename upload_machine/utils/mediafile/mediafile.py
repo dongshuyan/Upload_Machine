@@ -996,10 +996,15 @@ class mediafile(object):
         if (douban_dict['episodes']) :
             self.media_type='TV_series'
             self.num=int(douban_dict['episodes'])
-            if self.pathinfo.max>=self.num:
-                self.complete=1
+            if self.complete==-1:
+                if self.pathinfo.max>=self.num:
+                    self.complete=1
+                else:
+                    self.complete=0
             logger.info('根据豆瓣信息分析，总集数为'+str(self.num))
-        
+        #没有获取到集数信息则默认为“未完结”
+        if self.complete==-1:
+            self.complete=0
         self.getptgen_done=1
 
     def getptgen_douban_info(self):

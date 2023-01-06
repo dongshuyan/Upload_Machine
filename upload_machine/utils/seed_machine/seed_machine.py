@@ -128,7 +128,8 @@ def seedmachine_single(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         file1=mediafile(filepath,pathinfo,basic,imgdata)
         if not pathinfo.imdb_url=='' and ((not 'imdb_url' in pathyaml) or pathyaml['imdb_url']==None):
             pathyaml['imdb_url']=pathinfo.imdb_url
-        
+        if file1.complete==1 and (not 'complete' in pathyaml or pathyaml['complete']==None or pathyaml['complete']==''):
+            pathyaml['complete']=1
         
         
         logger.info('正在发布路径'+pathinfo.path+'下第'+str(pathep)+'集资源:'+filepath)
@@ -247,9 +248,11 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         file1.getfullinfo()
         if not pathinfo.imdb_url=='' and ((not 'imdb_url' in pathyaml) or pathyaml['imdb_url']==None):
             pathyaml['imdb_url']=pathinfo.imdb_url
+        if file1.complete==1 and (not 'complete' in pathyaml or pathyaml['complete']==None or pathyaml['complete']==''):
+            pathyaml['complete']=1
         #用模板获取mediainfo
         file1.updatemediainfo(siteitem.mediainfo_template_file)
-        
+
         #3.把文件返回原位
         ls = os.listdir(path_new)
         for i in ls:
@@ -340,6 +343,9 @@ def seedmachine(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
     file1.getfullinfo()
     if not pathinfo.imdb_url=='' and ((not 'imdb_url' in pathyaml) or pathyaml['imdb_url']==None):
         pathyaml['imdb_url']=pathinfo.imdb_url
+    if file1.complete==1 and (not 'complete' in pathyaml or pathyaml['complete']==None or pathyaml['complete']==''):
+        pathyaml['complete']=1
+        
 
     logger.info('正在发布路径'+pathinfo.path+'下资源')
     
