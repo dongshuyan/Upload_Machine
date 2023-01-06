@@ -445,7 +445,7 @@ class mediafile(object):
         self.country=''
         self.year=2022
 
-        #根据文件名判断内封字幕信息
+        #根据文件名判断内嵌字幕信息
         self.sublan=''
         jp=0
         sc=0
@@ -458,19 +458,19 @@ class mediafile(object):
             jp=1
         
         if jp==0 and sc==0 and tc==1:
-            self.sublan='[内封繁中]'
+            self.sublan='[内嵌繁中]'
         elif jp==0 and sc==1 and tc==0:
-            self.sublan='[内封简中]'
+            self.sublan='[内嵌简中]'
         elif jp==0 and sc==1 and tc==1:
-            self.sublan='[内封简繁中字]'
+            self.sublan='[内嵌简繁中字]'
         elif jp==1 and sc==0 and tc==0:
-            self.sublan='[内封日字]'
+            self.sublan='[内嵌日字]'
         elif jp==1 and sc==0 and tc==1:
-            self.sublan='[内封繁日双语]'
+            self.sublan='[内嵌繁日双语]'
         elif jp==1 and sc==1 and tc==0:
-            self.sublan='[内封简日双语]'
+            self.sublan='[内嵌简日双语]'
         elif jp==1 and sc==1 and tc==1:
-            self.sublan='[内封简繁日双语]'
+            self.sublan='[内嵌简繁日双语]'
         else:
             self.sublan=''
         
@@ -534,35 +534,35 @@ class mediafile(object):
                         if 'EN' in subitem.upper() or 'ENGLISH' in subitem.upper() or '英' in subitem.upper():
                             en=1
         if en==0 and jp==0 and sc==0 and tc==1:
-            self.sublan='[繁体中字]'
+            self.sublan='[内封繁体中字]'
         elif en==0 and jp==0 and sc==1 and tc==0:
-            self.sublan='[简体中字]'
+            self.sublan='[内封简体中字]'
         elif en==0 and jp==0 and sc==1 and tc==1:
-            self.sublan='[简繁中字]'
+            self.sublan='[内封简繁中字]'
         elif en==0 and jp==1 and sc==0 and tc==0:
-            self.sublan='[日文字幕]'
+            self.sublan='[内封日文字幕]'
         elif en==0 and jp==1 and sc==0 and tc==1:
-            self.sublan='[繁日双语]'
+            self.sublan='[内封繁日双语]'
         elif en==0 and jp==1 and sc==1 and tc==0:
-            self.sublan='[简日双语]'
+            self.sublan='[内封简日双语]'
         elif en==0 and jp==1 and sc==1 and tc==1:
-            self.sublan='[简繁日双语]'
+            self.sublan='[内封简繁日双语]'
         elif en==1 and jp==0 and sc==0 and tc==0:
-            self.sublan='[英文字幕]'
+            self.sublan='[内封英文字幕]'
         elif en==1 and jp==0 and sc==0 and tc==1:
-            self.sublan='[繁英双语]'
+            self.sublan='[内封繁英双语]'
         elif en==1 and jp==0 and sc==1 and tc==0:
-            self.sublan='[简英双语]'
+            self.sublan='[内封简英双语]'
         elif en==1 and jp==0 and sc==1 and tc==1:
-            self.sublan='[简繁英双语]'
+            self.sublan='[内封简繁英双语]'
         elif en==1 and jp==1 and sc==0 and tc==0:
-            self.sublan='[日英双语]'
+            self.sublan='[内封日英双语]'
         elif en==1 and jp==1 and sc==0 and tc==1:
-            self.sublan='[繁日英三语]'
+            self.sublan='[内封繁日英三语]'
         elif en==1 and jp==1 and sc==1 and tc==0:
-            self.sublan='[简日英三语]'
+            self.sublan='[内封简日英三语]'
         elif en==0 and jp==1 and sc==1 and tc==1:
-            self.sublan='[简繁日英三语]'
+            self.sublan='[内封简繁日英三语]'
 
         self.text_jp=jp
         self.text_sc=sc
@@ -578,6 +578,7 @@ class mediafile(object):
         ch=0
         jp=0
         en=0
+        yue=0
         a=res.split('\n\n')
         for item in a:
             if item.startswith('Audio'):
@@ -649,6 +650,7 @@ class mediafile(object):
         ch=0
         jp=0
         en=0
+        yue=0
         infolist=self.mediainfo_json['media']['track']
         for item in infolist:
             if not '@type' in item:
@@ -661,6 +663,8 @@ class mediafile(object):
                         jp=1
                     if 'EN' in item['Title'].upper() or '英' in item['Title'].upper():
                         en=1
+                    if 'CANTON' in item['Title'].upper() or '粤' in item['Title'].upper():
+                        yue=1
                 elif 'Language' in item :
                     if 'CHINESE' in item['Language'].upper() or '中' in item['Language'].upper() or 'CH' in item['Language'].upper() or 'ZH' in item['Language'].upper() or '国' in item['Language'].upper():
                         ch=1
@@ -668,7 +672,9 @@ class mediafile(object):
                         jp=1
                     if 'EN' in item['Language'].upper() or '英' in item['Language'].upper():
                         en=1
-
+                    if 'CANTON' in item['Title'].upper() or '粤' in item['Title'].upper():
+                        yue=1
+        '''
         if jp==0 and ch==0 and en==1:
             self.language='英语'
         elif jp==0 and ch==1 and en==0:
@@ -694,7 +700,36 @@ class mediafile(object):
             logger.info('根据mediainfo音轨分析，语言为'+self.language)
         else:
             logger.warning('无法根据mediainfo分析出音轨语言信息')
+        '''
+        if jp+ch+en+yue>0:
+            self.language=''
+            if ch==1:
+                self.language=self.language+'国'
+            if yue==1:
+                self.language=self.language+'粤'
+            if jp==1:
+                self.language=self.language+'日'
+            if en==1:
+                self.language=self.language+'英'
+        self.audio_num=jp+ch+en+yue
+        self.audio_ch=ch
+        self.audio_jp=jp
+        self.audio_en=en
+        self.audio_yue=yue
 
+        if self.audio_num=='1':
+            self.language=self.language+'语'
+        elif self.audio_num=='2':
+            self.language=self.language+'双语'
+        elif self.audio_num=='3':
+            self.language=self.language+'三语'
+        elif self.audio_num=='4':
+            self.language=self.language+'四语'
+
+        if self.audio_num>0:
+            logger.info('根据mediainfo音轨分析，语言为'+self.language)
+        else:
+            logger.warning('无法根据mediainfo分析出音轨语言信息')
 
     def getsubtext(self):
         jp=0
