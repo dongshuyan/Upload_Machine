@@ -4,7 +4,32 @@ import os
 from upload_machine.utils.uploader.upload_tools import *
 import re
 import cloudscraper
-
+from bs4 import BeautifulSoup
+def get_token(cookie):
+    headers = {
+            'authority': 'zhuque.in',
+            'accept': 'application/json, text/plain, */*',
+            'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+            'cookie': cookie,
+            'origin': 'https://zhuque.in',
+            'referer': 'https://zhuque.in/torrent/upload',
+            'sec-ch-ua': '"Not?A_Brand";v="8", "Chromium";v="108", "Microsoft Edge";v="108"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"macOS"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-origin',
+            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54',
+    }
+    scraper=cloudscraper.create_scraper()
+    r = scraper.get('https://zhuque.in/index',headers=headers)
+    soup = BeautifulSoup(r.text,'lxml')
+    res=soup.find_all('meta',{'name':'x-csrf-token'})
+    if len(res)<=0:
+        return ''
+    if not 'content' in res[0].attrs:
+        return ''
+    return res[0].attrs['content']
 def zhuque_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     post_url = "https://zhuque.in/api/torrent/upload"
     tags=[]
@@ -197,11 +222,15 @@ def zhuque_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     else:
         uplver='false'
         
-    if siteinfo.token=='':
-        return False,fileinfo+' 发布种子发生错误,错误信息:朱雀缺少站点token信息，请联系站点/莫与解决'
+        
 
     torrent_file = file1.torrentpath
     file_tup = ("torrent", (os.path.basename(torrent_file), open(torrent_file, 'rb'), 'application/x-bittorrent')),
+    token=get_token(siteinfo.cookie)
+    if token=='' and siteinfo.token=='':
+        return False,fileinfo+' 发布种子发生错误,错误信息:朱雀缺少站点token信息，请联系站点/莫与解决'
+    elif token=='':
+        token=siteinfo.token
     headers = {
             'authority': 'zhuque.in',
             'accept': 'application/json, text/plain, */*',
@@ -216,7 +245,7 @@ def zhuque_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             'sec-fetch-mode': 'cors',
             'sec-fetch-site': 'same-origin',
             'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54',
-            'x-csrf-token': siteinfo.token,
+            'x-csrf-token': token,
     }
     other_data = {
             "title": file1.uploadname,
