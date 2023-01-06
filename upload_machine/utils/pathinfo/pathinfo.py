@@ -280,8 +280,8 @@ class pathinfo(object):
 
 
         self.downloadpath=''
-        if not 'downloadpath' in infodict or infodict['downloadpath']==None:
-            if (self.collection or 'movie' in self.type) == 1 and ('new_folder' in basic and basic['new_folder']==0):
+        if not 'downloadpath' in infodict or infodict['downloadpath']==None or infodict['downloadpath']=='':
+            if (self.collection>0 or 'movie' in self.type.lower()) and ( (not 'new_folder' in basic) or str(basic['new_folder'])=='0' or basic['new_folder']==None or basic['new_folder']==''):
                 self.downloadpath=os.path.dirname( self.path)
             else:
                 self.downloadpath=self.path

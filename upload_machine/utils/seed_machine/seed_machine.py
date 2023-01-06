@@ -247,6 +247,17 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         file1.getfullinfo()
         if not pathinfo.imdb_url=='' and ((not 'imdb_url' in pathyaml) or pathyaml['imdb_url']==None):
             pathyaml['imdb_url']=pathinfo.imdb_url
+        
+        #3.把文件返回原位
+        ls = os.listdir(path_new)
+        for i in ls:
+            c_path=os.path.join(path_new, i)
+            if (os.path.isdir(c_path)) or (i.startswith('.')) or (not(  os.path.splitext(i)[1].lower()== ('.mp4') or os.path.splitext(i)[1].lower()== ('.mkv')  or os.path.splitext(i)[1].lower()== ('.avi') or os.path.splitext(i)[1].lower()== ('.ts')    )):
+                continue
+            shutil.move(c_path, pathinfo.path) 
+        #4.删除path_new文件夹
+        shutil.rmtree(path_new)
+        
         upload_success=False
         uploadtime=0
         #用模板获取mediainfo
@@ -291,15 +302,7 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
             
         del(file1)  
         logger.info(siteitem.sitename+'站点,路径'+pathinfo.path+'下资源合集发布完毕，分别为：'+str(eps))
-        #3.把文件返回原位
-        ls = os.listdir(path_new)
-        for i in ls:
-            c_path=os.path.join(path_new, i)
-            if (os.path.isdir(c_path)) or (i.startswith('.')) or (not(  os.path.splitext(i)[1].lower()== ('.mp4') or os.path.splitext(i)[1].lower()== ('.mkv')  or os.path.splitext(i)[1].lower()== ('.avi') or os.path.splitext(i)[1].lower()== ('.ts')    )):
-                continue
-            shutil.move(c_path, pathinfo.path) 
-        #4.删除path_new文件夹
-        shutil.rmtree(path_new)
+        
     return log_error,log_succ
     
 #发布合集

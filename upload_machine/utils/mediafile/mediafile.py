@@ -901,25 +901,37 @@ class mediafile(object):
     def get_douban(self):
         if 'doubancookie' in self.basic and self.basic['doubancookie']!=None:
             get_success=0
+            get_time=0
             while get_success==0:
+                get_time+=1
+                if get_time>5:
+                    raise Exception('获取豆瓣info出错，请尝试能否正常打开豆瓣')
                 try:
                     res_douban=getdoubaninfo(url=self.doubanurl,cookie=self.basic['doubancookie'],ret_val=True)
+                    douban_dict=res_douban.parse()
                     get_success=1
-                except:
+                except Exception as r:
                     get_success=0
-                    logger.warning('抓取豆瓣info错误，正在重试...')
+                    logger.warning('抓取豆瓣info错误，一秒后重试，原因: %s' %(r))
+                    time.sleep(1)
 
         else:
             get_success=0
+            get_time=0
             while get_success==0:
+                get_time+=1
+                if get_time>5:
+                    raise Exception('获取豆瓣info出错，请尝试能否正常打开豆瓣')
                 try:
                     res_douban=getdoubaninfo(url=self.doubanurl,ret_val=True)
+                    douban_dict=res_douban.parse()
                     get_success=1
-                except:
+                except Exception as r:
                     get_success=0
-                    logger.warning('抓取豆瓣info错误，正在重试...')
-            
-        douban_dict=res_douban.parse()
+                    logger.warning('抓取豆瓣info错误，一秒后重试，原因: %s' %(r))
+                    time.sleep(1)
+        
+
         self.douban_dict=douban_dict
         self.douban_info=res_douban.info()
 

@@ -3,10 +3,10 @@ basic:
   picture_num: 3 #表示截图的数量
   workpath: /Users/Desktop/ #工作路径 反斜杠朝向请根据自己系统填写，示例文档是linux和Mac下的路径格式。Win下应该是D:\Upload_Machine_Demo\这种格式
   #选填并建议填写项
-  log: /Users/Desktop/record_path/Auto_Upload.sh #日志文件路径，可有可无，若没有则日志不写入文件
-  new_folder: 0 #发布的资源是否在外层套一层0day名字文件夹 0表示否,1表示是,2表示0day文件夹以中文名开头。不填默认是
   doubancookie: cookie #此处填写豆瓣账号的cookie可以抓到只有登录才能看到的资源的info，不填则按照未登录模式抓取
   #选填但是建议不填项
+  log: /Users/Desktop/record_path/Auto_Upload.sh #日志文件路径，可有可无，若没有则日志不写入文件
+  new_folder: 0 #发布的资源是否在外层套一层0day名字文件夹 0表示否,1表示是,2表示0day文件夹以中文名开头。不填默认是
   record_path: /Users/Desktop/record_path #用来存放发种记录 不填默认在工作目录下/record_path
   screenshot_path: /Users/Desktop/screenshot_path #用来存放视频截图，种子等临时文件 不填默认在工作目录下/screenshot_path
 qbinfo:
@@ -50,7 +50,8 @@ site info: #配置站点信息
     enable: 1 #是否开启此站点自动发种 1为开启，0为关闭
     uplver: 1 #是否开启匿名发种，1为开启，0为关闭
     cookie: cookie #从网页F12获取的cookie
-    mediainfo_template_file: #mediainfo的模板文件
+    mediainfo_template_file: #mediainfo的模板文件，如果没有就把本行删掉
+    torrentkey: #只有配置朱雀站点需要填写本行。其他站点删掉本行
 path info:
   path1:
     #必填项
