@@ -8,9 +8,13 @@ def readyaml(file):
     audata = yaml.load(f, Loader=yaml.FullLoader)
     try:
         if (len(audata)<2):
-            logger.warning('配置文件'+file+'数据缺失，已自动使用备份配置文件'+newfile)
-            f=open(newfile, encoding='utf-8')
-            audata = yaml.load(f, Loader=yaml.FullLoader)
+            logger.warning('配置文件'+file+'数据少于两行，判断为数据缺失，已自动使用备份配置文件'+newfile)
+            if os.path.exists(newfile):
+                f=open(newfile, encoding='utf-8')
+                audata = yaml.load(f, Loader=yaml.FullLoader)
+            else:
+                raise ValueError('配置文件'+file+'数据少于两行，判断为数据缺失，且未找到备份配置文件'+newfile+'请检查配置文件')
+
     except:
         logger.warning('配置文件'+file+'数据缺失，已自动使用备份配置文件'+newfile)
         f=open(newfile, encoding='utf-8')

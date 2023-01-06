@@ -126,7 +126,7 @@ def seedmachine_single(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
 
         #获取file全部信息
         file1=mediafile(filepath,pathinfo,basic,imgdata)
-        if not pathinfo.imdb_url=='' and pathyaml['imdb_url']==None:
+        if not pathinfo.imdb_url=='' and ((not 'imdb_url' in pathyaml) or pathyaml['imdb_url']==None):
             pathyaml['imdb_url']=pathinfo.imdb_url
         
         
@@ -221,7 +221,9 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
             os.mkdir(path_new)
         except Exception as r:
             logger.warning('新建文件夹发生错误,错误信息: %s' %(r))  
-            log_error=log_error+'路径'+pathinfo.path+'新建同名子文件夹发生错误\n'
+            log_error=log_error+'路径'+pathinfo.path+'新建子文件夹'+path_new+'发生错误\n'
+            if os.path.exists(path_new):
+                logger.warning('路径 '+pathinfo.path+' 内已存在文件夹 '+path_new+'请更改此文件夹命名\n')
             continue
         ls = os.listdir(pathinfo.path)
         filepath=''
@@ -243,7 +245,7 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         file1=mediafile(path_new,pathinfo,basic,imgdata)
         logger.info('正在抓取资源信息,请稍后...')
         file1.getfullinfo()
-        if not pathinfo.imdb_url=='' and pathyaml['imdb_url']==None:
+        if not pathinfo.imdb_url=='' and ((not 'imdb_url' in pathyaml) or pathyaml['imdb_url']==None):
             pathyaml['imdb_url']=pathinfo.imdb_url
         upload_success=False
         uploadtime=0
@@ -332,7 +334,7 @@ def seedmachine(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
     file1=mediafile(pathinfo.path,pathinfo,basic,imgdata)
     logger.info('正在抓取资源信息,请稍后...')
     file1.getfullinfo()
-    if not pathinfo.imdb_url=='' and pathyaml['imdb_url']==None:
+    if not pathinfo.imdb_url=='' and ((not 'imdb_url' in pathyaml) or pathyaml['imdb_url']==None):
         pathyaml['imdb_url']=pathinfo.imdb_url
 
     logger.info('正在发布路径'+pathinfo.path+'下资源')
