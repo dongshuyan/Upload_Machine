@@ -351,7 +351,7 @@ class mediafile(object):
                     self.address=c_path
                     maxsize=filesize
 
-            if 'zeroday_name' in self.pathinfo.infodict and self.pathinfo.infodict['zeroday_name']!=None and self.pathinfo.infodict['zeroday_name']!='':
+            if self.pathinfo.collection==1 and 'zeroday_name' in self.pathinfo.infodict and self.pathinfo.infodict['zeroday_name']!=None and self.pathinfo.infodict['zeroday_name']!='':
                 zeroday_path=os.path.join(self.pathinfo.path,self.pathinfo.infodict['zeroday_name'])
                 if os.path.exists(zeroday_path):
                     ls = os.listdir(zeroday_path)
@@ -801,6 +801,8 @@ class mediafile(object):
             logger.warning('无法根据mediainfo分析出字幕语言信息')
 
     def updatemediainfo(self,filepath='',newpath=''):
+        if os.path.isdir(self.topath):
+            self.address=os.path.join(self.topath,os.path.basename(self.address))
         if not (filepath=='' or filepath==None):
             a=os.popen('mediainfo --Inform=file://"'+filepath+'" "'+self.address+'"')
             res=a.buffer.read().decode('utf-8')
@@ -813,7 +815,6 @@ class mediafile(object):
                     ss[i]=':'.join([ss[i].split(':')[0],' '+self.filename])
             res='\n'.join(ss)
         self.mediainfo=res
-
 
     def getmediainfo(self):
         if self.getmediainfo_done==1:
@@ -923,14 +924,18 @@ class mediafile(object):
                 logger.info('根据豆瓣信息分析，首播为'+self.firstRelease)
             if '集\u3000\u3000数'in item:
                 self.num=int(item[5:].strip())
-                if self.pathinfo.max>=self.num:
-                    self.complete=1
+                if self.complete==-1:
+                    if self.pathinfo.max>=self.num:
+                        self.complete=1
+                    else:
+                        self.complete=0
                 logger.info('根据豆瓣信息分析，总集数为'+str(self.num))
             if self.imdburl=='' and 'imdb'in item and '链接'in item and not((item[7:].strip()).endswith('//')):
                 self.imdburl=item[7:].strip()
             if '片\u3000\u3000长'in item:
                 self.runtime=item[5:].strip()
-    
+            if self.complete==-1:
+                self.complete=0
     def get_douban(self):
         if 'doubancookie' in self.basic and self.basic['doubancookie']!=None:
             get_success=0
@@ -995,13 +1000,18 @@ class mediafile(object):
             logger.info('根据豆瓣信息分析，imdb链接为'+self.imdburl)
         if (douban_dict['episodes']) :
             self.media_type='TV_series'
-            self.num=int(douban_dict['episodes'])
+            try:
+                self.num=int(douban_dict['episodes'])
+                logger.info('根据豆瓣信息分析，总集数为'+str(self.num))
+            except:
+                self.num=1000000
+                logger.info('豆瓣页面暂无集数数据')
             if self.complete==-1:
                 if self.pathinfo.max>=self.num:
                     self.complete=1
                 else:
                     self.complete=0
-            logger.info('根据豆瓣信息分析，总集数为'+str(self.num))
+            
         #没有获取到集数信息则默认为“未完结”
         if self.complete==-1:
             self.complete=0
@@ -1115,15 +1125,18 @@ class mediafile(object):
             douban_info += "\n◎集\u3000\u3000数　" + data['num']
             self.media_type='TV_series'
             self.num=int(data['num'])
-            if self.pathinfo.max>=self.num:
-                self.complete=1
+            if self.complete==-1:
+                if self.pathinfo.max>=self.num:
+                    self.complete=1
+                else:
+                    self.complete=0
             logger.info('根据豆瓣信息分析，总集数为'+str(self.num))
         if (data['imdbRating']) :
             douban_info += "\n◎IMDb评分  " + data['imdbRating'] + "/10 from " + data['imdbVotes'] + " users"
         if (data['imdbUrl']) :
             douban_info += "\n◎IMDb链接  " + data['imdbUrl']
             self.imdburl=data['imdbUrl']
-            pathinfo.imdb_url=data['imdbUrl']
+            self.pathinfo.imdb_url=data['imdbUrl']
             logger.info('根据豆瓣信息分析，imdb链接为'+data['imdbUrl'])
         if (data['rating']) :
             douban_info += "\n◎豆瓣评分　" + data['rating'] + "/10 from " + data['votes'] + " users";
@@ -1170,7 +1183,8 @@ class mediafile(object):
             douban_info += "\n\n◎获奖情况　" + awardstr
 
         douban_info =douban_info+ "\n\n"
-
+        if self.complete==-1:
+            self.complete=0
         self.douban_info=douban_info
         self.getptgen_done=1
 
@@ -1295,9 +1309,14 @@ class mediafile(object):
             elif self.pathinfo.collection==2:
                 eps_temp=findeps([self.mediapath])
                 eps_temp.sort()
-                self.uploadname=self.uploadname+'E'+str(eps_temp[0]).zfill(2)+'-E'+str(eps_temp[-1]).zfill(2)
-                self.uploadname_sharkpt=self.uploadname_sharkpt+'E'+str(eps_temp[0]).zfill(2)+'-E'+str(eps_temp[-1]).zfill(2)
-                self.small_descr=self.small_descr+' | 第'+str(eps_temp[0]).zfill(2)+'-'+str(eps_temp[-1]).zfill(2)+'集'
+                if len(eps_temp)>1:
+                    self.uploadname=self.uploadname+'E'+str(eps_temp[0]).zfill(2)+'-E'+str(eps_temp[-1]).zfill(2)
+                    self.uploadname_sharkpt=self.uploadname_sharkpt+'E'+str(eps_temp[0]).zfill(2)+'-E'+str(eps_temp[-1]).zfill(2)
+                    self.small_descr=self.small_descr+' | 第'+str(eps_temp[0]).zfill(2)+'-'+str(eps_temp[-1]).zfill(2)+'集'
+                else:
+                    self.uploadname=self.uploadname+'E'+self.episodename
+                    self.uploadname_sharkpt=self.uploadname_sharkpt+'E'+self.episodename
+                    self.small_descr=self.small_descr+' | 第'+self.episodename+'集'
             elif self.complete==1:
                 self.uploadname=self.uploadname
                 self.small_descr=self.small_descr+' | 全 '+str(self.pathinfo.max)+' 集'
@@ -1344,6 +1363,7 @@ class mediafile(object):
                 del(tempchinesename)
         else:
             self.topath=self.mediapath
+            
 
             
 

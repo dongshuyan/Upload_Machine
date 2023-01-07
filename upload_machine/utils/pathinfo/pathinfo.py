@@ -146,6 +146,49 @@ def findeps(pathlist):
 
 
 class pathinfo(object):
+    def updatepath(self,newpath):
+        self.path=newpath
+        if self.path[-1]=='\\' or self.path[-1]=='/':
+            self.path=self.path[:-1]
+        if ('anime' in self.type.lower() or 'tv' in self.type.lower()):
+            if self.zeroday_name=='':
+                self.eps=findeps([self.path])
+            else:
+                self.eps=findeps([self.path,os.path.join(self.path,self.zeroday_name)])
+            if (len(self.eps)<1):
+                #raise Exception('路径'+pathid+' : '+self.infodict['path']+'中没找到视频文件')
+                logger.warning('路径'+self.pathid+' : '+self.infodict['path']+'中没找到任何视频文件,请检查或者联系开发者')
+            if len(self.eps)>0:
+                self.min=self.eps[0]
+                self.max=self.eps[-1]
+            else:
+                self.min=10000
+                self.max=-1000
+        if ('anime' in self.type or 'tv' in self.type):
+            if len(self.eps) == self.max-self.min+1:
+                self.lack=False
+            else:
+                self.lack=True
+            if self.lack:
+                self.lackeps=[]
+                for i in range(self.min,self.max+1):
+                    if not i in self.eps:
+                        self.lackeps.append(i)
+                logger.warning('识别到路径'+self.pathid+' 中资源存在部分集数缺失,缺失集数:'+str(self.lackeps))
+                res=100
+                while not(res==0 or res==1):
+                    res=input('识别到路径'+self.pathid+' 中资源存在部分集数缺失,缺失集数为:'+str(self.lackeps)+'。是否仍然继续发布？请回复选项对应的数字\n0:先不发布，退出程序 1:无视警告,仍然发布\n')
+                    try:
+                        res=int(res)
+                    except:
+                        res=100
+                    if not(res==0 or res==1):
+                        logger.warning('输入有误，请重新输入')
+                if res==0:
+                    logger.error('识别到路径'+self.pathid+' 中资源存在部分集数缺失,用户退出程序')
+                    raise ValueError ('识别到路径'+self.pathid+' 中资源存在部分集数缺失,用户退出程序')
+        #self.print()
+
     def __init__(self,pathid,infodict,sites,basic):
         self.pathid=pathid
         self.sites=[]
@@ -167,7 +210,7 @@ class pathinfo(object):
         
 
         #可有可无的属性,后面写入配置文件
-        attr_disp=['type','collection','complete','enable','doubanurl']
+        attr_disp=['type','collection','enable','doubanurl']
         for item in attr_disp:
             if not item in infodict or infodict[item]==None:
                 exec('self.'+item+'=""')
@@ -178,7 +221,7 @@ class pathinfo(object):
                 exec('self.exist_'+item+'=True')
 
         #可有可无的属性,后面不写入配置文件
-        attr_disp=['video_type','video_format','audio_format','year','zeroday_name','exinfo','seasonnum','imdb_url','bgm_url','anidb_url','transfer','txt_info','audio_info','from_url','contenttail','contenthead','screenshot','small_descr']
+        attr_disp=['complete','video_type','video_format','audio_format','year','zeroday_name','exinfo','seasonnum','imdb_url','bgm_url','anidb_url','transfer','txt_info','audio_info','from_url','contenttail','contenthead','screenshot','small_descr']
         for item in attr_disp:
             if not item in infodict or infodict[item]==None:
                 exec('self.'+item+'=""')

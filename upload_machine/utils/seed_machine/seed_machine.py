@@ -217,6 +217,7 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
             continue
         #1.将没有发布过的资源移到新路径path_new
         #新建文件夹
+        path_old=pathinfo.path
         path_new=os.path.join(pathinfo.path,os.path.basename(pathinfo.path))
         try:
             os.mkdir(path_new)
@@ -237,6 +238,7 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
                 shutil.move(c_path, path_new) 
         
         #2.将path_new按照合集发布
+        pathinfo.updatepath(path_new)
         logger.info('正在'+siteitem+'站点发布路径'+pathinfo.path+'下没发布过的资源合集，分别为：'+str(eps))
         
         errornum=0
@@ -254,12 +256,18 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         file1.updatemediainfo(siteitem.mediainfo_template_file)
 
         #3.把文件返回原位
-        ls = os.listdir(path_new)
+        
+        dst_path=path_old
+        if ('new_folder' in basic) and (str(basic['new_folder'])=='1' or str(basic['new_folder'])=='2') :
+            dst_path=os.path.join(path_old,os.path.basename(file1.topath))
+        if not os.path.exists(dst_path):
+            os.mkdir(dst_path)
+        ls = os.listdir(file1.topath)
         for i in ls:
-            c_path=os.path.join(path_new, i)
+            c_path=os.path.join(file1.topath, i)
             if (os.path.isdir(c_path)) or (i.startswith('.')) or (not(  os.path.splitext(i)[1].lower()== ('.mp4') or os.path.splitext(i)[1].lower()== ('.mkv')  or os.path.splitext(i)[1].lower()== ('.avi') or os.path.splitext(i)[1].lower()== ('.ts')    )):
                 continue
-            shutil.move(c_path, pathinfo.path) 
+            shutil.move(c_path, dst_path) 
         #4.删除path_new文件夹
         shutil.rmtree(path_new)
 
@@ -269,7 +277,6 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         while upload_success==False and uploadtime<3:
             uploadtime=uploadtime+1
             logger.info('第'+str(uploadtime)+'次尝试发布')
-            print("正在准备登录"+siteitem.sitename)
             upload_success,logstr=auto_upload(siteitem,file1,basic['record_path'],qbinfo,basic,hashlist)
             if not upload_success:
                 logger.warning(siteitem.sitename+'第'+str(uploadtime)+'次发布任务失败')
@@ -361,7 +368,6 @@ def seedmachine(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         while upload_success==False and uploadtime<3:
             uploadtime=uploadtime+1
             logger.info('第'+str(uploadtime)+'次尝试发布')
-            print("正在准备登录"+siteitem.sitename)
 
 
             upload_success,logstr=auto_upload(siteitem,file1,basic['record_path'],qbinfo,basic,hashlist)
