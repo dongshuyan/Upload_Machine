@@ -205,8 +205,6 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "uplver": uplver,
             "tags[]": tags,
             }
-    print(other_data)
-    a=input('check')
     scraper=cloudscraper.create_scraper()
     success_upload=0
     try_upload=0
