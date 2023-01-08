@@ -96,7 +96,10 @@ def mktorrent_win(filepath,torrentname,tracker="https://announce.leaguehd.com/an
                 except Exception as r:
                     logger.error('删除种子发生错误: %s' %(r))
             res=os.popen(order)
+            temp=res
             res=res.buffer.read().decode('utf-8')
+            temp.close()
+            del(temp)
             if os.path.exists(torrentname):
                 filesize=os.path.getsize(torrentname)
             else:
@@ -136,7 +139,10 @@ def mktorrent_win(filepath,torrentname,tracker="https://announce.leaguehd.com/an
 
             #os.system(order)
             res=os.popen(order)
+            temp=res
             res=res.buffer.read().decode('utf-8')
+            temp.close()
+            del(temp)
             filesizetime=0
             while filesize==0:
                 filesizetime=filesizetime+1
@@ -208,7 +214,10 @@ def mktorrent_old(filepath,torrentname,tracker="https://announce.leaguehd.com/an
             except Exception as r:
                 logger.error('删除种子发生错误: %s' %(r))
         res=os.popen(order)
+        temp=res
         res=res.buffer.read().decode('utf-8')
+        temp.close()
+        del(temp)
         filesizetime=0
         while filesize==0:
             filesizetime=filesizetime+1
@@ -289,6 +298,7 @@ def get_video_duration(video_path: str):
     ffprobe_cmd = 'ffprobe -i "'+video_path+'" -show_entries format=duration -v quiet -of csv="p=0"'
     a=os.popen(ffprobe_cmd)
     duration_info = float(a.read())
+    a.close()
     #duration_info = float(a.buffer.read().decode('utf-8'))
     return duration_info
 
@@ -806,9 +816,11 @@ class mediafile(object):
         if not (filepath=='' or filepath==None):
             a=os.popen('mediainfo --Inform=file://"'+filepath+'" "'+self.address+'"')
             res=a.buffer.read().decode('utf-8')
+            a.close()
         else:
             a=os.popen('mediainfo "'+self.address+'"')
             res=a.buffer.read().decode('utf-8')
+            a.close()
             ss=res.split('\n')
             for i in range(len(ss)):
                 if ss[i].startswith('Complete name'):
@@ -822,6 +834,7 @@ class mediafile(object):
         a=os.popen('mediainfo "'+self.address+'"')
         #res=a.read()
         res=a.buffer.read().decode('utf-8')
+        a.close()
         #self.dealsubtext(res)
         #self.dealaudio(res)
         ss=res.split('\n')
@@ -834,6 +847,7 @@ class mediafile(object):
         a=os.popen("mediainfo --Output=JSON \""+self.address+'"')
         #res_json=a.read()
         res_json=a.buffer.read().decode('utf-8')
+        a.close()
         media_json=json.loads(res_json)
 
         self.mediainfo_json=media_json
