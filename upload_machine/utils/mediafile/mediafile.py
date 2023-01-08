@@ -351,7 +351,7 @@ class mediafile(object):
                     self.address=c_path
                     maxsize=filesize
 
-            if self.pathinfo.collection==1 and 'zeroday_name' in self.pathinfo.infodict and self.pathinfo.infodict['zeroday_name']!=None and self.pathinfo.infodict['zeroday_name']!='':
+            if self.pathinfo.collection>=1 and 'zeroday_name' in self.pathinfo.infodict and self.pathinfo.infodict['zeroday_name']!=None and self.pathinfo.infodict['zeroday_name']!='':
                 zeroday_path=os.path.join(self.pathinfo.path,self.pathinfo.infodict['zeroday_name'])
                 if os.path.exists(zeroday_path):
                     ls = os.listdir(zeroday_path)
@@ -1349,6 +1349,7 @@ class mediafile(object):
                 self.topath=os.path.join(self.pathinfo.path,self.pathinfo.zeroday_name)
             else:
                 self.topath=os.path.join(self.pathinfo.path,medianame)
+                self.pathinfo.zeroday_name=medianame
                 self.pathinfo.infodict['zeroday_name']=medianame
         elif 'new_folder' in self.basic and self.basic['new_folder']==2:
             if self.pathinfo.zeroday_name!='':
@@ -1360,6 +1361,7 @@ class mediafile(object):
                 tempchinesename=tempchinesename.replace(' ','.')
                 self.topath=os.path.join(self.pathinfo.path,tempchinesename+'.'+medianame)
                 self.pathinfo.infodict['zeroday_name']=tempchinesename+'.'+medianame
+                self.pathinfo.zeroday_name=tempchinesename+'.'+medianame
                 del(tempchinesename)
         else:
             self.topath=self.mediapath
