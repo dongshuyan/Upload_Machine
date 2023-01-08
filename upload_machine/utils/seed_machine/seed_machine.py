@@ -91,6 +91,7 @@ def seedmachine_single(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         #如果没有站点要发布就略过本集
         if len(site_upload)==0:
             continue
+        
 
         ls = os.listdir(pathinfo.path)
         filepath=''
@@ -203,6 +204,9 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
     log_error=''
     log_succ=''
     logstr=''
+    #1.将没有发布过的资源移到新路径path_new
+    path_old=pathinfo.path
+    path_new=os.path.join(pathinfo.path,os.path.basename(pathinfo.path))
     for siteitem in sites:
         #发布过此集的站点略过
         if sites[siteitem].enable!=1 or ( eval('pathinfo.'+siteitem+'_max_done==10000')):
@@ -213,33 +217,39 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
             if  not eval('pathep in pathinfo.'+siteitem+'_done'):
                 eps.append(int (pathep))
         if len(eps)<=0:
-            logger.info('正在'+siteitem+'站点发布路径'+pathinfo.path+'下无未发布分集,已跳过')
+            logger.info('正在'+siteitem+'站点发布路径'+path_old+'下无未发布分集,已跳过')
             continue
-        #1.将没有发布过的资源移到新路径path_new
+        
         #新建文件夹
-        path_old=pathinfo.path
-        path_new=os.path.join(pathinfo.path,os.path.basename(pathinfo.path))
         try:
             os.mkdir(path_new)
         except Exception as r:
             logger.warning('新建文件夹发生错误,错误信息: %s' %(r))  
-            log_error=log_error+'路径'+pathinfo.path+'新建子文件夹'+path_new+'发生错误\n'
+            log_error=log_error+'路径'+path_old+'新建子文件夹'+path_new+'发生错误\n'
             if os.path.exists(path_new):
-                logger.warning('路径 '+pathinfo.path+' 内已存在文件夹 '+path_new+'请更改此文件夹命名\n')
+                logger.warning('路径 '+path_old+' 内已存在文件夹 '+path_new+'请更改此文件夹命名\n')
             continue
-        ls = os.listdir(pathinfo.path)
-        filepath=''
-        ls = os.listdir(pathinfo.path)
+
+        ls = os.listdir(path_old)
         for i in ls:
-            c_path=os.path.join(pathinfo.path, i)
+            c_path=os.path.join(path_old, i)
             if (os.path.isdir(c_path)) or (i.startswith('.')) or (not(  os.path.splitext(i)[1].lower()== ('.mp4') or os.path.splitext(i)[1].lower()== ('.mkv')  or os.path.splitext(i)[1].lower()== ('.avi') or os.path.splitext(i)[1].lower()== ('.ts')    )):
                 continue
             if int(findnum(i)[0]) in eps:
                 shutil.move(c_path, path_new) 
-        
+        if pathinfo.zeroday_name!='' and pathinfo.zeroday_name!=None:
+            path_file=os.path.join(path_old,pathinfo.zeroday_name)
+            ls = os.listdir(path_file)
+            for i in ls:
+                c_path=os.path.join(path_file, i)
+                if (os.path.isdir(c_path)) or (i.startswith('.')) or (not(  os.path.splitext(i)[1].lower()== ('.mp4') or os.path.splitext(i)[1].lower()== ('.mkv')  or os.path.splitext(i)[1].lower()== ('.avi') or os.path.splitext(i)[1].lower()== ('.ts')    )):
+                    continue
+                if int(findnum(i)[0]) in eps:
+                    shutil.move(c_path, path_new)
         #2.将path_new按照合集发布
-        pathinfo.updatepath(path_new)
-        logger.info('正在'+siteitem+'站点发布路径'+pathinfo.path+'下没发布过的资源合集，分别为：'+str(eps))
+        if pathinfo.path!=path_new:
+            pathinfo.updatepath(path_new)
+        logger.info('正在'+siteitem+'站点发布路径'+path_old+'下没发布过的资源合集，分别为：'+str(eps))
         
         errornum=0
         succnum=0
@@ -312,7 +322,7 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         #a=input('check')
             
         del(file1)  
-        logger.info(siteitem.sitename+'站点,路径'+pathinfo.path+'下资源合集发布完毕，分别为：'+str(eps))
+        logger.info(siteitem.sitename+'站点,路径'+path_old+'下资源合集发布完毕，分别为：'+str(eps))
         
     return log_error,log_succ
     
