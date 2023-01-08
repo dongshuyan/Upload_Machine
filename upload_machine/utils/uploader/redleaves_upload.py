@@ -215,7 +215,7 @@ def redleaves_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "color": "0",
             "font": "0",
             "size": "0",
-            "descr": file1.douban_info+'\n'+file1.screenshoturl,
+            "descr": file1.pathinfo.contenthead+'\n'+file1.douban_info+'\n'+file1.screenshoturl+'\n'+file1.pathinfo.contenttail,
             "technical_info": file1.mediainfo,
             "type": select_type,
             "medium_sel": medium_sel,
