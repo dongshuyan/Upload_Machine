@@ -237,7 +237,7 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
                 continue
             if int(findnum(i)[0]) in eps:
                 shutil.move(c_path, path_new) 
-        if pathinfo.zeroday_name!='' and pathinfo.zeroday_name!=None:
+        if pathinfo.zeroday_name!='' and pathinfo.zeroday_name!=None and os.path.exists(os.path.join(path_old,pathinfo.zeroday_name)):
             path_file=os.path.join(path_old,pathinfo.zeroday_name)
             ls = os.listdir(path_file)
             for i in ls:
