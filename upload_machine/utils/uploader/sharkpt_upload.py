@@ -4,6 +4,7 @@ import os
 from upload_machine.utils.uploader.upload_tools import *
 import re
 import cloudscraper
+import datetime
 
 def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     post_url = "https://sharkpt.net/takeupload.php"
@@ -174,7 +175,16 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         tags.append(6)
         logger.info('已选择中字')
 
-    
+    # 官组默认二级置顶三天
+    if 'Shark'.upper() in file1.sub.upper():
+        pos_state = 'r_sticky'
+        pos_state_until = (datetime.datetime.utcnow() + datetime.timedelta(hours=80)).strftime("%Y-%m-%d %H:%M")
+        logger.info(f'官组资源，二级置顶至 {pos_state_until}')
+    else:
+        pos_state = 'normal'
+        pos_state_until = ''
+        logger.info('非官组资源，不置顶')
+
     tags=list(set(tags))
     tags.sort()
     
@@ -204,6 +214,8 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "team_sel": team_sel,
             "uplver": uplver,
             "tags[]": tags,
+            "pos_state": pos_state,
+            "pos_state_until": pos_state_until
             }
     scraper=cloudscraper.create_scraper()
     success_upload=0
