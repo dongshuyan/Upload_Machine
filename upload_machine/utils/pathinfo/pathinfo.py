@@ -8,67 +8,67 @@ from upload_machine.utils.para_ctrl.readyaml import write_yaml
 from shutil import move
 
 def findnum(name):
-    num=re.findall(r" ([0-9]{1,2}) ",name)
-    if len(num)!=0:
-        sty=" "+num[0]+" "
-        stz=" XX "
-        stx=" "+num[0]+" "
-        return num[0],sty,stz,stx
-    num=re.findall(r"第([0-9]{1,2})話",name)
-    if len(num)!=0:
-        sty='第'+num[0]+'話'
-        stz="第XX話"
-        stx='第'+num[0]+'話'
-        return num[0],sty,stz,stx
-    num=re.findall(r"第([0-9]{1,2})话",name)
-    if len(num)!=0:
-        sty='第'+num[0]+'话'
-        stz="第XX话"
-        stx='第'+num[0]+'话'
-        return num[0],sty,stz,stx
-    num=re.findall(r"E([0-9]{1,2})",name)
-    if len(num)!=0:
-        sty='第'+num[0]+'话'
-        stz="第XX话"
-        stx='第'+num[0]+'话'
-        return num[0],sty,stz,stx
-    num=re.findall(r"_([0-9]{1,2})_",name)
-    if len(num)!=0:
-        sty='_'+num[0]+'_'
-        stz="_XX_"
-        stx='_'+num[0]+'_'
-        return num[0],sty,stz,stx
-    num=re.findall(r"\[([0-9]{1,2})\D",name)
-    if len(num)!=0:
-        sty="\["+num[0]+"\]"
-        stz="[XX]"
-        stx="["+num[0]+"]"
-        return num[0],sty,stz,stx
-    num=re.findall(r"\D([0-9]{1,2})\]",name)
-    if len(num)!=0:
-        sty="\["+num[0]+"\]"
-        stz="[XX]"
-        stx="["+num[0]+"]"
-        return num[0],sty,stz,stx
-    num=re.findall(r"-([0-9]{1,2})\D",name)
-    if len(num)!=0:
-        sty='-'+num[0]
-        stz="-XX"
-        stx="-"+num[0]
-        return num[0],sty,stz,stx
-    num=re.findall(r"\D([0-9]{1,2})\D",name)
-    if len(num)!=0:
-        sty=num[0]
-        stz="XX"
-        stx=num[0]
-        return num[0],sty,stz,stx  
-    
-    num=re.findall(r"([0-9]{1,2})",name)
-    if len(num)!=0:
-        sty=num[0]
-        stz="XX"
-        stx=num[0]
-        return num[0],sty,stz,stx     
+    for i in range(2,0,-1):
+        num=re.findall(r" ([0-9]{"+str(i)+"}) ",name)
+        if len(num)!=0:
+            sty=" "+num[0]+" "
+            stz=" XX "
+            stx=" "+num[0]+" "
+            return num[0],sty,stz,stx
+        num=re.findall(r"第([0-9]{"+str(i)+"})話",name)
+        if len(num)!=0:
+            sty='第'+num[0]+'話'
+            stz="第XX話"
+            stx='第'+num[0]+'話'
+            return num[0],sty,stz,stx
+        num=re.findall(r"第([0-9]{"+str(i)+"})话",name)
+        if len(num)!=0:
+            sty='第'+num[0]+'话'
+            stz="第XX话"
+            stx='第'+num[0]+'话'
+            return num[0],sty,stz,stx
+        num=re.findall(r"E([0-9]{"+str(i)+"})",name)
+        if len(num)!=0:
+            sty='第'+num[0]+'话'
+            stz="第XX话"
+            stx='第'+num[0]+'话'
+            return num[0],sty,stz,stx
+        num=re.findall(r"_([0-9]{"+str(i)+"})_",name)
+        if len(num)!=0:
+            sty='_'+num[0]+'_'
+            stz="_XX_"
+            stx='_'+num[0]+'_'
+            return num[0],sty,stz,stx
+        num=re.findall(r"\[([0-9]{"+str(i)+"})\D",name)
+        if len(num)!=0:
+            sty="\["+num[0]+"\]"
+            stz="[XX]"
+            stx="["+num[0]+"]"
+            return num[0],sty,stz,stx
+        num=re.findall(r"\D([0-9]{"+str(i)+"})\]",name)
+        if len(num)!=0:
+            sty="\["+num[0]+"\]"
+            stz="[XX]"
+            stx="["+num[0]+"]"
+            return num[0],sty,stz,stx
+        num=re.findall(r"-([0-9]{"+str(i)+"})\D",name)
+        if len(num)!=0:
+            sty='-'+num[0]
+            stz="-XX"
+            stx="-"+num[0]
+            return num[0],sty,stz,stx
+        num=re.findall(r"\D([0-9]{"+str(i)+"})\D",name)
+        if len(num)!=0:
+            sty=num[0]
+            stz="XX"
+            stx=num[0]
+            return num[0],sty,stz,stx  
+        num=re.findall(r"([0-9]{"+str(i)+"})",name)
+        if len(num)!=0:
+            sty=num[0]
+            stz="XX"
+            stx=num[0]
+            return num[0],sty,stz,stx     
     return '-1','-1','XX','-1'
 
 def finddoubanurl(name):

@@ -205,12 +205,10 @@ def lemonhd_upload_anime(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         else:
             other_data['animate_type']='6'
             logger.info('已成功选择类型为collection')
-
-    if file1.pathinfo.complete==0:
+    if file1.pathinfo.collection==0 or (file1.pathinfo.max-file1.pathinfo.min==0):
         other_data['is_complete']='yes'
         logger.info('已成功选择未完结')
         other_data['series']='第'+file1.episodename+'话'
-        
     elif file1.pathinfo.complete==1:
         other_data['series']='TV '+str(file1.pathinfo.min).zfill(2)+'-'+str(file1.pathinfo.max).zfill(2)+' Fin'
     else:
@@ -468,7 +466,7 @@ def lemonhd_upload_tv(siteinfo,file1,record_path,qbinfo,basic,hashlist,up_url):
 
         other_data['t_season']=file1.season
         
-        if file1.pathinfo.collection==0:
+        if file1.pathinfo.collection==0 or (file1.pathinfo.max-file1.pathinfo.min==0):
             other_data['series']='E'+file1.episodename
         elif file1.pathinfo.complete==1:
             other_data['series']='E'+str(file1.pathinfo.min).zfill(2)+'-E'+str(file1.pathinfo.max).zfill(2)+' Fin'

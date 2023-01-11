@@ -938,7 +938,7 @@ class mediafile(object):
                 logger.info('根据豆瓣信息分析，首播为'+self.firstRelease)
             if '集\u3000\u3000数'in item:
                 self.num=int(item[5:].strip())
-                if self.complete==-1:
+                if not (self.complete==1 or self.complete==0):
                     if self.pathinfo.max>=self.num:
                         self.complete=1
                     else:
@@ -948,7 +948,7 @@ class mediafile(object):
                 self.imdburl=item[7:].strip()
             if '片\u3000\u3000长'in item:
                 self.runtime=item[5:].strip()
-            if self.complete==-1:
+            if not (self.complete==1 or self.complete==0):
                 self.complete=0
     def get_douban(self):
         if 'doubancookie' in self.basic and self.basic['doubancookie']!=None:
@@ -1020,15 +1020,15 @@ class mediafile(object):
             except:
                 self.num=1000000
                 logger.info('豆瓣页面暂无集数数据')
-            if self.complete==-1:
+            if not (self.complete==1 or self.complete==0):
                 if self.pathinfo.max>=self.num:
                     self.complete=1
                 else:
                     self.complete=0
             
         #没有获取到集数信息则默认为“未完结”
-        if self.complete==-1:
-            self.complete=0
+        if not (self.complete==1 or self.complete==0):
+                self.complete=0
         self.getptgen_done=1
 
     def getptgen_douban_info(self):
@@ -1139,7 +1139,7 @@ class mediafile(object):
             douban_info += "\n◎集\u3000\u3000数　" + data['num']
             self.media_type='TV_series'
             self.num=int(data['num'])
-            if self.complete==-1:
+            if not (self.complete==1 or self.complete==0):
                 if self.pathinfo.max>=self.num:
                     self.complete=1
                 else:
@@ -1197,7 +1197,7 @@ class mediafile(object):
             douban_info += "\n\n◎获奖情况　" + awardstr
 
         douban_info =douban_info+ "\n\n"
-        if self.complete==-1:
+        if not (self.complete==1 or self.complete==0):
             self.complete=0
         self.douban_info=douban_info
         self.getptgen_done=1
