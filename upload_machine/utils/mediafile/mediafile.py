@@ -1419,6 +1419,8 @@ class mediafile(object):
             self.gettorrent(tracker)
         else:
             self.mktorrent(tracker)
+        if not (self.complete==1 or self.complete==0):
+            self.complete=0
         self.getinfo_done=1
 
     def print(self):

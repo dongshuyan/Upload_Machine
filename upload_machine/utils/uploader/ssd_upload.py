@@ -157,7 +157,7 @@ def ssd_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         source_sel='5'
     logger.info('未找到资源国家信息，已默认日本')
 
-    if file1.pathinfo.collection==1:
+    if file1.pathinfo.collection==1 and file1.pathinfo.complete==1:
         pack='yes'
     else:
         pack='no'
