@@ -26,6 +26,7 @@ image hosting: #配置图床站点信息
     8: emp
     9: smms
     10: redleaves
+    11: sharkimg
   ptpimg:
     apikey: apikey
   smms:
@@ -45,6 +46,8 @@ image hosting: #配置图床站点信息
   freeimage:
     cookie: cookie #F12 nerwork中提取的cookie,如果没有账号则在冒号后留空或者填写null
     url: https://freeimage.host/
+  sharkimg:
+    token: token
 site info: #配置站点信息
   hdsky: #配置站点，目前支持的关键词有[hdsky,piggo,ssd,audience,pter,hhaclub,lemonhd,carpt,hdpt,wintersakura,hdfans,hares,zmpt,hdvideo,ihdbits,redleaves,mteam,sharkpt,zhuque]
     enable: 1 #是否开启此站点自动发种 1为开启，0为关闭

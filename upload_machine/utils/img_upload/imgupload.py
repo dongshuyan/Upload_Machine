@@ -6,6 +6,7 @@ from upload_machine.utils.img_upload.smms import smms_upload_files
 from upload_machine.utils.img_upload.fapping_emp import femp_upload_files
 from upload_machine.utils.img_upload.imgbox import imgbox_upload_files
 from upload_machine.utils.img_upload.redleaves import redleaves_upload_files
+from upload_machine.utils.img_upload.sharkimg import sharkimg_upload_files
 
 
 def existitem(imgdata,item):
@@ -15,7 +16,7 @@ def existitem(imgdata,item):
 
 def createimgdict(imgdata):
     imgdict=dict()
-    imghostlist=['ptpimg','picgo','smms','pter','emp','femp','imgbox','chd','freeimage','redleaves']
+    imghostlist=['ptpimg','picgo','smms','pter','emp','femp','imgbox','chd','freeimage','redleaves','sharkimg']
     for item in imghostlist:
         imgdict[item]=False
     if existitem(imgdata,'ptpimg') and existitem(imgdata['ptpimg'],'apikey'):
@@ -32,6 +33,8 @@ def createimgdict(imgdata):
         imgdict['chd']=True
     if existitem(imgdata,'freeimage')  and existitem(imgdata['freeimage'],'url') and existitem(imgdata['freeimage'],'cookie') :
         imgdict['freeimage']=True
+    if existitem(imgdata, 'sharkimg') and existitem(imgdata['sharkimg'], 'token'):
+        imgdict['sharkimg'] = True
     imgdict['femp']=True
     imgdict['redleaves']=True
     imgdict['imgbox']=True
@@ -169,6 +172,16 @@ def img_upload(imgdata,imglist:list[str],host:str='',form:str='img',fail:bool=Fa
         logger.info('正在尝试使用'+host+'上传图片,请稍等...')
         if not (chevereto_url=='' or chevereto_cookie==''):
             res=chevereto_cookie_upload_files(imgpaths=imglist,url=chevereto_url, cookie=chevereto_cookie, form=form)
+        else:
+            success=False
+            logger.warning('图床'+host+'配置信息缺失')
+        if res=='':
+            success=False
+    elif 'sharkimg'in host.lower():
+        host='sharkimg'
+        logger.info('正在尝试使用'+host+'上传图片,请稍等...')
+        if imgdict[host]==True:
+            res=sharkimg_upload_files(imgpaths=imglist,token=imgdata[host]['token'],form=form)
         else:
             success=False
             logger.warning('图床'+host+'配置信息缺失')

@@ -353,6 +353,7 @@ upload_machine -yp '工作目录/au.yaml' -iu -ih 图床名称  -iform 图片格
 - imgbox
 - pter
 - smms
+- sharkimg
 
 ### 3.获取豆瓣信息
 
