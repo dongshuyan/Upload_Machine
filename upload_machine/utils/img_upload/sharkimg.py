@@ -19,7 +19,6 @@ def sharkimg_upload(imgpath: str, token: str):
         res = req.json()
     except json.decoder.JSONDecodeError:
         res = {}
-    print(req.text)
     if not req.ok or ('status' in res and res['status'] != True):
         logger.warning(req.content)
         logger.warning(f"上传图片失败: HTTP {req.status_code}, reason: {res.message}")
