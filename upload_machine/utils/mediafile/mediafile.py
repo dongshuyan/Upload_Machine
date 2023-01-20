@@ -1219,8 +1219,11 @@ class mediafile(object):
             ls = os.listdir(self.topath)
             for i in ls:
                 c_path=os.path.join(self.topath, i)
-                if i.startswith('.'):
-                    os.remove(c_path)
+                if i.startswith('.') and os.path.exists(c_path):
+                    try:
+                        os.remove(c_path)
+                    except Exception as r:
+                        logger.error('删除.开头文件"'+c_path+'"发生错误: %s' %(r))
                     continue
                 if (os.path.isdir(c_path)):
                     if not os.path.exists(   os.path.join(dirpath,i)    ):
