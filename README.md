@@ -353,6 +353,7 @@ upload_machine -yp '工作目录/au.yaml' -iu -ih 图床名称  -iform 图片格
 - imgbox
 - pter
 - smms
+- sharkimg
 
 ### 3.获取豆瓣信息
 
@@ -380,6 +381,7 @@ upload_machine -yp '工作目录/au.yaml' -mi -mf '视频路径' -ih 图床名�
 - imgbox
 - pter
 - smms
+- sharkimg
 
 图片格式(可以不填，默认'img'):
 
