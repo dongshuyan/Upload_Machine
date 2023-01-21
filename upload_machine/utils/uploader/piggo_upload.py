@@ -84,7 +84,7 @@ def piggo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     if file1.Video_Format=='H264':
         codec_sel='1'
     elif file1.Video_Format=='x264':
-        codec_sel='7'
+        codec_sel='1'
     elif file1.Video_Format=='H265':
         codec_sel='6'
     elif file1.Video_Format=='x265':
