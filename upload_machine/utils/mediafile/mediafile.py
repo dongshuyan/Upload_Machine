@@ -453,7 +453,7 @@ class mediafile(object):
 
         self.language=''
         self.country=''
-        self.year=2022
+        self.year=2023
 
         #根据文件名判断内嵌字幕信息
         self.sublan=''
@@ -996,7 +996,7 @@ class mediafile(object):
                 self.year=int(douban_dict['year'])
             except:
                 logger.warning("douban_dict['year']转换数字出错,其内容为: "+str(douban_dict['year']))
-                self.year=2022
+                self.year=2023
         if (douban_dict['countries'] and len(douban_dict['countries']) > 0) :
             self.country=" / ".join(douban_dict['countries'])
         if (douban_dict['genres'] and len(douban_dict['genres']) > 0):
@@ -1231,7 +1231,10 @@ class mediafile(object):
                         filelist.append(newpath)
                     else:
                         logger.warning('由于文件'+c_path+'在里外文件夹均已存在,已改名为_temp')
-                        os.rename(c_path,c_path+'_temp')
+                        try:
+                            os.rename(c_path,c_path+'_temp')
+                        except Exception as r:
+                            logger.error('rename文件夹"'+c_path+'"发生错误: %s' %(r))
                         newpath=move(c_path+'_temp',dirpath)
                         filelist.append(newpath)
                 else:
@@ -1241,7 +1244,10 @@ class mediafile(object):
                     else:
                         logger.warning('由于文件'+c_path+'在里外文件夹均已存在,已改名为_temp')
                         stem, suffix = os.path.splitext(c_path)
-                        os.rename(c_path,stem+'_temp'+suffix)
+                        try:
+                            os.rename(c_path,stem+'_temp'+suffix)
+                        except Exception as r:
+                            logger.error('rename temp文件"'+c_path+'"发生错误: %s' %(r))
                         newpath=move(stem+'_temp'+suffix,dirpath)
                         filelist.append(newpath)
 
@@ -1264,6 +1270,8 @@ class mediafile(object):
                 newpath=move(item,self.topath)
                 if '_temp' in newpath and os.path.exists(newpath):
                     os.rename(newpath,newpath.replace('_temp',''))
+            else:
+                logger.warning('文件 '+item+' 丢失')
 
 
 
