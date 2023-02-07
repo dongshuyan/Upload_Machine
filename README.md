@@ -408,11 +408,11 @@ upload_machine 'au.yaml' -mi -mf '1.mp4' -ih picgo -iform bbcode -in 6
 
 ## Reference
 
-[Differential 差速器](https://github.com/LeiShi1313/Differential)  (复制了上传图床部分代码)
-[Differential差速器使用教程](https://leishi.io/blog/posts/2021-12/Differential/)  (Upload_Machine安装教程主要参考本文)
-[mktorrent-win-builds](https://github.com/q3aql/mktorrent-win-builds)
-[MKTORRENT WIN下命令行制作种子](https://blog.acesheep.com/index.php/archives/551/)
-[linux 安装 Chrome](https://www.cnblogs.com/ivantang/p/6290729.html)
-[windows10 环境变量设置](https://blog.csdn.net/palmer_kai/article/details/80588594)
-[Linux Ubuntu系统升级Python3版本至Python3.9版本步骤](https://blog.csdn.net/u012080686/article/details/112600252)
-[PYTorrent](https://github.com/ndroi/pytorrent)
+[Differential 差速器](https://github.com/LeiShi1313/Differential)  (复制了上传图床部分代码)  
+[Differential差速器使用教程](https://leishi.io/blog/posts/2021-12/Differential/)  (Upload_Machine安装教程主要参考本文)  
+[mktorrent-win-builds](https://github.com/q3aql/mktorrent-win-builds)  
+[MKTORRENT WIN下命令行制作种子](https://blog.acesheep.com/index.php/archives/551/)  
+[linux 安装 Chrome](https://www.cnblogs.com/ivantang/p/6290729.html)  
+[windows10 环境变量设置](https://blog.csdn.net/palmer_kai/article/details/80588594)  
+[Linux Ubuntu系统升级Python3版本至Python3.9版本步骤](https://blog.csdn.net/u012080686/article/details/112600252)  
+[PYTorrent](https://github.com/ndroi/pytorrent)  

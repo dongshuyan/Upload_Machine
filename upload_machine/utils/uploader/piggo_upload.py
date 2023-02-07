@@ -170,7 +170,7 @@ def piggo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
 
     if 'piggo' in file1.pathinfo.exclusive :
         tags.append(1)
-    if 'PIGGO' in file1.sub.upper():
+    if 'PIGO' in file1.sub.upper():
         tags.append(3)
     if '国' in file1.language or '中' in file1.language:
         tags.append(5)
