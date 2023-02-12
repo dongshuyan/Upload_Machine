@@ -210,6 +210,7 @@ def piggo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "audiocodec_sel[4]": audiocodec_sel,
             "standard_sel[4]": standard_sel,
             "team_sel[4]": team_sel,
+            "processing_sel[4]": 1,
             "uplver": uplver,
             "tags[4][]": tags,
             }

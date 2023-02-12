@@ -1246,10 +1246,11 @@ class mediafile(object):
                         stem, suffix = os.path.splitext(c_path)
                         try:
                             os.rename(c_path,stem+'_temp'+suffix)
+                            newpath=move(stem+'_temp'+suffix,dirpath)
+                            filelist.append(newpath)
                         except Exception as r:
                             logger.error('rename temp文件"'+c_path+'"发生错误: %s' %(r))
-                        newpath=move(stem+'_temp'+suffix,dirpath)
-                        filelist.append(newpath)
+                        
 
         logger.info('检测到路径制种，将先删除掉路径里面所有种子文件(torrent后缀)以及隐藏文件（.开头的文件）...')
         deletetorrent(self.topath) 
