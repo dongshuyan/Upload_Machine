@@ -1211,6 +1211,9 @@ class mediafile(object):
         self.mktorrent_done=1
 
     def gettorrent(self,tracker='https://announce.leaguehd.com/announce.php'):
+        if not('new_folder' in self.basic and self.basic['new_folder']>=1):
+            self.mktorrent(tracker)
+            return
         dirpath=os.path.dirname(self.topath)
         filelist=[]
         if not os.path.exists(self.topath):
@@ -1426,11 +1429,13 @@ class mediafile(object):
         if self.pathinfo.contenttail!='':
             self.content= self.content+self.pathinfo.contenttail
 
-        
+        '''
         if 'new_folder' in self.basic and self.basic['new_folder']>=1:
             self.gettorrent(tracker)
         else:
             self.mktorrent(tracker)
+        '''
+        self.gettorrent(tracker)
         if not (self.complete==1 or self.complete==0):
             self.complete=0
         self.getinfo_done=1

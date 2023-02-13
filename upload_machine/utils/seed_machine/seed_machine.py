@@ -105,7 +105,7 @@ def seedmachine_single(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
         move_suc=0
         move_newpath=''
         move_oldpath=''
-        
+        filelist=[]
         if filepath=='' and pathinfo.zeroday_name!='':
             zeroday_path=os.path.join(pathinfo.path,pathinfo.zeroday_name)
             ls = os.listdir(zeroday_path)
@@ -157,7 +157,8 @@ def seedmachine_single(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
                 if not upload_success:
                     logger.warning(siteitem.sitename+'第'+str(uploadtime)+'次发布任务失败')
                     logger.warning(logstr)
-                    file1.mktorrent()
+                    #file1.mktorrent()
+                    file1.gettorrent()
 
             if not upload_success:
                 logger.warning(siteitem.sitename+'发布任务失败，本站暂停发种')
@@ -292,6 +293,7 @@ def seedmachine_rest(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
                 logger.warning(siteitem.sitename+'第'+str(uploadtime)+'次发布任务失败')
                 logger.warning(logstr)
                 #file1.mktorrent()
+                file1.gettorrent()
         if not upload_success:
             logger.warning(siteitem.sitename+'发布任务失败，本站暂停发种')
             siteitem.enable=0
@@ -385,6 +387,7 @@ def seedmachine(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
                 logger.warning(siteitem.sitename+'第'+str(uploadtime)+'次发布任务失败')
                 logger.warning(logstr)
                 #file1.mktorrent()
+                file1.gettorrent()
 
         if not upload_success:
             logger.warning(siteitem.sitename+'发布任务失败，本站暂停发种')
