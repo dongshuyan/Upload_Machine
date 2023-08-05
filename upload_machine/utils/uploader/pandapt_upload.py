@@ -4,10 +4,9 @@ import os
 from upload_machine.utils.uploader.upload_tools import *
 import re
 import cloudscraper
-import datetime
 
-def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
-    post_url = "https://sharkpt.net/takeupload.php"
+def pandapt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
+    post_url = "https://pandapt.net/takeupload.php"
     tags=[]
     time_out=40
     if (file1.pathinfo.type=='anime' or file1.pathinfo.type=='tv') and file1.pathinfo.collection==0:
@@ -42,36 +41,34 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     elif 'music' in file1.pathinfo.type.lower():
         select_type='408'
     else:
-        select_type='409'
+        select_type='405'
     logger.info('已成功填写类型为'+file1.pathinfo.type)
+
 
 
     #选择媒介
     if 'web' in file1.type.lower() and 'dl' in file1.type.lower():
-        medium_sel='18'
+        medium_sel='10'
     elif (file1.type=='bluray') and '2160' in file1.standard_sel:
         medium_sel='11'
     elif file1.type=='bluray':
-        medium_sel='13'
-    elif 'rip' in file1.type.lower() and  'web' in file1.type.lower():
-        medium_sel='17'
-    elif 'rip' in file1.type.lower() and 'dvd' in file1.type.lower():
-        medium_sel='17'
+        medium_sel='1'
+    elif 'rip' in file1.type.lower() and  'dvd' in file1.type.lower():
+        medium_sel='6'
     elif 'rip' in file1.type.lower()  :
-        medium_sel='17'
+        medium_sel='7'
     elif 'HDTV' in file1.type.upper() and '2160' in file1.standard_sel:
-        medium_sel='19'
+        medium_sel='12'
     elif 'HDTV' in file1.type.upper():
-        medium_sel='19'
-    elif 'remux' in file1.type.lower() and '2160' in file1.standard_sel:
-        medium_sel='15'
+        medium_sel='5'
     elif 'remux' in file1.type.lower():
-        medium_sel='16'
+        medium_sel='3'
     elif 'dvd' in file1.type.lower():
-        medium_sel='20'
+        medium_sel='2'
     else:
-        medium_sel='23'
-    logger.info('已成功选择媒介为'+file1.type)
+        medium_sel='10'
+    logger.info('已成功填写来源为'+file1.type)
+
 
 
     #选择编码
@@ -89,38 +86,42 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
 
     #选择音频编码
     if file1.Audio_Format.upper()=='AAC':
-        audiocodec_sel='14'
+        audiocodec_sel='7'
     elif 'DTS-HDMA' in file1.Audio_Format.upper() or 'DTS-HD MA' in file1.Audio_Format.upper():
-        audiocodec_sel='10'
+        audiocodec_sel='3'
     elif 'TRUEHD ATMOS' in file1.Audio_Format.upper():
-        audiocodec_sel='9'
-    elif 'LPCM' in file1.Audio_Format.upper():
-        audiocodec_sel='15'
-    elif 'TRUEHD' in file1.Audio_Format.upper():
-        audiocodec_sel='11'
-    elif 'FLAC' in file1.Audio_Format.upper():
-        audiocodec_sel='19'
-    elif 'APE' in file1.Audio_Format.upper():
-        audiocodec_sel='19'
-    elif 'MP3' in file1.Audio_Format.upper():
-        audiocodec_sel='19'
-    elif 'AC3' in file1.Audio_Format.upper() or 'AC-3' in file1.Audio_Format.upper() or 'DD' in file1.Audio_Format.upper():
-        audiocodec_sel='13'
-    elif 'DTS:X' in file1.Audio_Format.upper() or 'DTS-X' in file1.Audio_Format.upper():
         audiocodec_sel='8'
-    elif 'DTS' in file1.Audio_Format.upper():
+    elif 'PCM' in file1.Audio_Format.upper():
+        audiocodec_sel='9'
+    elif 'TRUEHD' in file1.Audio_Format.upper():
+        audiocodec_sel='1'
+    elif 'FLAC' in file1.Audio_Format.upper():
+        audiocodec_sel='11'
+    elif 'APE' in file1.Audio_Format.upper():
         audiocodec_sel='12'
+    elif 'MP3' in file1.Audio_Format.upper():
+        audiocodec_sel='10'
+    elif 'AC3' in file1.Audio_Format.upper() or 'AC-3' in file1.Audio_Format.upper() or 'DD' in file1.Audio_Format.upper():
+        audiocodec_sel='5'
+    elif 'EAC3' in file1.Audio_Format.upper() or 'EAC-3' in file1.Audio_Format.upper() or 'DDP' in file1.Audio_Format.upper():
+        audiocodec_sel='6'
+    elif 'DTS:X' in file1.Audio_Format.upper() or 'DTS-X' in file1.Audio_Format.upper():
+        audiocodec_sel='2'
+    elif 'DTS' in file1.Audio_Format.upper():
+        audiocodec_sel='4'
     elif 'WAV' in file1.Audio_Format.upper():
-        audiocodec_sel='19'
-    elif 'M4A' in file1.Audio_Format.upper():
-        audiocodec_sel='19'
+        audiocodec_sel='15'
+    elif 'OGG' in file1.Audio_Format.upper():
+        audiocodec_sel='13'
+    elif 'OPUS' in file1.Audio_Format.upper():
+        audiocodec_sel='14'
     else:
-        audiocodec_sel='19'
+        audiocodec_sel='7'
     logger.info('已成功选择音频编码为'+file1.Audio_Format.upper())
 
     #选择分辨率
     if '8K' in file1.standard_sel:
-        standard_sel='8'
+        standard_sel='6'
     elif '2160' in file1.standard_sel:
         standard_sel='5'
     elif '1080p' in file1.standard_sel.lower():
@@ -136,33 +137,44 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     logger.info('已成功选择分辨率为'+file1.standard_sel)
     
 
-    #选择制作组
-    if 'SharkWEB'.upper() in file1.sub.upper():
-        team_sel='2'
-        tags.append(3)
-    elif 'SharkDIY'.upper() in file1.sub.upper():
-        team_sel='3'
-        tags.append(3)
-    elif 'SharkTV'.upper() in file1.sub.upper():
-        team_sel='4'
-        tags.append(3)
-    elif 'SharkMV'.upper() in file1.sub.upper():
-        team_sel='5'
-        tags.append(3)
-    elif 'Shark'.upper() in file1.sub.upper():
-        team_sel='1'
-        tags.append(3)
+
+    #选择地区
+    if not file1.country=='':
+        if '大陆' in file1.country:
+            source_sel='7'
+            logger.info('国家信息已选择'+file1.country)
+        elif '香港' in file1.country:
+            source_sel='2'
+            logger.info('国家信息已选择'+file1.country)
+        elif '台湾' in file1.country:
+            source_sel='2'
+            logger.info('国家信息已选择'+file1.country)
+        elif '美国' in file1.country:
+            source_sel='1'
+            logger.info('国家信息已选择'+file1.country)
+        elif '英国' in file1.country:
+            source_sel='1'
+            logger.info('国家信息已选择'+file1.country)
+        elif '法国' in file1.country:
+            source_sel='1'
+            logger.info('国家信息已选择'+file1.country)
+        elif '韩国' in file1.country:
+            source_sel='4'
+            logger.info('国家信息已选择'+file1.country)
+        elif '日本' in file1.country:
+            source_sel='3'
+            logger.info('国家信息已选择'+file1.country)
+        elif '印度' in file1.country:
+            source_sel='9'
+            logger.info('国家信息已选择'+file1.country)
+        else:
+            source_sel='6'
+            logger.info('未找到资源国家信息，已选择其他')
     else:
-        team_sel='6'
-    logger.info('制作组已成功选择为'+file1.sub)
+        source_sel='3'
+        logger.info('未找到资源国家信息，已默认日本')
     
-    if 'anime' in file1.pathinfo.type.lower():
-        tags.append(14)
-        logger.info('已选择动画')
-    if file1.pathinfo.transfer!=1:
-        tags.append(9)
-        logger.info('已选择原创')
-    if 'sharkpt' in file1.pathinfo.exclusive :
+    if 'pandapt' in file1.pathinfo.exclusive :
         tags.append(1)
         logger.info('已选择禁转')
     if '国' in file1.language or '中' in file1.language:
@@ -174,17 +186,14 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     if not file1.sublan=='' and ('简' in file1.sublan or '繁' in file1.sublan or '中' in file1.sublan):
         tags.append(6)
         logger.info('已选择中字')
+    if file1.pathinfo.complete==1:
+        tags.append(10)
+        logger.info('已选择完结')
+    if 'anime' in file1.pathinfo.type.lower():
+        tags.append(12)
+        logger.info('已选择动画')
 
-    # 官组默认二级置顶三天
-    if 'Shark'.upper() in file1.sub.upper():
-        pos_state = 'r_sticky'
-        pos_state_until = (datetime.datetime.utcnow() + datetime.timedelta(hours=80)).strftime("%Y-%m-%d %H:%M")
-        logger.info(f'官组资源，二级置顶至 {pos_state_until}')
-    else:
-        pos_state = 'normal'
-        pos_state_until = ''
-        logger.info('非官组资源，不置顶')
-
+    
     tags=list(set(tags))
     tags.sort()
     
@@ -198,8 +207,9 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             
 
     other_data = {
-            "name": file1.uploadname_sharkpt,
+            "name": file1.uploadname,
             "small_descr": file1.small_descr+file1.pathinfo.exinfo,
+            "url": file1.imdburl,
             "pt_gen": file1.doubanurl,
             "color": "0",
             "font": "0",
@@ -208,15 +218,14 @@ def sharkpt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "technical_info": file1.mediainfo,
             "type": select_type,
             "medium_sel[4]": medium_sel,
+            "standard_sel[4]": standard_sel,
             "codec_sel[4]": codec_sel,
             "audiocodec_sel[4]": audiocodec_sel,
-            "standard_sel[4]": standard_sel,
-            "team_sel[4]": team_sel,
+            "source_sel[4]": source_sel,
             "uplver": uplver,
             "tags[4][]": tags,
-            "pos_state": pos_state,
-            "pos_state_until": pos_state_until
             }
+
     scraper=cloudscraper.create_scraper()
     success_upload=0
     try_upload=0

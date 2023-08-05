@@ -45,6 +45,31 @@ def hdvideo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     logger.info('已成功填写类型为'+file1.pathinfo.type)
 
 
+    source_sel='24'
+    #选择来源
+    if 'web' in file1.type.lower() and 'dl' in file1.type.lower():
+        source_sel='24'
+    elif (file1.type=='bluray') and '2160' in file1.standard_sel:
+        source_sel='23'
+    elif file1.type=='bluray':
+        source_sel='22'
+    elif 'rip' in file1.type.lower() and  'web' in file1.type.lower():
+        source_sel='24'
+    elif 'dvd' in file1.type.lower():
+        source_sel='25'
+    elif 'rip' in file1.type.lower()  :
+        source_sel='22'
+    elif 'HDTV' in file1.type.upper() and '2160' in file1.standard_sel:
+        source_sel='26'
+    elif 'HDTV' in file1.type.upper():
+        source_sel='26'
+    elif 'remux' in file1.type.lower():
+        source_sel='22'
+    else:
+        source_sel='28'
+    logger.info('已成功填写来源为'+file1.type)
+
+
     #选择媒介
     if 'web' in file1.type.lower() and 'dl' in file1.type.lower():
         medium_sel='14'
@@ -138,17 +163,13 @@ def hdvideo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     #选择制作组
     if 'HDVWEB' in file1.sub.upper():
         team_sel='1'
-    elif 'HDVMOVIE' in file1.sub.upper():
-        team_sel='7'
     elif 'HDVMV' in file1.sub.upper():
         team_sel='2'
-    elif 'QHSTUDIO' in file1.sub.upper():
-        team_sel='3'
     else:
         team_sel='4'
     logger.info('制作组已成功选择为'+file1.sub)
     
-    if 'HDV' in file1.sub.upper() or 'QHSTUDIO' in file1.sub.upper():
+    if 'HDV' in file1.sub.upper():
         tags.append(3)
         logger.info('已选择官方')
     if 'hdvideo' in file1.pathinfo.exclusive :
@@ -163,6 +184,9 @@ def hdvideo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     if not file1.sublan=='' and ('简' in file1.sublan or '繁' in file1.sublan or '中' in file1.sublan):
         tags.append(6)
         logger.info('已选择中字')
+    if file1.pathinfo.complete==1:
+        tags.append(17)
+        logger.info('已选择完结')
 
     
     tags=list(set(tags))
@@ -187,13 +211,14 @@ def hdvideo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "size": "0",
             "descr": file1.content,
             "type": select_type,
-            "medium_sel": medium_sel,
-            "codec_sel": codec_sel,
-            "audiocodec_sel": audiocodec_sel,
-            "standard_sel": standard_sel,
-            "team_sel": team_sel,
+            "source_sel[4]": source_sel,
+            "medium_sel[4]": medium_sel,
+            "codec_sel[4]": codec_sel,
+            "audiocodec_sel[4]": audiocodec_sel,
+            "standard_sel[4]": standard_sel,
+            "team_sel[4]": team_sel,
             "uplver": uplver,
-            "tags[]": tags,
+            "tags[4][]": tags,
             }
 
     scraper=cloudscraper.create_scraper()

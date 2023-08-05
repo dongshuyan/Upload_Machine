@@ -17,6 +17,9 @@ from upload_machine.utils.uploader.redleaves_upload import redleaves_upload
 from upload_machine.utils.uploader.mteam_upload import mteam_upload
 from upload_machine.utils.uploader.sharkpt_upload import sharkpt_upload
 from upload_machine.utils.uploader.zhuque_upload import zhuque_upload
+from upload_machine.utils.uploader.dajiao_upload import dajiao_upload
+from upload_machine.utils.uploader.pandapt_upload import pandapt_upload
+from upload_machine.utils.uploader.rousi_upload import rousi_upload
 
 
 
