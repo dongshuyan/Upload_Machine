@@ -100,9 +100,13 @@ def hdvideo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         codec_sel='7'
     elif file1.Video_Format=='x264':
         codec_sel='7'
+    elif 'AVC' in file1.Video_Format.upper():
+        codec_sel='7'
     elif file1.Video_Format=='H265':
         codec_sel='6'
     elif file1.Video_Format=='x265':
+        codec_sel='6'
+    elif 'HEVC' in file1.Video_Format.upper():
         codec_sel='6'
     else:
         codec_sel='6'

@@ -815,11 +815,15 @@ class mediafile(object):
         if os.path.isdir(self.topath):
             self.address=os.path.join(self.topath,os.path.basename(self.address))
         if not (filepath=='' or filepath==None):
+            logger.info('检测到mediainfo模板文件正在应用...')
             a=os.popen('mediainfo --Inform=file://"'+filepath+'" "'+self.address+'"')
             res=a.buffer.read().decode('utf-8')
-            a.close()
             self.mediainfo=res
+            a.close()
+            self.content=self.douban_info+"\n[quote=Mediainfo]\n"+self.mediainfo+"[/quote]\n"+self.screenshoturl
+            #logger.info('使用模板后，mediainfo变更为:\n'+self.mediainfo)
         else:
+            #logger.info('未检测到mediainfo模板文件,正在使用原版mediainfo...')
             a=os.popen('mediainfo "'+self.address+'"')
             res=a.buffer.read().decode('utf-8')
             a.close()
@@ -835,6 +839,7 @@ class mediafile(object):
                 i+=1
             res='\n'.join(ss)
             self.mediainfo=res
+            self.content=self.douban_info+"\n[quote=Mediainfo]\n"+self.mediainfo+"[/quote]\n"+self.screenshoturl
 
     def getmediainfo(self):
         if self.getmediainfo_done==1:
