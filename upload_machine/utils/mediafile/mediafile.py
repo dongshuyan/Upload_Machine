@@ -393,6 +393,7 @@ class mediafile(object):
         self.anidburl          = pathinfo.anidb_url
         self.from_url          = pathinfo.from_url
         self.transfer          = pathinfo.transfer
+        self.complete          = pathinfo.complete
         self.filename          = os.path.basename(self.address)
         self.episodename       = findnum(self.filename)[0]
         self.episode           = int(self.episodename)
@@ -1012,7 +1013,7 @@ class mediafile(object):
             self.imdburl='https://www.imdb.com/title/'+self.imdburl+'/'
             self.pathinfo.imdb_url=self.imdburl
             logger.info('根据豆瓣信息分析，imdb链接为'+self.imdburl)
-        if (douban_dict['episodes']) :
+        if (douban_dict['episodes']) and  (not('movie' in self.mediatype.lower())):
             self.media_type='TV_series'
             try:
                 self.num=int(douban_dict['episodes'])

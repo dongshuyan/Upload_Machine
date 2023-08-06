@@ -400,24 +400,26 @@ def seedmachine(pathinfo,sites,pathyaml,basic,qbinfo,imgdata,hashlist):
             log_error=log_error+str(errornum)+':\t'+siteitem.sitename+'   \t'+logstr+'\n'
             logger.warning(logstr)
             #记录已发布的种子
-            for epitem in pathinfo.eps:
-                exec('pathinfo.'+siteitem.sitename+'_done.append('+str(epitem)+')')
+            if not 'movie' in pathinfo.type.lower():
+                for epitem in pathinfo.eps:
+                    exec('pathinfo.'+siteitem.sitename+'_done.append('+str(epitem)+')')
+                exec('pathinfo.'+siteitem.sitename+'_done=list(set('+'pathinfo.'+siteitem.sitename+'_done'+'))')
+                exec('pathinfo.'+siteitem.sitename+'_done.sort()')
             if pathinfo.complete==1:
                 exec('pathinfo.'+siteitem.sitename+'_done.append(-1)')
-            exec('pathinfo.'+siteitem.sitename+'_done=list(set('+'pathinfo.'+siteitem.sitename+'_done'+'))')
-            exec('pathinfo.'+siteitem.sitename+'_done.sort()')
             exec('pathyaml["'+siteitem.sitename+'"]=",".join([str(i) for i in pathinfo.'+siteitem.sitename+'_done])')
         else:
             succnum=succnum+1
             log_succ=log_succ+str(succnum)+':\t'+siteitem.sitename+'   \t'+logstr+'\n'
             logger.info(logstr)
             #记录已发布的种子
-            for epitem in pathinfo.eps:
-                exec('pathinfo.'+siteitem.sitename+'_done.append('+str(epitem)+')')
+            if not 'movie' in pathinfo.type.lower():
+                for epitem in pathinfo.eps:
+                    exec('pathinfo.'+siteitem.sitename+'_done.append('+str(epitem)+')')
+                exec('pathinfo.'+siteitem.sitename+'_done=list(set('+'pathinfo.'+siteitem.sitename+'_done'+'))')
+                exec('pathinfo.'+siteitem.sitename+'_done.sort()')
             if pathinfo.complete==1:
                 exec('pathinfo.'+siteitem.sitename+'_done.append(-1)')
-            exec('pathinfo.'+siteitem.sitename+'_done=list(set('+'pathinfo.'+siteitem.sitename+'_done'+'))')
-            exec('pathinfo.'+siteitem.sitename+'_done.sort()')
             exec('pathyaml["'+siteitem.sitename+'"]=",".join([str(i) for i in pathinfo.'+siteitem.sitename+'_done])')
             #deletetorrent(basic['screenshot_path'])
         #a=input('check')
