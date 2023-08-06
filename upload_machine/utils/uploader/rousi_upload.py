@@ -39,7 +39,7 @@ def rousi_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     elif 'sport' in file1.pathinfo.type.lower():
         select_type='407'
     elif 'music' in file1.pathinfo.type.lower():
-        select_type='408'
+        select_type='406'
     else:
         select_type='405'
     logger.info('已成功填写类型为'+file1.pathinfo.type)
@@ -72,72 +72,72 @@ def rousi_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
 
     #选择媒介
     if 'web' in file1.type.lower() and 'dl' in file1.type.lower():
-        medium_sel='14'
-    elif (file1.type=='bluray') and '2160' in file1.standard_sel:
         medium_sel='10'
+    elif (file1.type=='bluray') and '2160' in file1.standard_sel:
+        medium_sel='1'
     elif file1.type=='bluray':
-        medium_sel='11'
-    elif 'rip' in file1.type.lower() and  'web' in file1.type.lower():
-        medium_sel='15'
+        medium_sel='1'
+    elif 'rip' in file1.type.lower() and  'dvd' in file1.type.lower():
+        medium_sel='6'
     elif 'rip' in file1.type.lower()  :
-        medium_sel='13'
+        medium_sel='7'
     elif 'HDTV' in file1.type.upper() and '2160' in file1.standard_sel:
-        medium_sel='16'
+        medium_sel='5'
     elif 'HDTV' in file1.type.upper():
-        medium_sel='16'
+        medium_sel='5'
     elif 'remux' in file1.type.lower():
-        medium_sel='12'
+        medium_sel='3'
     elif 'dvd' in file1.type.lower():
-        medium_sel='18'
+        medium_sel='2'
     else:
-        medium_sel='19'
+        medium_sel='10'
     logger.info('已成功填写来源为'+file1.type)
 
 
 
     #选择编码
     if file1.Video_Format=='H264':
-        codec_sel='7'
+        codec_sel='1'
     elif file1.Video_Format=='x264':
-        codec_sel='7'
+        codec_sel='1'
     elif file1.Video_Format=='H265':
         codec_sel='6'
     elif file1.Video_Format=='x265':
         codec_sel='6'
     else:
-        codec_sel='6'
+        codec_sel='1'
     logger.info('已成功选择编码为'+file1.Video_Format)
 
     #选择音频编码
     if file1.Audio_Format.upper()=='AAC':
         audiocodec_sel='6'
     elif 'DTS-HDMA' in file1.Audio_Format.upper() or 'DTS-HD MA' in file1.Audio_Format.upper():
-        audiocodec_sel='3'
+        audiocodec_sel='11'
     elif 'TRUEHD ATMOS' in file1.Audio_Format.upper():
-        audiocodec_sel='11'
-    elif 'PCM' in file1.Audio_Format.upper():
         audiocodec_sel='8'
+    elif 'PCM' in file1.Audio_Format.upper():
+        audiocodec_sel='14'
     elif 'TRUEHD' in file1.Audio_Format.upper():
-        audiocodec_sel='11'
+        audiocodec_sel='9'
     elif 'FLAC' in file1.Audio_Format.upper():
         audiocodec_sel='1'
     elif 'APE' in file1.Audio_Format.upper():
         audiocodec_sel='2'
     elif 'MP3' in file1.Audio_Format.upper():
-        audiocodec_sel='7'
+        audiocodec_sel='4'
     elif 'AC3' in file1.Audio_Format.upper() or 'AC-3' in file1.Audio_Format.upper() or 'DD' in file1.Audio_Format.upper():
-        audiocodec_sel='9'
+        audiocodec_sel='13'
     elif 'EAC3' in file1.Audio_Format.upper() or 'EAC-3' in file1.Audio_Format.upper() or 'DDP' in file1.Audio_Format.upper():
-        audiocodec_sel='10'
+        audiocodec_sel='13'
     elif 'DTS:X' in file1.Audio_Format.upper() or 'DTS-X' in file1.Audio_Format.upper():
-        audiocodec_sel='3'
+        audiocodec_sel='10'
     elif 'DTS' in file1.Audio_Format.upper():
         audiocodec_sel='3'
     elif 'WAV' in file1.Audio_Format.upper():
-        audiocodec_sel='12'
+        audiocodec_sel='7'
     elif 'M4A' in file1.Audio_Format.upper():
         audiocodec_sel='7'
-    elif 'OPUS' in file1.Audio_Format.upper():
+    elif 'OGG' in file1.Audio_Format.upper():
         audiocodec_sel='5'
     else:
         audiocodec_sel='7'
@@ -145,48 +145,59 @@ def rousi_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
 
     #选择分辨率
     if '8K' in file1.standard_sel:
-        standard_sel='5'
+        standard_sel='6'
     elif '2160' in file1.standard_sel:
         standard_sel='6'
     elif '1080p' in file1.standard_sel.lower():
-        standard_sel='8'
+        standard_sel='1'
     elif '1080i' in file1.standard_sel.lower():
-        standard_sel='9'
+        standard_sel='2'
     elif '720' in file1.standard_sel:
-        standard_sel='10'
+        standard_sel='3'
     elif '480' in file1.standard_sel:
-        standard_sel='11'
+        standard_sel='7'
     else:
         standard_sel='8'
     logger.info('已成功选择分辨率为'+file1.standard_sel)
     
     #选择制作组
-    if 'HDVWEB' in file1.sub.upper():
+    if 'DJWEB' in file1.sub.upper():
         team_sel='1'
-    elif 'HDVMV' in file1.sub.upper():
+    elif 'DJTV' in file1.sub.upper():
         team_sel='2'
+    elif 'DJZB' in file1.sub.upper():
+        team_sel='3'
+    elif 'CatEDU' in file1.sub.upper():
+        team_sel='6'
+    elif 'Zaxyzit' in file1.sub.upper():
+        team_sel='8'
     else:
-        team_sel='4'
+        team_sel='7'
     logger.info('制作组已成功选择为'+file1.sub)
     
-    if 'HDV' in file1.sub.upper():
-        tags.append(3)
-        logger.info('已选择官方')
-    if 'ruosi' in file1.pathinfo.exclusive :
+
+    if 'rousi' in file1.pathinfo.exclusive :
         tags.append(1)
         logger.info('已选择禁转')
+    if 'ROUSI' in file1.sub.upper():
+        tags.append(3)
+        logger.info('已选择官方')
     if '国' in file1.language or '中' in file1.language:
         tags.append(5)
         logger.info('已选择国语')
-    if '粤' in file1.language:
-        tags.append(10)
-        logger.info('已选择粤语')
     if not file1.sublan=='' and ('简' in file1.sublan or '繁' in file1.sublan or '中' in file1.sublan):
         tags.append(6)
         logger.info('已选择中字')
-    if file1.pathinfo.complete==1:
-        tags.append(17)
-        logger.info('已选择完结')
+    if '粤' in file1.language:
+        tags.append(15)
+        logger.info('已选择粤语')
+    if '2160' in file1.standard_sel:
+        tags.append(18)
+        logger.info('已选择4K')
+    if 'ROUSIWEB' in file1.sub.upper():
+        tags.append(13)
+        logger.info('已选择RousiWeb')
+
 
     
     tags=list(set(tags))
@@ -209,14 +220,9 @@ def rousi_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "color": "0",
             "font": "0",
             "size": "0",
-            "descr": file1.content,
+            "descr": file1.pathinfo.contenthead+'\n'+file1.douban_info+'\n'+file1.screenshoturl+'\n'+file1.pathinfo.contenttail,
+            "technical_info": file1.mediainfo,
             "type": select_type,
-            "source_sel[4]": source_sel,
-            "medium_sel[4]": medium_sel,
-            "codec_sel[4]": codec_sel,
-            "audiocodec_sel[4]": audiocodec_sel,
-            "standard_sel[4]": standard_sel,
-            "team_sel[4]": team_sel,
             "uplver": uplver,
             "tags[4][]": tags,
             }

@@ -25,7 +25,8 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - 无法在发种前暂停自行修改信息
 
 ## 更新说明
-- 20230806 增加对pandapt和dajiao站点的适配，并更新了hdvideo站点发布
+- 20230806 增加对站点Rousi的支持
+- 20230806 增加对pandapt和dajiao站点的支持，并更新了hdvideo站点发布
 - 20230112 piggo发布更新，sharkpt merge了官组相关设置
 - 20230108 修复了无数个由于上一次更新带来的bug
 - 20221205 新增将未发布资源打包发布的功能，设置方法是将配置文件`au.yaml`中`path`中的`collection`参数设置为2
