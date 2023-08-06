@@ -818,6 +818,7 @@ class mediafile(object):
             a=os.popen('mediainfo --Inform=file://"'+filepath+'" "'+self.address+'"')
             res=a.buffer.read().decode('utf-8')
             a.close()
+            self.mediainfo=res
         else:
             a=os.popen('mediainfo "'+self.address+'"')
             res=a.buffer.read().decode('utf-8')
@@ -826,8 +827,14 @@ class mediafile(object):
             for i in range(len(ss)):
                 if ss[i].startswith('Complete name'):
                     ss[i]=':'.join([ss[i].split(':')[0],' '+self.filename])
+            i=0
+            while (i<len(ss)):
+                if (ss[i].upper()).startswith('Unique'.upper()):
+                    del(ss[i])
+                    i=i-1
+                i+=1
             res='\n'.join(ss)
-        self.mediainfo=res
+            self.mediainfo=res
 
     def getmediainfo(self):
         if self.getmediainfo_done==1:
