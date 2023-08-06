@@ -843,6 +843,12 @@ class mediafile(object):
         for i in range(len(ss)):
             if ss[i].startswith('Complete name'):
                 ss[i]=':'.join([ss[i].split(':')[0],' '+self.filename])
+        i=0
+        while (i<len(ss)):
+            if (ss[i].upper()).startswith('Unique'.upper()):
+                del(ss[i])
+                i=i-1
+            i+=1
 
         self.mediainfo='\n'.join(ss)
         a=os.popen("mediainfo --Output=JSON \""+self.address+'"')
