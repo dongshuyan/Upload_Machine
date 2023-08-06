@@ -114,11 +114,11 @@ def hdvideo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
 
     #选择音频编码
     if file1.Audio_Format.upper()=='AAC':
-        audiocodec_sel='6'
+        audiocodec_sel='21'
     elif 'DTS-HDMA' in file1.Audio_Format.upper() or 'DTS-HD MA' in file1.Audio_Format.upper():
         audiocodec_sel='3'
     elif 'TRUEHD ATMOS' in file1.Audio_Format.upper():
-        audiocodec_sel='11'
+        audiocodec_sel='14'
     elif 'PCM' in file1.Audio_Format.upper():
         audiocodec_sel='8'
     elif 'TRUEHD' in file1.Audio_Format.upper():
@@ -128,15 +128,15 @@ def hdvideo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     elif 'APE' in file1.Audio_Format.upper():
         audiocodec_sel='2'
     elif 'MP3' in file1.Audio_Format.upper():
-        audiocodec_sel='7'
+        audiocodec_sel='18'
     elif 'AC3' in file1.Audio_Format.upper() or 'AC-3' in file1.Audio_Format.upper() or 'DD' in file1.Audio_Format.upper():
         audiocodec_sel='9'
     elif 'EAC3' in file1.Audio_Format.upper() or 'EAC-3' in file1.Audio_Format.upper() or 'DDP' in file1.Audio_Format.upper():
         audiocodec_sel='10'
     elif 'DTS:X' in file1.Audio_Format.upper() or 'DTS-X' in file1.Audio_Format.upper():
-        audiocodec_sel='3'
+        audiocodec_sel='16'
     elif 'DTS' in file1.Audio_Format.upper():
-        audiocodec_sel='3'
+        audiocodec_sel='17'
     elif 'WAV' in file1.Audio_Format.upper():
         audiocodec_sel='12'
     elif 'M4A' in file1.Audio_Format.upper():
