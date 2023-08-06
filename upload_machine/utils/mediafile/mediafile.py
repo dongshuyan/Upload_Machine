@@ -811,7 +811,7 @@ class mediafile(object):
         else:
             logger.warning('无法根据mediainfo分析出字幕语言信息')
 
-    def updatemediainfo(self,filepath='',newpath=''):
+    def updatemediainfo(self,filepath=''):
         if os.path.isdir(self.topath):
             self.address=os.path.join(self.topath,os.path.basename(self.address))
         if not (filepath=='' or filepath==None):
