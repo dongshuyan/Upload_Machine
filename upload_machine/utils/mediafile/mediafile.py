@@ -821,6 +821,11 @@ class mediafile(object):
             self.mediainfo=res
             a.close()
             self.content=self.douban_info+"\n[quote=Mediainfo]\n"+self.mediainfo+"[/quote]\n"+self.screenshoturl
+            if self.pathinfo.contenthead!='':
+                self.content= self.pathinfo.contenthead+self.content
+            
+            if self.pathinfo.contenttail!='':
+                self.content= self.content+self.pathinfo.contenttail
             #logger.info('使用模板后，mediainfo变更为:\n'+self.mediainfo)
         else:
             #logger.info('未检测到mediainfo模板文件,正在使用原版mediainfo...')
@@ -840,6 +845,11 @@ class mediafile(object):
             res='\n'.join(ss)
             self.mediainfo=res
             self.content=self.douban_info+"\n[quote=Mediainfo]\n"+self.mediainfo+"[/quote]\n"+self.screenshoturl
+            if self.pathinfo.contenthead!='':
+                self.content= self.pathinfo.contenthead+self.content
+            
+            if self.pathinfo.contenttail!='':
+                self.content= self.content+self.pathinfo.contenttail
 
     def getmediainfo(self):
         if self.getmediainfo_done==1:
