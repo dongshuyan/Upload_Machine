@@ -101,10 +101,10 @@ def pandapt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         audiocodec_sel='12'
     elif 'MP3' in file1.Audio_Format.upper():
         audiocodec_sel='10'
-    elif 'AC3' in file1.Audio_Format.upper() or 'AC-3' in file1.Audio_Format.upper() or 'DD' in file1.Audio_Format.upper():
-        audiocodec_sel='5'
     elif 'EAC3' in file1.Audio_Format.upper() or 'EAC-3' in file1.Audio_Format.upper() or 'DDP' in file1.Audio_Format.upper():
         audiocodec_sel='6'
+    elif 'AC3' in file1.Audio_Format.upper() or 'AC-3' in file1.Audio_Format.upper() or 'DD' in file1.Audio_Format.upper():
+        audiocodec_sel='5'
     elif 'DTS:X' in file1.Audio_Format.upper() or 'DTS-X' in file1.Audio_Format.upper():
         audiocodec_sel='2'
     elif 'DTS' in file1.Audio_Format.upper():
@@ -189,9 +189,6 @@ def pandapt_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     if file1.pathinfo.complete==1:
         tags.append(10)
         logger.info('已选择完结')
-    if 'anime' in file1.pathinfo.type.lower():
-        tags.append(12)
-        logger.info('已选择动画')
 
     
     tags=list(set(tags))

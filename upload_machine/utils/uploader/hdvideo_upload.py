@@ -129,10 +129,10 @@ def hdvideo_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
         audiocodec_sel='2'
     elif 'MP3' in file1.Audio_Format.upper():
         audiocodec_sel='18'
-    elif 'AC3' in file1.Audio_Format.upper() or 'AC-3' in file1.Audio_Format.upper() or 'DD' in file1.Audio_Format.upper():
-        audiocodec_sel='9'
     elif 'EAC3' in file1.Audio_Format.upper() or 'EAC-3' in file1.Audio_Format.upper() or 'DDP' in file1.Audio_Format.upper():
         audiocodec_sel='10'
+    elif 'AC3' in file1.Audio_Format.upper() or 'AC-3' in file1.Audio_Format.upper() or 'DD' in file1.Audio_Format.upper():
+        audiocodec_sel='9'
     elif 'DTS:X' in file1.Audio_Format.upper() or 'DTS-X' in file1.Audio_Format.upper():
         audiocodec_sel='16'
     elif 'DTS' in file1.Audio_Format.upper():
