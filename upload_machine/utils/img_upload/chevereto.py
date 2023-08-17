@@ -57,7 +57,7 @@ def chevereto_api_upload(imgpath: str, url: str, api_key: str):
     return res['image']['url']
 
 
-def chevereto_cookie_upload(imgpath: str, url: str, cookie: str):
+def chevereto_cookie_upload(imgpath: str, url: str, cookie: str, proxy: bool, proxy_host: str = ''):
     auth_token=get_token(url,cookie)
     if auth_token=='':
         logger.warning('未找到auth_token')
@@ -65,11 +65,12 @@ def chevereto_cookie_upload(imgpath: str, url: str, cookie: str):
 
     img  = Path(imgpath)
     headers = {'cookie': cookie}
+    proxies = {'http': proxy_host} if proxy else None
     data = {'type': 'file', 'action': 'upload', 'nsfw': 0, 'auth_token': auth_token}
     files = {'source': open(img, 'rb')}
 
     try:
-        req = requests.post(f'{url}/json', data=data, files=files, headers=headers)
+        req = requests.post(f'{url}/json', data=data, files=files, headers=headers, proxies=proxies)
     except Exception as r:
         logger.warning('requests 获取失败，原因: %s' %(r))
     try:
@@ -125,7 +126,7 @@ def chevereto_api_upload_files(imgpaths: list,url: str, api_key: str, form='img'
             logger.warning(domain+'第'+str(imgnum)+'张图片'+imgpath+'上传失败')
     return liststr.strip()
 
-def chevereto_cookie_upload_files(imgpaths: list,url: str, cookie: str, form='img'):
+def chevereto_cookie_upload_files(imgpaths: list,url: str, cookie: str, form='img',proxy:bool = False,proxy_host:str=''):
     liststr=''
     imgnum=0
     domain=url_to_domain(url)
@@ -137,7 +138,7 @@ def chevereto_cookie_upload_files(imgpaths: list,url: str, cookie: str, form='im
         while success==0 and trynum<5:
             trynum=trynum+1
             try:
-                imgstr=chevereto_cookie_upload(imgpath,url,cookie)
+                imgstr=chevereto_cookie_upload(imgpath,url,cookie, proxy, proxy_host)
                 success=1
             except Exception as r:
                 success=0

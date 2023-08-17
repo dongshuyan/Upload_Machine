@@ -25,14 +25,17 @@ def createimgdict(imgdata):
         imgdict['picgo']=True
     if existitem(imgdata,'smms') and existitem(imgdata['smms'],'apikey'):
         imgdict['smms']=True
+        imgdata['smms']['enable_proxy']=imgdata['smms']['enable_proxy'] if existitem(imgdata['smms'],'enable_proxy') else False
     if existitem(imgdata,'pter')  and existitem(imgdata['pter'],'url') and existitem(imgdata['pter'],'cookie') :
         imgdict['pter']=True
     if existitem(imgdata,'emp')  and existitem(imgdata['emp'],'url') and existitem(imgdata['emp'],'cookie') :
         imgdict['emp']=True
+        imgdata['emp']['enable_proxy']=imgdata['emp']['enable_proxy'] if existitem(imgdata['emp'],'enable_proxy') else False
     if existitem(imgdata,'chd')  and existitem(imgdata['chd'],'url') and existitem(imgdata['chd'],'cookie') :
         imgdict['chd']=True
     if existitem(imgdata,'freeimage')  and existitem(imgdata['freeimage'],'url') and existitem(imgdata['freeimage'],'cookie') :
         imgdict['freeimage']=True
+        imgdata['freeimage']['enable_proxy'] = imgdata['freeimage']['enable_proxy'] if existitem(imgdata['freeimage'],'enable_proxy') else False
     if existitem(imgdata, 'sharkimg') and existitem(imgdata['sharkimg'], 'token'):
         imgdict['sharkimg'] = True
     imgdict['femp']=True
@@ -51,7 +54,7 @@ def img_upload_seq(imgdata,seq:list[str],imglist:list[str],form:str='img'):
         if not (res==''):
             return res
 
-def img_upload(imgdata,imglist:list[str],host:str='',form:str='img',fail:bool=False,chevereto_url:str='',chevereto_apikey:str='',chevereto_cookie:str=''):
+def img_upload(imgdata,imglist:list[str],host:str='',form:str='img',fail:bool=False,chevereto_url:str='',chevereto_apikey:str='',chevereto_cookie:str='',proxy_host:str=''):
     imgdata,imgdict,seq=createimgdict(imgdata)
     success=True
     res=''
@@ -81,7 +84,7 @@ def img_upload(imgdata,imglist:list[str],host:str='',form:str='img',fail:bool=Fa
         host='smms'
         logger.info('正在尝试使用'+host+'上传图片,请稍等...')
         if imgdict[host]==True:
-            res=smms_upload_files(imgpaths=imglist,api_key=imgdata[host]['apikey'],form=form)
+            res=smms_upload_files(imgpaths=imglist,api_key=imgdata[host]['apikey'],form=form, proxy=imgdata[host]['enable_proxy'],proxy_host=proxy_host)
         else:
             success=False
             logger.warning('图床'+host+'配置信息缺失')
@@ -111,7 +114,7 @@ def img_upload(imgdata,imglist:list[str],host:str='',form:str='img',fail:bool=Fa
         host='emp'
         logger.info('正在尝试使用'+host+'上传图片,请稍等...')
         if imgdict[host]==True:
-            res=chevereto_cookie_upload_files(imgpaths=imglist,url=imgdata[host]['url'].strip('/'), cookie=imgdata[host]['cookie'], form=form)
+            res=chevereto_cookie_upload_files(imgpaths=imglist,url=imgdata[host]['url'].strip('/'), cookie=imgdata[host]['cookie'], form=form,proxy=imgdata[host]['enable_proxy'],proxy_host=proxy_host)
         else:
             success=False
             logger.warning('图床'+host+'配置信息缺失')
@@ -141,7 +144,7 @@ def img_upload(imgdata,imglist:list[str],host:str='',form:str='img',fail:bool=Fa
         host='freeimage'
         logger.info('正在尝试使用'+host+'上传图片,请稍等...')
         if imgdict[host]==True:
-            res=chevereto_cookie_upload_files(imgpaths=imglist,url=imgdata[host]['url'].strip('/'), cookie=imgdata[host]['cookie'], form=form)
+            res=chevereto_cookie_upload_files(imgpaths=imglist,url=imgdata[host]['url'].strip('/'), cookie=imgdata[host]['cookie'], form=form,proxy=imgdata[host]['enable_proxy'],proxy_host=proxy_host)
         else:
             success=False
             logger.warning('图床'+host+'配置信息缺失')

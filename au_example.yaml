@@ -9,6 +9,7 @@ basic:
   new_folder: 0 #发布的资源是否在外层套一层0day名字文件夹 0表示否,1表示是,2表示0day文件夹以中文名开头。不填默认是
   record_path: /Users/Desktop/record_path #用来存放发种记录 不填默认在工作目录下/record_path
   screenshot_path: /Users/Desktop/screenshot_path #用来存放视频截图，种子等临时文件 不填默认在工作目录下/screenshot_path
+  proxy_host: 127.0.0.1:10809 #用于设置http代理, 解决无法上传图床 长时间等待问题 请根据自己的环境 自行修改
 qbinfo:
   qburl: 127.0.0.1:8080
   qbwebuiusername: username #你qbittorrent的WEBUI的用户名密码
@@ -31,6 +32,7 @@ image hosting: #配置图床站点信息
     apikey: apikey
   smms:
     apikey: apikey
+    enable_proxy: 0 #留空或0表示不开启 开启代理设为: 1
   picgo:
     apikey: apikey
     url: https://www.picgo.net/api/1/upload
@@ -40,12 +42,14 @@ image hosting: #配置图床站点信息
   emp:
     cookie: cookie #F12 nerwork中提取的cookie,如果没有账号则在冒号后留空或者填写null
     url: https://jerking.empornium.ph
+    enable_proxy: 0 #留空或0表示不开启 开启代理设为: 1
   chd:
     cookie: cookie #F12 nerwork中提取的cookie,如果没有账号则在冒号后留空或者填写null
     url: https://shewang.net/
   freeimage:
     cookie: cookie #F12 nerwork中提取的cookie,如果没有账号则在冒号后留空或者填写null
     url: https://freeimage.host/
+    enable_proxy: 0 #留空或0表示不开启 开启代理设为: 1
   sharkimg:
     token: token
 site info: #配置站点信息

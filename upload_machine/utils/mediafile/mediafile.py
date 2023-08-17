@@ -512,7 +512,7 @@ class mediafile(object):
         for i in range (self.screenshotnum):
             imgpaths.append(os.path.join(self.screenshotaddress,str(i+1)+'.jpg'))
         logger.info('正在将'+self.chinesename +'的第'+self.episodename+'集截图上传'+server+'图床,请稍等...')
-        res=img_upload(imgdata=self.imgdata,imglist=imgpaths,host=server,form='bbcode')
+        res=img_upload(imgdata=self.imgdata,imglist=imgpaths,host=server,form='bbcode', proxy_host=self.basic['proxy_host'])
         if res=='':
             print(self.chinesename+'上传图床失败,请自行上传图床：')
             temp='\n'

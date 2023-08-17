@@ -5,13 +5,14 @@ from urllib.parse import urlparse
 import requests
 from loguru import logger
 
-def smms_upload(imgpath: str, api_key: str):
+def smms_upload(imgpath: str, api_key: str, proxy: bool = False, proxy_host: str = ''):
     img  = Path(imgpath)
     headers = {'Authorization': api_key}
+    proxies = {'http': proxy_host} if proxy else None
     files = {'smfile': open(img, 'rb'), 'format': 'json'}
     try:
         #req = requests.post('https://sm.ms/api/v2/upload', headers=headers, files=files)
-        req = requests.post('https://smms.app/api/v2/upload', headers=headers, files=files)
+        req = requests.post('https://smms.app/api/v2/upload', headers=headers, proxies=proxies, files=files)
     except Exception as r:
         logger.warning('requests 获取失败，原因: %s' %(r))
         return None
@@ -35,7 +36,7 @@ def smms_upload(imgpath: str, api_key: str):
         return None
     return res['data']['url']
 
-def smms_upload_files(imgpaths: list, api_key: str, form='img'):
+def smms_upload_files(imgpaths: list, api_key: str, form='img', proxy: bool = False, proxy_host: str = ''):
     liststr=''
     imgnum=0
     for imgpath in imgpaths:
@@ -46,7 +47,7 @@ def smms_upload_files(imgpaths: list, api_key: str, form='img'):
         while success==0 and trynum<5:
             trynum=trynum+1
             try:
-                imgstr=smms_upload(imgpath,api_key)
+                imgstr=smms_upload(imgpath,api_key, proxy, proxy_host)
                 success=1
             except Exception as r:
                 success=0
