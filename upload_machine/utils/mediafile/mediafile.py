@@ -820,7 +820,7 @@ class mediafile(object):
             res=a.buffer.read().decode('utf-8')
             self.mediainfo=res
             a.close()
-            self.content=self.douban_info+"\n[quote=Mediainfo]\n"+self.mediainfo+"[/quote]\n"+self.screenshoturl
+            self.content=self.douban_info+"\n"+self.mediainfo+"\n"+self.screenshoturl
             if self.pathinfo.contenthead!='':
                 self.content= self.pathinfo.contenthead+self.content
             
