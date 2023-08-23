@@ -46,9 +46,9 @@ def hhclub_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
 
     #选择来源
     if 'web' in file1.type.lower():
-        source_sel='6'
+        source_sel='2'
     elif (file1.type=='bluray' or 'bd' in file1.type.lower()) and '2160' in file1.standard_sel:
-        source_sel='1'
+        source_sel='7'
     elif file1.type=='bluray' or 'bd' in file1.type.lower():
         source_sel='1'
     elif 'dvd' in file1.type.lower()  :
@@ -192,7 +192,7 @@ def hhclub_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     logger.info('制作组已成功选择为'+file1.sub)
     
     if 'HHWEB' in file1.sub.upper():
-        tags.append(2)
+        #tags.append(2)
         tags.append(3)
         tags.append(4)
     if 'WEB' in file1.type:
@@ -235,15 +235,15 @@ def hhclub_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
             "size": "0",
             "descr": file1.content,
             "type": select_type,
-            "source_sel" : source_sel,
-            "medium_sel": medium_sel,
-            "codec_sel": codec_sel,
-            "audiocodec_sel": audiocodec_sel,
-            "standard_sel": standard_sel,
-            "processing_sel" : processing_sel,
-            "team_sel": team_sel,
+            "source_sel[5]" : source_sel,
+            "medium_sel[5]": medium_sel,
+            "codec_sel[5]": codec_sel,
+            "audiocodec_sel[5]": audiocodec_sel,
+            "standard_sel[5]": standard_sel,
+            "processing_sel[5]" : processing_sel,
+            "team_sel[5]": team_sel,
             "uplver": uplver,
-            "tags[]": tags,
+            "tags[5][]": tags,
             }
 
     scraper=cloudscraper.create_scraper()
