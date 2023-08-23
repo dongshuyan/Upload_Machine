@@ -192,23 +192,18 @@ def hhclub_upload(siteinfo,file1,record_path,qbinfo,basic,hashlist):
     logger.info('制作组已成功选择为'+file1.sub)
     
     if 'HHWEB' in file1.sub.upper():
-        #tags.append(2)
+        # tags.append(2)
         tags.append(3)
-        tags.append(4)
-    if 'WEB' in file1.type:
-        tags.append(4)
-        logger.info('已选择WEB')
+        # tags.append(4)
     if 'hhclub' in file1.pathinfo.exclusive :
         tags.append(1)
         logger.info('已选择禁转')
     if '国' in file1.language or '中' in file1.language:
         tags.append(5)
         logger.info('已选择国语')
-    '''
     if '粤' in file1.language:
         tags.append(10)
         logger.info('已选择粤语')
-    '''
     if not file1.sublan=='' and ('简' in file1.sublan or '繁' in file1.sublan or '中' in file1.sublan):
         tags.append(6)
         logger.info('已选择中字')
