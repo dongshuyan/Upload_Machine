@@ -877,7 +877,10 @@ class mediafile(object):
         #res_json=a.read()
         res_json=a.buffer.read().decode('utf-8')
         a.close()
-        media_json=json.loads(res_json)
+        try:
+            media_json=json.loads(res_json)
+        except:
+            raise ValueError('mediainfo数据错误，请本地检测这个视频是否能正常生成mediainfo信息，指令为：'+"mediainfo --Output=JSON \""+self.address+'"')
 
         self.mediainfo_json=media_json
 
