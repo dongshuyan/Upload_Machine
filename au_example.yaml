@@ -28,6 +28,7 @@ image hosting: #配置图床站点信息
     9: smms
     10: redleaves
     11: sharkimg
+    12: rousi
   ptpimg:
     apikey: apikey
   smms:
@@ -53,7 +54,7 @@ image hosting: #配置图床站点信息
   sharkimg:
     token: token
 site info: #配置站点信息
-  hdsky: #配置站点，目前支持的关键词有[hdsky,piggo,ssd,audience,pter,hhaclub,lemonhd,carpt,hdpt,wintersakura,hdfans,hares,zmpt,hdvideo,ihdbits,redleaves,mteam,sharkpt,zhuque]
+  hdsky: #配置站点，目前支持的关键词有[hdsky,piggo,ssd,audience,pter,hhaclub,lemonhd,carpt,hdpt,wintersakura,hdfans,hares,zmpt,hdvideo,ihdbits,redleaves,mteam,sharkpt,zhuque,rousi,pandapt,dajiao]
     enable: 1 #是否开启此站点自动发种 1为开启，0为关闭
     uplver: 1 #是否开启匿名发种，1为开启，0为关闭
     cookie: cookie #从网页F12获取的cookie

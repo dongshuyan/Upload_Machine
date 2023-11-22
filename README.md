@@ -25,6 +25,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - 无法在发种前暂停自行修改信息
 
 ## 更新说明
+- 20230826 增加对站点Rousi图床的支持
 - 20230806 增加对站点Rousi的支持
 - 20230806 增加对pandapt和dajiao站点的支持，并更新了hdvideo站点发布
 - 20230112 piggo发布更新，sharkpt merge了官组相关设置
@@ -102,7 +103,7 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - audience (观众)
 - pter (猫站)
 - hhclub (憨憨)
-- lemonhd (柠檬)
+- lemonhd (柠檬)【已关站】
 - hdpt (明教)
 - wintersakura (冬樱)
 - carpt (车站)
@@ -110,19 +111,20 @@ Upload_Machine全部使用requests发请求来发种，所以：
 - hares (白兔)
 - zmpt (织梦)
 - hdvideo(高清视频)
-- iHDBits(爱好多)
+- iHDBits(爱好多)【已关站】
 - redleaves(红叶)
 - mteam(馒头)
-- sharkpt(鲨鱼)
+- sharkpt(鲨鱼)【已关站】
 - zhuque(朱雀)
 - dajiao(打胶)
 - pandapt(熊猫)
+- Rousi(肉丝)
 
 
 正在适配的站点(排名不分先后):
 
 - HDTime
-- Rousi
+
 
 Todolist:
 - 自动文件改名

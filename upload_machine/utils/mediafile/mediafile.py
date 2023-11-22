@@ -820,7 +820,7 @@ class mediafile(object):
             res=a.buffer.read().decode('utf-8')
             self.mediainfo=res
             a.close()
-            self.content=self.douban_info+"\n[quote=Mediainfo]\n"+self.mediainfo+"[/quote]\n"+self.screenshoturl
+            self.content=self.douban_info+"\n"+self.mediainfo+"\n"+self.screenshoturl
             if self.pathinfo.contenthead!='':
                 self.content= self.pathinfo.contenthead+self.content
             
@@ -877,7 +877,10 @@ class mediafile(object):
         #res_json=a.read()
         res_json=a.buffer.read().decode('utf-8')
         a.close()
-        media_json=json.loads(res_json)
+        try:
+            media_json=json.loads(res_json)
+        except:
+            raise ValueError('mediainfo数据错误，请本地检测这个视频是否能正常生成mediainfo信息，指令为：'+"mediainfo --Output=JSON \""+self.address+'"')
 
         self.mediainfo_json=media_json
 
